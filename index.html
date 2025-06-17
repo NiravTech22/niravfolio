@@ -8,12 +8,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlalH9Fp0+4wK1i4f8sVb5h5x5G1t0mB5t1G7o4/8w5g6m7E+7u+z5r+Q6+5X9y7f5r+g7+4Q3+8Q+6Q1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     :root {
-      /* Default subtle cyber gray/black modern dark mode */
-      --bg: #141417; /* Dark charcoal/gray */
-      --text: #e0e0e0; /* Light gray for readability */
-      --accent: #00bcd4; /* Cyan/Turquoise for highlights */
-      --secondary: #8bc34a; /* Lime green for secondary elements */
-      --muted: #888888; /* Muted gray for less important text */
+      /* Ultra minimalist color scheme */
+      --bg: #ffffff;
+      --text: #111111;
+      --accent: #000000;
+      --secondary: #333333;
+      --muted: #666666;
+      --card-bg: #ffffff;
+      --card-border: #eeeeee;
+      --hover-bg: #fafafa;
     }
 
     * {
@@ -28,190 +31,595 @@
       font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
       font-weight: 300;
       overflow-x: hidden;
-      transition: background-color 0.8s ease, color 0.8s ease;
       line-height: 1.6;
+      scroll-behavior: smooth;
     }
 
-    /* General Transitions */
-    * {
-      transition: background-color 0.8s ease, color 0.8s ease, border-color 0.8s ease, transform 0.3s ease, opacity 0.3s ease;
-    }
-
+    /* Ultra Minimalist Header */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 3rem 2rem 1rem 2rem;
+      padding: 2rem 4rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
     }
 
     header h2 {
       font-family: 'JetBrains Mono', monospace;
-      font-weight: 500;
-      font-size: 1.1rem;
+      font-weight: 400;
+      font-size: 1rem;
       letter-spacing: -0.5px;
+      color: var(--text);
     }
 
     nav a {
-      margin-left: 2.5rem;
+      margin-left: 3rem;
       text-decoration: none;
       color: var(--muted);
-      transition: color 0.3s ease;
-      font-weight: 400;
-      font-size: 0.95rem;
+      transition: color 0.2s ease;
+      font-weight: 300;
+      font-size: 0.9rem;
       letter-spacing: -0.3px;
     }
 
     nav a:hover {
+      color: var(--text);
+    }
+
+    /* Ultra Minimalist Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 4rem 2rem;
+      background: var(--bg);
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-greeting {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.2rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .hero-text h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text);
+      line-height: 1.2;
+      text-transform: lowercase;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      font-weight: 400;
+      text-transform: lowercase;
+    }
+
+    .hero-description {
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+    }
+
+    .hero-description p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--muted);
+      text-transform: lowercase;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .hero-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .hero-link:hover {
       color: var(--accent);
     }
 
-    .hero {
+    .hero-link:hover .link-arrow {
+      transform: translateX(4px);
+    }
+
+    .link-arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .code-block {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 2rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+
+    .code-block pre {
+      margin: 0;
+    }
+
+    .code-block code {
+      color: var(--text);
+    }
+
+    .code-block .keyword {
+      color: var(--accent);
+    }
+
+    .code-block .string {
+      color: var(--secondary);
+    }
+
+    @media (max-width: 1024px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 2rem 1rem;
+      }
+
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+
+      .hero-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    /* Ultra Minimalist Card Slider */
+    .card-slider-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      padding: 2rem 0;
+    }
+
+    .card-slider {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 4rem 2rem 6rem 2rem;
+      gap: 2rem;
+      animation: slide 40s linear infinite;
+      width: max-content;
     }
 
-    .hero h1 {
-      font-family: 'Geist', sans-serif;
-      font-weight: 500;
-      font-size: 2.5rem;
+    .card-slider:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes slide {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-300px * 6)); }
+    }
+
+    .slider-card {
+      width: 300px;
+      min-width: 300px;
+      height: 400px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: all 0.2s ease;
+    }
+
+    .slider-card:hover {
+      border-color: var(--text);
+    }
+
+    /* Ultra Minimalist Section Styles */
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: all 0.2s ease;
+    }
+
+    .section-card:hover {
+      border-color: var(--text);
+    }
+
+    .section-card h3 {
+      font-size: 1.2rem;
       margin-bottom: 1rem;
-      letter-spacing: -1px;
-      line-height: 1.2;
+      color: var(--text);
+      font-weight: 400;
     }
 
-    .hero p {
-      max-width: 500px;
+    .section-card p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    /* Ultra Minimalist Blog Cards */
+    .blog-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: all 0.2s ease;
+    }
+
+    .blog-card:hover {
+      border-color: var(--text);
+    }
+
+    .blog-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .blog-card .date {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .blog-card .tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .blog-card .tag {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    /* Ultra Minimalist Research Cards */
+    .research-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: all 0.2s ease;
+    }
+
+    .research-card:hover {
+      border-color: var(--text);
+    }
+
+    .research-card .metrics {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .research-card .metric {
+      text-align: left;
+    }
+
+    .research-card .metric-value {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .research-card .metric-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* Ultra Minimalist Contact Cards */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .contact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .contact-card:hover {
+      border-color: var(--text);
+    }
+
+    .contact-card .icon {
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .contact-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .contact-card p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-card a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+
+    .contact-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* Ultra Minimalist Section Titles */
+    h2.section-title {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 3rem;
+      text-align: center;
+      color: var(--text);
+      letter-spacing: -1px;
+    }
+
+    /* Ultra Minimalist Section Layout */
+    section {
+      padding: 8rem 4rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* Ultra Minimalist Footer */
+    footer {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .social-links {
+      margin: 2rem 0;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .social-links a {
       color: var(--muted);
       font-size: 1.1rem;
-      font-weight: 300;
-      letter-spacing: -0.2px;
+      transition: color 0.2s ease;
     }
 
+    .social-links a:hover {
+      color: var(--text);
+    }
+
+    /* Ultra Minimalist Mobile Navigation */
+    @media (max-width: 768px) {
+      header {
+        padding: 1.5rem;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      section {
+        padding: 4rem 1.5rem;
+      }
+
+      .mobile-nav-fabs .main-fab, .mobile-nav-fabs .section-fab {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+      }
+    }
+
+    /* Modern Glassmorphism Card Style */
+    .project-card, .about-card, .contact-form {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-card:hover, .about-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      border-color: var(--accent);
+    }
+
+    /* Ultra Minimalist CTA Buttons */
     .cta {
-      margin-top: 2rem;
       display: flex;
-      gap: 1rem;
+      gap: 1.5rem;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     .cta button {
       background: none;
-      border: 1px solid var(--accent);
+      border: 1px solid var(--text);
       color: var(--text);
       padding: 0.8rem 1.5rem;
-      font-weight: 400;
+      font-weight: 300;
       cursor: pointer;
-      transition: all 0.3s ease;
-      border-radius: 6px;
+      transition: all 0.2s ease;
+      border-radius: 4px;
       font-size: 0.9rem;
       letter-spacing: -0.2px;
     }
 
     .cta button:hover {
-      background-color: var(--accent);
+      background: var(--text);
       color: var(--bg);
     }
 
-    section {
-      padding: 3rem 2rem;
-      max-width: 900px;
-      margin: auto;
+    /* Ultra Minimalist Card Hover Effects */
+    .slider-card, .section-card, .blog-card, .research-card, .contact-card {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      transition: transform 0.3s ease;
     }
 
-    h2.section-title {
-      font-family: 'Geist', sans-serif;
-      font-weight: 500;
-      font-size: 2rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      color: var(--accent);
-      letter-spacing: -0.8px;
+    .slider-card:hover, .section-card:hover, .blog-card:hover, .research-card:hover, .contact-card:hover {
+      transform: rotate3d(var(--rotate-x, 0), var(--rotate-y, 0), 0, 10deg);
     }
 
-    .project-card, .about-card, .contact-form {
-      background: rgba(255, 255, 255, 0.01);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      transition: transform 0.3s ease, background 0.8s ease, border 0.8s ease;
-    }
-
-    .project-card:hover, .about-card:hover {
-      transform: translateY(-2px);
-    }
-
-    .project-card h3, .about-card h3 {
-      color: var(--secondary);
-      margin-bottom: 0.8rem;
-      font-weight: 500;
-      font-size: 1.1rem;
-      letter-spacing: -0.3px;
-    }
-
-    .project-card p, .about-card p {
-      font-weight: 300;
-      line-height: 1.6;
-      letter-spacing: -0.1px;
-    }
-
+    /* Ultra Minimalist Contact Form */
     .contact-form input, .contact-form textarea {
       width: 100%;
       padding: 0.8rem;
-      margin-bottom: 1rem;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 1.5rem;
+      background: none;
+      border: 1px solid var(--card-border);
       color: var(--text);
-      border-radius: 6px;
-      transition: background 0.8s ease, border 0.8s ease;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      font-family: 'Geist', sans-serif;
+      font-weight: 300;
+      font-size: 0.9rem;
+    }
+
+    .contact-form input:focus, .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--text);
+    }
+
+    .contact-form button {
+      background: none;
+      border: 1px solid var(--text);
+      color: var(--text);
+      padding: 0.8rem 1.5rem;
+      font-weight: 300;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Geist', sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .contact-form button:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    /* Ultra Minimalist Modal Buttons */
+    .mood-theme-modal-content #analyzeBtn {
+      background: none;
+      border: 1px solid var(--text);
+      color: var(--text);
+      padding: 0.8rem 1.5rem;
+      font-weight: 300;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      letter-spacing: -0.2px;
+    }
+
+    .mood-theme-modal-content #analyzeBtn:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .mood-theme-modal-content #analyzeBtn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: none;
+      color: var(--muted);
+      border-color: var(--muted);
+    }
+
+    .mood-theme-modal-content .mode-toggle {
+      display: flex;
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .mood-theme-modal-content .mode-toggle button {
+      padding: 0.8rem 1.5rem;
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
       font-family: 'Geist', sans-serif;
       font-weight: 300;
     }
 
-    .contact-form button {
-      background-color: var(--secondary);
+    .mood-theme-modal-content .mode-toggle button.active {
+      background: var(--text);
       color: var(--bg);
-      border: none;
-      padding: 0.8rem 1.5rem;
-      font-weight: 400;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      font-family: 'Geist', sans-serif;
     }
 
-    .contact-form button:hover {
-      background-color: var(--accent);
-    }
-
-    footer {
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    /* Styles for footer social links */
-    .social-links {
-      margin-top: 1.5rem;
-      margin-bottom: 1rem; /* Adjust if needed */
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-    }
-
-    .social-links a {
-      color: var(--muted);
-      font-size: 1.5rem; /* Icon size */
-      transition: color 0.3s ease, transform 0.3s ease;
-    }
-
-    .social-links a:hover {
-      color: var(--accent);
-      transform: translateY(-2px);
+    .mood-theme-modal-content .mode-toggle button:hover:not(.active) {
+      background: var(--hover-bg);
+      color: var(--text);
     }
 
     /* AI Mood Theme Trigger (Floating Icon - Right) */
@@ -271,8 +679,8 @@
     }
 
     .mood-theme-modal-content {
-      background: rgba(20, 20, 23, 0.95); /* Use a slightly transparent bg derived from --bg */
-      border: 1px solid rgba(255, 255, 255, 0.1); /* More pronounced border */
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
       border-radius: 12px;
       padding: 2.5rem; /* Increased padding */
       width: 90%;
@@ -320,8 +728,8 @@
         width: 100%;
         padding: 0.9rem 1.2rem; /* Increased padding for input */
         margin-bottom: 1.5rem; /* Consistent spacing */
-        background: rgba(255, 255, 255, 0.05); /* Slightly lighter background for input */
-        border: 1px solid rgba(255, 255, 255, 0.12); /* Slightly more visible border */
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
         color: var(--text);
         border-radius: 8px; /* More rounded corners */
         font-family: 'Geist', sans-serif;
@@ -332,9 +740,12 @@
     .mood-theme-modal-content #emotionInput:focus {
         outline: none;
         border-color: var(--accent); /* Accent border on focus */
-        background: rgba(255, 255, 255, 0.08); /* Slight background change on focus */
+        background: var(--card-bg); /* Slight background change on focus */
     }
 
+    .mood-theme-modal-content #emotionInput::placeholder {
+      color: var(--muted);
+    }
 
     .mood-theme-modal-content .theme-controls {
       display: flex;
@@ -345,84 +756,20 @@
       margin-bottom: 1.5rem; /* Consistent spacing */
     }
 
-    /* Analyze & Transform Button */
-    .mood-theme-modal-content #analyzeBtn {
-      background: none; /* No background initially */
-      border: 1px solid var(--accent); /* Border with accent color */
-      color: var(--accent); /* Text color matching accent */
-      padding: 0.9rem 1.8rem; /* Generous padding */
-      font-weight: 500; /* Slightly bolder text */
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border-radius: 8px; /* Consistent border-radius */
-      font-size: 1rem;
-      letter-spacing: -0.2px;
-    }
-
-    .mood-theme-modal-content #analyzeBtn:hover {
-      background-color: var(--accent); /* Fill with accent on hover */
-      color: var(--bg); /* Change text to background color on hover */
-      transform: translateY(-2px); /* Slight lift effect */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-    .mood-theme-modal-content #analyzeBtn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-      background: none;
-      color: var(--muted);
-      border-color: var(--muted);
-      box-shadow: none;
-    }
-
-    /* Mode Toggle Buttons */
-    .mood-theme-modal-content .mode-toggle {
-      display: flex;
-      border: 1px solid rgba(255, 255, 255, 0.15); /* More visible border for the toggle group */
-      border-radius: 8px; /* Match other elements' border-radius */
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.03); /* Subtle background for the toggle */
-      transition: all 0.3s ease;
-    }
-
-    .mood-theme-modal-content .mode-toggle button {
-      padding: 0.7rem 1.2rem; /* Adjusted padding */
-      background: none; /* No initial background, only border for separation */
-      border: none; /* No individual button borders */
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-      font-family: 'Geist', sans-serif;
-      font-weight: 400;
-    }
-
-    .mood-theme-modal-content .mode-toggle button.active {
-      background: var(--accent);
-      color: var(--bg);
-      font-weight: 500;
-      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3); /* Inner shadow for active state */
-    }
-
-    .mood-theme-modal-content .mode-toggle button:hover:not(.active) {
-      background: rgba(255, 255, 255, 0.08); /* More visible hover */
-      color: var(--text);
-    }
-
     /* Mood Result display */
     .mood-theme-modal-content .mood-result {
       margin-top: 1.5rem; /* Consistent spacing */
       padding: 1.2rem; /* Increased padding */
       border-radius: 8px; /* Consistent border-radius */
-      background: rgba(255, 255, 255, 0.03); /* Slightly different background */
-      border: 1px solid var(--accent); /* Clearer accent border */
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
       font-size: 0.95rem; /* Slightly larger text */
     }
     .mood-theme-modal-content .mood-result #moodText {
         margin-bottom: 0.5rem;
     }
     .mood-theme-modal-content .mood-result .confidence-bar {
-        background: rgba(255, 255, 255, 0.15); /* More visible bar background */
+        background: var(--card-bg);
         height: 10px; /* Thicker bar */
         border-radius: 5px; /* Rounded ends */
     }
@@ -577,6 +924,870 @@
           transform: translateY(-220px);
       }
     }
+
+    /* Modern Card Slider */
+    .card-slider-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      padding: 2rem 0;
+    }
+
+    .card-slider {
+      display: flex;
+      gap: 2rem;
+      animation: slide 30s linear infinite;
+      width: max-content;
+    }
+
+    .card-slider:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes slide {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-300px * 6));
+      }
+    }
+
+    .slider-card {
+      width: 300px;
+      min-width: 300px;
+      height: 400px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: transform 0.3s ease;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .slider-card:hover {
+      transform: rotate3d(1, 1, 1, 15deg);
+    }
+
+    /* Section Styles */
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .section-card:hover {
+      transform: rotate3d(1, 1, 1, 10deg);
+      border-color: var(--accent);
+    }
+
+    .section-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-card p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .section-card .icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    /* Tech Blog Section */
+    .blog-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .blog-card:hover {
+      transform: rotate3d(1, 1, 1, 10deg);
+      border-color: var(--accent);
+    }
+
+    .blog-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .blog-card .date {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .blog-card .tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .blog-card .tag {
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--accent);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    /* ML Research Section */
+    .research-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .research-card:hover {
+      transform: rotate3d(1, 1, 1, 10deg);
+      border-color: var(--accent);
+    }
+
+    .research-card .metrics {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .research-card .metric {
+      text-align: center;
+    }
+
+    .research-card .metric-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .research-card .metric-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Contact Section */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .contact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .contact-card:hover {
+      transform: rotate3d(1, 1, 1, 10deg);
+      border-color: var(--accent);
+    }
+
+    .contact-card .icon {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .contact-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .contact-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Update button styles to ensure contrast */
+    .cta button, .contact-form button, .mood-theme-modal-content #analyzeBtn {
+      background: none;
+      border: 1px solid var(--text);
+      color: var(--text);
+      padding: 0.8rem 1.5rem;
+      font-weight: 300;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      letter-spacing: -0.2px;
+    }
+
+    .cta button:hover, .contact-form button:hover, .mood-theme-modal-content #analyzeBtn:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    /* Update card styles to ensure contrast */
+    .slider-card, .section-card, .blog-card, .research-card, .contact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+    }
+
+    /* Update modal styles */
+    .mood-theme-modal-content {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+    }
+
+    .mood-theme-modal-content h2.section-title {
+      color: var(--text);
+    }
+
+    .mood-theme-modal-content p {
+      color: var(--muted);
+    }
+
+    .mood-theme-modal-content #emotionInput {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+    }
+
+    .mood-theme-modal-content #emotionInput::placeholder {
+      color: var(--muted);
+    }
+
+    .mood-theme-modal-content .mode-toggle {
+      border: 1px solid var(--card-border);
+    }
+
+    .mood-theme-modal-content .mode-toggle button {
+      color: var(--muted);
+    }
+
+    .mood-theme-modal-content .mode-toggle button.active {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .mood-theme-modal-content .mode-toggle button:hover:not(.active) {
+      background: var(--hover-bg);
+      color: var(--text);
+    }
+
+    .mood-theme-modal-content .mood-result {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+    }
+
+    .mood-theme-modal-content .mood-result #moodText {
+      color: var(--text);
+    }
+
+    .mood-theme-modal-content .mood-result #confidenceText {
+      color: var(--muted);
+    }
+
+    /* Modern Mobile Navigation Icons */
+    .mobile-nav-fabs .main-fab svg,
+    .mobile-nav-fabs .section-fab svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 1.2;
+      fill: none;
+      transition: all 0.2s ease;
+    }
+
+    #moodThemeTrigger svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      stroke-width: 1.2;
+      fill: none;
+      transition: all 0.2s ease;
+    }
+
+    /* Add hover effects for the icons */
+    .mobile-nav-fabs .main-fab:hover svg,
+    .mobile-nav-fabs .section-fab:hover svg,
+    #moodThemeTrigger:hover svg {
+      transform: scale(1.1);
+      stroke-width: 1.5;
+    }
+
+    /* Add animation for the AI theme trigger */
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    #moodThemeTrigger {
+      animation: pulse 3s infinite;
+    }
+
+    #moodThemeTrigger:hover {
+      animation: none;
+    }
+
+    /* AI Assistant Modal Styles */
+    .mood-theme-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .mood-theme-modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mood-theme-modal-content {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--card-border);
+    }
+
+    .mood-theme-modal-overlay.open .mood-theme-modal-content {
+      transform: translateY(0);
+    }
+
+    .mood-theme-modal-content h2 {
+      color: var(--text);
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      background: linear-gradient(45deg, var(--accent), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .mood-theme-modal-content p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .input-group input {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .input-group input:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.1);
+    }
+
+    .input-group button {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent);
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .input-group button:hover {
+      background: var(--secondary);
+      transform: translateY(-1px);
+    }
+
+    .theme-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .mode-toggle {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .mode-toggle button {
+      flex: 1;
+      padding: 0.8rem;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .mode-toggle button:hover {
+      background: var(--hover-bg);
+    }
+
+    .mode-toggle button.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .theme-presets {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .theme-presets button {
+      flex: 1;
+      padding: 0.8rem;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-presets button:hover {
+      background: var(--hover-bg);
+      border-color: var(--accent);
+    }
+
+    .mood-result {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      border-radius: 12px;
+      background: var(--hover-bg);
+      border: 1px solid var(--card-border);
+    }
+
+    .mood-text {
+      margin-bottom: 1rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .confidence-bar {
+      height: 4px;
+      background: var(--card-border);
+      border-radius: 2px;
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+
+    .confidence-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0;
+      transition: width 0.3s ease;
+    }
+
+    .confidence-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+
+    .theme-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .action-button {
+      flex: 1;
+      padding: 0.8rem;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .action-button:hover {
+      background: var(--hover-bg);
+      border-color: var(--accent);
+    }
+
+    .close-button {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0.3rem;
+      transition: color 0.2s ease;
+      line-height: 1;
+    }
+
+    .close-button:hover {
+      color: var(--text);
+    }
+
+    /* Theme Switch Button */
+    .theme-switch {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 48px;
+      height: 48px;
+      border-radius: 24px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      transition: all 0.2s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      z-index: 100;
+    }
+
+    .theme-switch.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .theme-switch:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .theme-switch i {
+      font-size: 1.2rem;
+    }
+
+    /* Updated Section Styles */
+    .section-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: var(--text);
+      text-transform: lowercase;
+    }
+
+    /* About Section */
+    .about-content {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .about-text p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      text-transform: lowercase;
+    }
+
+    .tech-stack h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+      text-transform: lowercase;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+    }
+
+    .tech-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .tech-item:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+
+    .tech-item i {
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+
+    .tech-item span {
+      color: var(--text);
+      font-size: 0.9rem;
+      text-transform: lowercase;
+    }
+
+    /* Timeline Section */
+    .timeline-container {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--card-border);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2.5rem;
+      width: 1rem;
+      height: 1rem;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+    }
+
+    .timeline-content {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-content:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+
+    .timeline-date {
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-content h3 {
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+      text-transform: lowercase;
+    }
+
+    .timeline-content h4 {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-transform: lowercase;
+    }
+
+    .timeline-content p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-transform: lowercase;
+    }
+
+    .timeline-tech {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .timeline-tech span {
+      font-size: 0.8rem;
+      color: var(--accent);
+      background: rgba(var(--accent-rgb), 0.1);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      text-transform: lowercase;
+    }
+
+    /* Projects Section */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+
+    .project-content {
+      padding: 1.5rem;
+    }
+
+    .project-card h3 {
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      text-transform: lowercase;
+    }
+
+    .project-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-transform: lowercase;
+    }
+
+    .project-tech {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .project-tech span {
+      font-size: 0.8rem;
+      color: var(--accent);
+      background: rgba(var(--accent-rgb), 0.1);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      text-transform: lowercase;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .project-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .project-link:hover {
+      color: var(--accent);
+    }
+
+    .project-link:hover .link-arrow {
+      transform: translateX(4px);
+    }
+
+    @media (max-width: 768px) {
+      .section-content {
+        padding: 2rem 1rem;
+      }
+
+      .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .timeline-container {
+        padding-left: 1.5rem;
+      }
+
+      .timeline-dot {
+        left: -1.75rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -584,85 +1795,244 @@
     <h2>nirav sawant</h2>
     <nav>
       <a href="#projects">projects</a>
-      <a href="#about">tech blogs</a>
-      <a href="#contact">about</a>
+      <a href="#about">about me</a>
+      <a href="#contact">reach out!</a>
       <a href="#ml-research">ml research</a>
+      <a href ="#tech-blog">my thoughts</a>
     </nav>
   </header>
 
   <div id="moodThemeTrigger">
-    <i class="fas fa-lightbulb"></i>
+    <svg viewBox="0 0 24 24">
+      <path d="M12 3v1m0 16v1M3 12h1m16 0h1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7M12 17a5 5 0 100-10 5 5 0 000 10z"/>
+    </svg>
   </div>
 
   <div class="mobile-nav-fabs">
-      <button id="mainMobileNavFab" class="main-fab">
-          <i class="fas fa-bars"></i>
-      </button>
-      <a href="#projects" class="section-fab" id="fabProjects"><i class="fas fa-folder-open"></i></a>
-      <a href="#about" class="section-fab" id="fabAbout"><i class="fas fa-user"></i></a>
-      <a href="#ml-research" class="section-fab" id="fabMLResearch"><i class="fas fa-flask"></i></a>
-      <a href="#contact" class="section-fab" id="fabContact"><i class="fas fa-envelope"></i></a>
+    <button id="mainMobileNavFab" class="main-fab">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+    <a href="#projects" class="section-fab" id="fabProjects">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2z"/>
+        <path d="M3 7l4-4h10l4 4"/>
+      </svg>
+    </a>
+    <a href="#about" class="section-fab" id="fabAbout">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 12a4 4 0 100-8 4 4 0 000 8z"/>
+        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+      </svg>
+    </a>
+    <a href="#ml-research" class="section-fab" id="fabMLResearch">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>
+    </a>
+    <a href="#contact" class="section-fab" id="fabContact">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+    </a>
   </div>
 
+  <!-- Theme Controls -->
+  <div class="theme-controls">
+    <button id="themeSwitch" class="theme-switch" onclick="toggleTheme()">
+      <i class="fas fa-moon"></i>
+    </button>
+  </div>
+
+  <!-- AI Assistant Modal -->
   <div id="moodThemeModal" class="mood-theme-modal-overlay">
     <div class="mood-theme-modal-content">
       <button class="close-button" onclick="closeMoodModal()"><i class="fas fa-times"></i></button>
-      <h2 class="section-title">AI Mood Theme</h2>
-      <p style="color: var(--muted); font-weight: 300;">Tell me how you're feeling and I'll adapt the site theme to match your mood</p>
-      <input id="emotionInput" type="text" placeholder="e.g., I'm feeling excited about my new project, but a bit anxious...">
-      <div class="theme-controls">
+      <h2>MoodSync Theme Studio</h2>
+      <p>describe how you're feeling today in the box below, and the theme will change based on your mood!</p>
+      <div class="input-group">
+        <input id="emotionInput" type="text" placeholder="Describe your mood or desired theme style...">
         <button id="analyzeBtn" onclick="setThemeFromEmotion()">Analyze & Transform</button>
+      </div>
+      <div class="theme-controls">
         <div class="mode-toggle">
-          <button id="lightMode" onclick="setThemeMode('light')">Light</button>
+          <button id="lightMode" onclick="setThemeMode('light')" class="active">Light</button>
           <button id="darkMode" onclick="setThemeMode('dark')">Dark</button>
         </div>
+        <div class="theme-presets">
+          <button onclick="applyPresetTheme('focus')" title="Focus Mode">Focus</button>
+          <button onclick="applyPresetTheme('relax')" title="Relax Mode">Relax</button>
+          <button onclick="applyPresetTheme('creative')" title="Creative Mode">Creative</button>
+        </div>
       </div>
-      <div id="result" style="display: none;" class="mood-result">
-        <div id="moodText"></div>
+      <div id="result" class="mood-result" style="display: none;">
+        <div id="moodText" class="mood-text"></div>
         <div class="confidence-bar">
           <div id="confidenceFill" class="confidence-fill"></div>
         </div>
-        <div id="confidenceText" style="font-size: 0.8em; margin-top: 0.5rem; color: var(--muted);"></div>
+        <div id="confidenceText" class="confidence-text"></div>
+        <div class="theme-actions">
+          <button onclick="saveCurrentTheme()" class="action-button">
+            <i class="fas fa-bookmark"></i> Save Theme
+          </button>
+          <button onclick="shareTheme()" class="action-button">
+            <i class="fas fa-share-alt"></i> Share
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
   <section class="hero">
-    <h1>Building the Future</h1>
-    <p>Mechatronics Engineering student specializing in AI-powered solutions and modern web experiences</p>
-    <div class="cta">
-      <button onclick="location.href='#projects'">View Work</button>
-      <button onclick="location.href='#about'">Tech Stack</button>
-      <button onclick="location.href='#contact'">Contact</button>
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-greeting">hi, i'm nirav!</div>
+        <h1>i love building things!</h1>
+        <p class="hero-subtitle">studying mechatronics and robotics engineering @ queen's university</p>
+        <div class="hero-description">
+          <p>i'm particularly passionate about creating innovative solutions through software and hardware. currently exploring AI, robotics, and full-stack development.</p>
+        </div>
+        <div class="hero-links">
+          <a href="#projects" class="hero-link">
+            <span class="link-text">view projects</span>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="#contact" class="hero-link">
+            <span class="link-text">say hello</span>
+            <span class="link-arrow">→</span>
+          </a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="code-block">
+          <pre><code>class Developer {
+  constructor() {
+    this.name = "nirav";
+    this.role = "student";
+    this.skills = [
+      "full-stack",
+      "ai/ml",
+      "robotics"
+    ];
+  }
+}</code></pre>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="projects">
-    <h2 class="section-title">Projects</h2>
-    <div class="project-card">
-      <h3>AI Health Assistant</h3>
-      <p>Designed and deployed a full-stack AI system to help patients track chronic symptoms and receive real-time feedback using OpenAI + Firebase.</p>
-    </div>
-    <div class="project-card">
-      <h3>CI/CD Auto-Infra</h3>
-      <p>Automated cloud deployments for internal tools using GitHub Actions and Docker on AWS Lambda. Reduced manual work by 80%.</p>
-    </div>
-    <div class="project-card">
-      <h3>Adaptive Theme Engine</h3>
-      <p>Built a free, client-side AI mood detection system that transforms the entire UI based on natural language input. Zero external APIs required.</p>
+  <section id="about" class="about">
+    <div class="section-content">
+      <h2>about me</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>hey there! i'm a mechatronics engineering student who loves building cool stuff. when i'm not coding or tinkering with circuits, you'll find me exploring new technologies and working on personal projects.</p>
+          <div class="tech-stack">
+            <h3>tech stack</h3>
+            <div class="tech-grid">
+              <div class="tech-item">
+                <i class="fab fa-python"></i>
+                <span>python</span>
+              </div>
+              <div class="tech-item">
+                <i class="fab fa-js"></i>
+                <span>javascript</span>
+              </div>
+              <div class="tech-item">
+                <i class="fab fa-react"></i>
+                <span>react</span>
+              </div>
+              <div class="tech-item">
+                <i class="fab fa-node-js"></i>
+                <span>node.js</span>
+              </div>
+              <div class="tech-item">
+                <i class="fas fa-microchip"></i>
+                <span>arduino</span>
+              </div>
+              <div class="tech-item">
+                <i class="fas fa-robot"></i>
+                <span>ros</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="about">
-    <h2 class="section-title">About Me</h2>
-    <div class="about-card">
-      <h3>Driven by Purpose</h3>
-      <p>I'm a 20-something developer with a deep interest in infrastructure, automation, and applied AI. My mission is to simplify complex systems and build tools that scale with elegance.</p>
+  <section id="timeline" class="timeline">
+    <div class="section-content">
+      <h2>experience</h2>
+            <div class="timeline-container">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">June 2024 - August 2024</div>
+            <h3>junior AI content strategist</h3>
+            <h4>legacy+</h4>
+            <p>championed communication with marketing/analyst teams <br>
+              created ai tools to streamline development of educational content for partnering organizations</p>
+            <div class="timeline-tech">
+              <span>react</span>
+              <span>node.js</span>
+              <span>aws</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-container">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">May 2025 - August 2025</div>
+            <h3>software engineer intern</h3>
+            <h4>cibc</h4>
+            <p>Championed concept of SDLC <br>
+              Contributed to multiple production level projects within the bank <br>
+              Championed communication with analyst teams, and gained a thorough understanding of the commercial banking industry
+
+            </p>
+            <div class="timeline-tech">
+              <span>react</span>
+              <span>node.js</span>
+              <span>aws</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="about-card">
-      <h3>Tech Stack</h3>
-      <p>React, Node.js, Python, Docker, Firebase, AWS, PostgreSQL, TailwindCSS, Framer Motion, GitHub Actions, and client-side AI/ML.</p>
-     fungicides</p>
+  </section>
+
+  <section id="projects" class="projects">
+    <div class="section-content">
+      <h2>projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-content">
+            <h3>moodsync theme studio</h3>
+            <p>an ai-powered interactive web app as part of my personal portfolio that generates color themes based on user mood and preferences.</p>
+            <div class="project-tech">
+              <span>react</span>
+              <span>node.js</span>
+              <span>typescript</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link">
+                <span>view code</span>
+                <span class="link-arrow">→</span>
+              </a>
+              <a href="#" class="project-link">
+                <span>live demo</span>
+                <span class="link-arrow">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Add more project cards as needed -->
+      </div>
     </div>
   </section>
 
@@ -680,15 +2050,99 @@
 
   <section id="ml-research">
     <h2 class="section-title">ML Research</h2>
-    <div class="project-card">
-      <h3>NeuroWeave</h3>
-      <p>
-        A fully digital experiment using machine learning to power UI adaptivity from brainwave patterns. Simulates real-time mental state detection using public EEG datasets.
-      </p>
-      <p>
-        Focus: Signal processing, LSTM classification, React-based adaptive UI. Fully open-source and reproducible.
-      </p>
-      <button onclick="window.open('https://github.com/yourusername/NeuroWeave', '_blank')" style="margin-top: 1rem; padding: 0.5rem 1rem; background: var(--accent); color: var(--bg); border: none; border-radius: 6px; cursor: pointer; font-family: 'Geist', sans-serif; font-weight: 400;">View Code</button>
+    <div class="section-grid">
+      <div class="research-card">
+        <h3>NeuroWeave</h3>
+        <p>A fully digital experiment using machine learning to power UI adaptivity from brainwave patterns.</p>
+        <div class="metrics">
+          <div class="metric">
+            <div class="metric-value">95%</div>
+            <div class="metric-label">Accuracy</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">50ms</div>
+            <div class="metric-label">Latency</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">10k+</div>
+            <div class="metric-label">Samples</div>
+          </div>
+        </div>
+      </div>
+      <div class="research-card">
+        <h3>Quantum ML</h3>
+        <p>Exploring quantum computing applications in machine learning and optimization problems.</p>
+        <div class="metrics">
+          <div class="metric">
+            <div class="metric-value">3x</div>
+            <div class="metric-label">Speedup</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">99%</div>
+            <div class="metric-label">Reliability</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tech-blog">
+    <h2 class="section-title">Tech Blog</h2>
+    <div class="section-grid">
+      <div class="blog-card">
+        <h3>Building Scalable AI Systems</h3>
+        <div class="date">March 15, 2024</div>
+        <p>Exploring best practices for deploying and scaling machine learning models in production environments.</p>
+        <div class="tags">
+          <span class="tag">AI</span>
+          <span class="tag">MLOps</span>
+          <span class="tag">DevOps</span>
+        </div>
+      </div>
+      <div class="blog-card">
+        <h3>Modern Web Architecture</h3>
+        <div class="date">March 10, 2024</div>
+        <p>Deep dive into building resilient and performant web applications using modern frameworks and tools.</p>
+        <div class="tags">
+          <span class="tag">Web Dev</span>
+          <span class="tag">Architecture</span>
+          <span class="tag">Performance</span>
+        </div>
+      </div>
+      <div class="blog-card">
+        <h3>Cloud Native Development</h3>
+        <div class="date">March 5, 2024</div>
+        <p>Understanding the principles and practices of building applications for the cloud era.</p>
+        <div class="tags">
+          <span class="tag">Cloud</span>
+          <span class="tag">DevOps</span>
+          <span class="tag">Kubernetes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 class="section-title">Reach Out</h2>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <i class="fas fa-envelope icon"></i>
+        <h3>Email</h3>
+        <p>Let's discuss your project</p>
+        <a href="mailto:your.email@example.com" style="color: var(--accent); text-decoration: none;">your.email@example.com</a>
+      </div>
+      <div class="contact-card">
+        <i class="fab fa-linkedin icon"></i>
+        <h3>LinkedIn</h3>
+        <p>Connect professionally</p>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank" style="color: var(--accent); text-decoration: none;">linkedin.com/in/yourprofile</a>
+      </div>
+      <div class="contact-card">
+        <i class="fab fa-github icon"></i>
+        <h3>GitHub</h3>
+        <p>Check out my code</p>
+        <a href="https://github.com/yourusername" target="_blank" style="color: var(--accent); text-decoration: none;">github.com/yourusername</a>
+      </div>
     </div>
   </section>
 
@@ -824,121 +2278,162 @@
       happy: {
         name: "Sunshine",
         light: {
-          '--bg': 'linear-gradient(135deg, #fffbf0 0%, #fff8e1 100%)',
+          '--bg': '#fffbf0',
           '--text': '#2d1810',
           '--accent': '#f57c00',
           '--secondary': '#ff9800',
-          '--muted': '#8d6e63'
+          '--muted': '#8d6e63',
+          '--card-bg': '#ffffff',
+          '--card-border': '#ffe0b2',
+          '--hover-bg': '#fff8e1'
         },
         dark: {
-          '--bg': 'linear-gradient(135deg, #1a1611 0%, #2d2418 100%)',
+          '--bg': '#1a1611',
           '--text': '#fff8e1',
           '--accent': '#ffb74d',
           '--secondary': '#ffa726',
-          '--muted': '#bcaaa4'
+          '--muted': '#bcaaa4',
+          '--card-bg': '#2d2418',
+          '--card-border': '#4d4033',
+          '--hover-bg': '#3d3228'
         }
       },
       sad: {
         name: "Melancholy",
         light: {
-          '--bg': 'linear-gradient(135deg, #f3f8ff 0%, #e8f2ff 100%)',
+          '--bg': '#f3f8ff',
           '--text': '#1a237e',
           '--accent': '#1976d2',
           '--secondary': '#1565c0',
-          '--muted': '#5c6bc0'
+          '--muted': '#5c6bc0',
+          '--card-bg': '#ffffff',
+          '--card-border': '#bbdefb',
+          '--hover-bg': '#e3f2fd'
         },
         dark: {
-          '--bg': 'linear-gradient(135deg, #0d1421 0%, #162938 100%)',
+          '--bg': '#0d1421',
           '--text': '#bbdefb',
           '--accent': '#42a5f5',
           '--secondary': '#2196f3',
-          '--muted': '#7986cb'
+          '--muted': '#7986cb',
+          '--card-bg': '#162938',
+          '--card-border': '#1e3a4f',
+          '--hover-bg': '#2a4a6a'
         }
       },
       angry: {
         name: "Intense",
         light: {
-          '--bg': 'linear-gradient(135deg, #ffebee 0%, #fce4ec 100%)',
+          '--bg': '#ffebee',
           '--text': '#b71c1c',
           '--accent': '#d32f2f',
           '--secondary': '#f44336',
-          '--muted': '#ad1457'
+          '--muted': '#ad1457',
+          '--card-bg': '#ffffff',
+          '--card-border': '#ffcdd2',
+          '--hover-bg': '#fce4ec'
         },
         dark: {
-          '--bg': 'linear-gradient(135deg, #1f0c0c 0%, #3d1a1a 100%)',
+          '--bg': '#1f0c0c',
           '--text': '#ffcdd2',
           '--accent': '#ef5350',
           '--secondary': '#f44336',
-          '--muted': '#e57373'
+          '--muted': '#e57373',
+          '--card-bg': '#3d1a1a',
+          '--card-border': '#4d2a2a',
+          '--hover-bg': '#5d3a3a'
         }
       },
       anxious: {
         name: "Storm",
         light: {
-          '--bg': 'linear-gradient(135deg, #f3e5f5 0%, #fce4ec 100%)',
+          '--bg': '#f3e5f5',
           '--text': '#4a148c',
           '--accent': '#7b1fa2',
           '--secondary': '#8e24aa',
-          '--muted': '#6a1b9a'
+          '--muted': '#6a1b9a',
+          '--card-bg': '#ffffff',
+          '--card-border': '#e1bee7',
+          '--hover-bg': '#fce4ec'
         },
         dark: {
-          '--bg': 'linear-gradient(135deg, #1a0d1f 0%, #2d1b35 100%)',
+          '--bg': '#1a0d1f',
           '--text': '#e1bee7',
           '--accent': '#ab47bc',
           '--secondary': '#9c27b0',
-          '--muted': '#ba68c8'
+          '--muted': '#ba68c8',
+          '--card-bg': '#2d1b35',
+          '--card-border': '#3d2a45',
+          '--hover-bg': '#4d3a55'
         }
       },
       calm: {
         name: "Zen",
         light: {
-          '--bg': 'linear-gradient(135deg, #f1f8e9 0%, #e8f5e8 100%)',
+          '--bg': '#f1f8e9',
           '--text': '#1b5e20',
           '--accent': '#388e3c',
           '--secondary': '#4caf50',
-          '--muted': '#2e7d32'
+          '--muted': '#2e7d32',
+          '--card-bg': '#ffffff',
+          '--card-border': '#c8e6c9',
+          '--hover-bg': '#e8f5e8'
         },
         dark: {
-          '--bg': 'linear-gradient(135deg, #0d1f0f 0%, #1b3820 100%)',
+          '--bg': '#0d1f0f',
           '--text': '#c8e6c9',
           '--accent': '#66bb6a',
           '--secondary': '#4caf50',
-          '--muted': '#81c784'
+          '--muted': '#81c784',
+          '--card-bg': '#1b3820',
+          '--card-border': '#2a4a2a',
+          '--hover-bg': '#3a5a3a'
         }
       },
       energetic: {
         name: "Electric",
         light: {
-          '--bg': 'linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%)',
+          '--bg': '#fff3e0',
           '--text': '#e65100',
           '--accent': '#ff6f00',
           '--secondary': '#ff8f00',
-          '--muted': '#f57c00'
+          '--muted': '#f57c00',
+          '--card-bg': '#ffffff',
+          '--card-border': '#ffe0b2',
+          '--hover-bg': '#fff8e1'
         },
         dark: {
-          '--bg': 'linear-gradient(135deg, #0a0a0a 0%, #1a0d33 100%)',
+          '--bg': '#0a0a0a',
           '--text': '#ffffff',
           '--accent': '#ff4081',
           '--secondary': '#00e5ff',
-          '--muted': '#b388ff'
+          '--muted': '#b388ff',
+          '--card-bg': '#1a0d33',
+          '--card-border': '#2a1d43',
+          '--hover-bg': '#3a2d53'
         }
       },
-      // New 'neutral' theme for default subtle cyber gray/black modern dark mode
       neutral: {
         name: "Subtle Cyber",
         light: {
-          '--bg': 'linear-gradient(135deg, #f0f0f5 0%, #e8e8ed 100%)',
+          '--bg': '#f0f0f5',
           '--text': '#333333',
           '--accent': '#2196f3',
           '--secondary': '#4caf50',
-          '--muted': '#777777'
+          '--muted': '#777777',
+          '--card-bg': '#ffffff',
+          '--card-border': '#e0e0e0',
+          '--hover-bg': '#f5f5f5'
         },
         dark: {
-          '--bg': 'linear-gradient(135deg, #0f0f12 0%, #1a1a1f 100%)', /* Darker charcoal/gray */
-          '--text': '#e0e0e0', /* Light gray for readability */
-          '--accent': '#00bcd4', /* Cyan/Turquoise for highlights */
-          '--secondary': '#8bc34a', /* Lime green for secondary elements */
-          '--muted': '#888888' /* Muted gray for less important text */
+          '--bg': '#0f0f12',
+          '--text': '#e0e0e0',
+          '--accent': '#00bcd4',
+          '--secondary': '#8bc34a',
+          '--muted': '#888888',
+          '--card-bg': '#1a1a1f',
+          '--card-border': '#2a2a2f',
+          '--hover-bg': '#2a2a2f'
         }
       }
     };
@@ -1211,6 +2706,240 @@
         }
       }
     }, 3000);
+
+    // Add this to your existing script
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('.slider-card, .section-card, .blog-card, .research-card, .contact-card');
+      
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          // Calculate rotation based on mouse position
+          const rotateX = (y - rect.height / 2) / 10;
+          const rotateY = (x - rect.width / 2) / 10;
+          
+          // Apply the rotation
+          card.style.setProperty('--rotate-x', rotateX);
+          card.style.setProperty('--rotate-y', rotateY);
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          // Reset rotation when mouse leaves
+          card.style.setProperty('--rotate-x', 0);
+          card.style.setProperty('--rotate-y', 0);
+        });
+      });
+    });
+
+    // Add this to your existing script
+    document.addEventListener('DOMContentLoaded', function() {
+      const mainFab = document.getElementById('mainMobileNavFab');
+      const mainFabSvg = mainFab.querySelector('svg');
+      
+      mainFab.addEventListener('click', function() {
+        const isOpen = document.querySelector('.mobile-nav-fabs').classList.contains('open');
+        if (isOpen) {
+          mainFabSvg.innerHTML = '<path d="M4 6h16M4 12h16M4 18h16"/>';
+        } else {
+          mainFabSvg.innerHTML = '<path d="M6 18L18 6M6 6l12 12"/>';
+        }
+      });
+    });
+
+    // Theme Functions
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const icon = document.querySelector('.theme-switch i');
+      if (document.body.classList.contains('dark-mode')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    }
+
+    function setThemeMode(mode) {
+      const lightBtn = document.getElementById('lightMode');
+      const darkBtn = document.getElementById('darkMode');
+      
+      if (mode === 'light') {
+        document.body.classList.remove('dark-mode');
+        lightBtn.classList.add('active');
+        darkBtn.classList.remove('active');
+      } else {
+        document.body.classList.add('dark-mode');
+        darkBtn.classList.add('active');
+        lightBtn.classList.remove('active');
+      }
+    }
+
+    // Initialize theme controls
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeSwitch = document.getElementById('themeSwitch');
+      if (themeSwitch) {
+        themeSwitch.classList.add('show');
+      }
+
+      // Show theme controls after scrolling
+      window.addEventListener('scroll', () => {
+        if (themeSwitch) themeSwitch.classList.add('show');
+      });
+    });
+
+    // Add new theme presets
+    const presetThemes = {
+      focus: {
+        name: "Focus Mode",
+        light: {
+          '--bg': '#f8f9fa',
+          '--text': '#2d3436',
+          '--accent': '#0984e3',
+          '--secondary': '#74b9ff',
+          '--muted': '#dfe6e9',
+          '--card-bg': '#ffffff',
+          '--card-border': '#dfe6e9',
+          '--hover-bg': '#f1f2f6'
+        },
+        dark: {
+          '--bg': '#2d3436',
+          '--text': '#f5f6fa',
+          '--accent': '#0984e3',
+          '--secondary': '#74b9ff',
+          '--muted': '#636e72',
+          '--card-bg': '#353b48',
+          '--card-border': '#636e72',
+          '--hover-bg': '#2f3640'
+        }
+      },
+      relax: {
+        name: "Relax Mode",
+        light: {
+          '--bg': '#f1f8e9',
+          '--text': '#1b5e20',
+          '--accent': '#388e3c',
+          '--secondary': '#4caf50',
+          '--muted': '#2e7d32',
+          '--card-bg': '#ffffff',
+          '--card-border': '#c8e6c9',
+          '--hover-bg': '#e8f5e8'
+        },
+        dark: {
+          '--bg': '#0d1f0f',
+          '--text': '#c8e6c9',
+          '--accent': '#66bb6a',
+          '--secondary': '#4caf50',
+          '--muted': '#81c784',
+          '--card-bg': '#1b3820',
+          '--card-border': '#2a4a2a',
+          '--hover-bg': '#3a5a3a'
+        }
+      },
+      creative: {
+        name: "Creative Mode",
+        light: {
+          '--bg': '#fff3e0',
+          '--text': '#e65100',
+          '--accent': '#ff6f00',
+          '--secondary': '#ff8f00',
+          '--muted': '#f57c00',
+          '--card-bg': '#ffffff',
+          '--card-border': '#ffe0b2',
+          '--hover-bg': '#fff8e1'
+        },
+        dark: {
+          '--bg': '#1a0d1f',
+          '--text': '#e1bee7',
+          '--accent': '#ab47bc',
+          '--secondary': '#9c27b0',
+          '--muted': '#ba68c8',
+          '--card-bg': '#2d1b35',
+          '--card-border': '#3d2a45',
+          '--hover-bg': '#4d3a55'
+        }
+      }
+    };
+
+    function applyPresetTheme(preset) {
+      const theme = presetThemes[preset];
+      if (theme) {
+        const mode = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+        applyTheme(theme[mode]);
+        
+        // Update UI
+        const result = document.getElementById('result');
+        const moodText = document.getElementById('moodText');
+        const confidenceFill = document.getElementById('confidenceFill');
+        const confidenceText = document.getElementById('confidenceText');
+        
+        if (result && moodText && confidenceFill && confidenceText) {
+          moodText.innerHTML = `<strong>Applied Theme:</strong> ${theme.name}`;
+          confidenceFill.style.width = '100%';
+          confidenceText.textContent = 'Preset Theme Applied';
+          result.style.display = 'block';
+        }
+      }
+    }
+
+    function saveCurrentTheme() {
+      const currentTheme = {
+        name: 'Custom Theme',
+        light: {},
+        dark: {}
+      };
+
+      // Get current theme values
+      const root = document.documentElement;
+      const computedStyle = getComputedStyle(root);
+      const mode = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+
+      ['--bg', '--text', '--accent', '--secondary', '--muted', '--card-bg', '--card-border', '--hover-bg'].forEach(prop => {
+        currentTheme[mode][prop] = computedStyle.getPropertyValue(prop).trim();
+      });
+
+      // Save to localStorage
+      const savedThemes = JSON.parse(localStorage.getItem('savedThemes') || '[]');
+      savedThemes.push(currentTheme);
+      localStorage.setItem('savedThemes', JSON.stringify(savedThemes));
+
+      // Show feedback
+      const moodText = document.getElementById('moodText');
+      if (moodText) {
+        moodText.innerHTML += '<br><span style="color: var(--accent);">Theme saved successfully!</span>';
+      }
+    }
+
+    function shareTheme() {
+      const currentTheme = {
+        name: 'Custom Theme',
+        light: {},
+        dark: {}
+      };
+
+      // Get current theme values
+      const root = document.documentElement;
+      const computedStyle = getComputedStyle(root);
+      const mode = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+
+      ['--bg', '--text', '--accent', '--secondary', '--muted', '--card-bg', '--card-border', '--hover-bg'].forEach(prop => {
+        currentTheme[mode][prop] = computedStyle.getPropertyValue(prop).trim();
+      });
+
+      // Create shareable link
+      const themeData = btoa(JSON.stringify(currentTheme));
+      const shareUrl = `${window.location.origin}${window.location.pathname}?theme=${themeData}`;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        const moodText = document.getElementById('moodText');
+        if (moodText) {
+          moodText.innerHTML += '<br><span style="color: var(--accent);">Theme link copied to clipboard!</span>';
+        }
+      });
+    }
   </script>
 </body>
 </html>
