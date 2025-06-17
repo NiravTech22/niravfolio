@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>portfolio | nirav</title>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlalH9Fp0+4wK1i4f8sVb5h5x5G1t0mB5t1G7o4/8w5g6m7E+7u+z5r+Q6+5X9y7f5r+g7+4Q3+8Q+6Q1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      /* Default subtle cyber gray/black modern dark mode */
+      --bg: #141417; /* Dark charcoal/gray */
+      --text: #e0e0e0; /* Light gray for readability */
+      --accent: #00bcd4; /* Cyan/Turquoise for highlights */
+      --secondary: #8bc34a; /* Lime green for secondary elements */
+      --muted: #888888; /* Muted gray for less important text */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      transition: background-color 0.8s ease, color 0.8s ease;
+      line-height: 1.6;
+    }
+
+    /* General Transitions */
+    * {
+      transition: background-color 0.8s ease, color 0.8s ease, border-color 0.8s ease, transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3rem 2rem 1rem 2rem;
+    }
+
+    header h2 {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+      font-size: 1.1rem;
+      letter-spacing: -0.5px;
+    }
+
+    nav a {
+      margin-left: 2.5rem;
+      text-decoration: none;
+      color: var(--muted);
+      transition: color 0.3s ease;
+      font-weight: 400;
+      font-size: 0.95rem;
+      letter-spacing: -0.3px;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 2rem 6rem 2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Geist', sans-serif;
+      font-weight: 500;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: -1px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      max-width: 500px;
+      color: var(--muted);
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: -0.2px;
+    }
+
+    .cta {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .cta button {
+      background: none;
+      border: 1px solid var(--accent);
+      color: var(--text);
+      padding: 0.8rem 1.5rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      letter-spacing: -0.2px;
+    }
+
+    .cta button:hover {
+      background-color: var(--accent);
+      color: var(--bg);
+    }
+
+    section {
+      padding: 3rem 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h2.section-title {
+      font-family: 'Geist', sans-serif;
+      font-weight: 500;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: var(--accent);
+      letter-spacing: -0.8px;
+    }
+
+    .project-card, .about-card, .contact-form {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease, background 0.8s ease, border 0.8s ease;
+    }
+
+    .project-card:hover, .about-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .project-card h3, .about-card h3 {
+      color: var(--secondary);
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      font-size: 1.1rem;
+      letter-spacing: -0.3px;
+    }
+
+    .project-card p, .about-card p {
+      font-weight: 300;
+      line-height: 1.6;
+      letter-spacing: -0.1px;
+    }
+
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border-radius: 6px;
+      transition: background 0.8s ease, border 0.8s ease;
+      font-family: 'Geist', sans-serif;
+      font-weight: 300;
+    }
+
+    .contact-form button {
+      background-color: var(--secondary);
+      color: var(--bg);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-weight: 400;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-family: 'Geist', sans-serif;
+    }
+
+    .contact-form button:hover {
+      background-color: var(--accent);
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Styles for footer social links */
+    .social-links {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem; /* Adjust if needed */
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .social-links a {
+      color: var(--muted);
+      font-size: 1.5rem; /* Icon size */
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* AI Mood Theme Trigger (Floating Icon - Right) */
+    #moodThemeTrigger {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 50%; /* Make it a circle */
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      opacity: 0; /* Hidden by default */
+      pointer-events: none; /* Make it non-interactive when hidden */
+      z-index: 1000; /* Ensure it's on top */
+    }
+
+    #moodThemeTrigger.show {
+      opacity: 1;
+      pointer-events: auto; /* Make it interactive when shown */
+    }
+
+    #moodThemeTrigger:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    /* AI Mood Theme Modal (Popup) */
+    .mood-theme-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7); /* Dimmed background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1001; /* Above trigger */
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      backdrop-filter: blur(5px); /* Subtle blur effect */
+    }
+
+    .mood-theme-modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mood-theme-modal-content {
+      background: rgba(20, 20, 23, 0.95); /* Use a slightly transparent bg derived from --bg */
+      border: 1px solid rgba(255, 255, 255, 0.1); /* More pronounced border */
+      border-radius: 12px;
+      padding: 2.5rem; /* Increased padding */
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+      transform: translateY(-20px); /* Initial position for slide-in effect */
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+    }
+
+    .mood-theme-modal-overlay.open .mood-theme-modal-content {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mood-theme-modal-content h2.section-title {
+      margin-top: 0; /* Override default section-title margin */
+      margin-bottom: 1.5rem; /* Consistent spacing */
+      font-size: 1.8rem; /* Slightly smaller for popup context */
+    }
+    
+    .mood-theme-modal-content p {
+        margin-bottom: 1.5rem; /* Consistent spacing for description */
+    }
+
+    .mood-theme-modal-content .close-button {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .mood-theme-modal-content .close-button:hover {
+      color: var(--accent);
+    }
+
+    /* Styles for elements inside the modal */
+    .mood-theme-modal-content #emotionInput {
+        width: 100%;
+        padding: 0.9rem 1.2rem; /* Increased padding for input */
+        margin-bottom: 1.5rem; /* Consistent spacing */
+        background: rgba(255, 255, 255, 0.05); /* Slightly lighter background for input */
+        border: 1px solid rgba(255, 255, 255, 0.12); /* Slightly more visible border */
+        color: var(--text);
+        border-radius: 8px; /* More rounded corners */
+        font-family: 'Geist', sans-serif;
+        font-weight: 300;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .mood-theme-modal-content #emotionInput:focus {
+        outline: none;
+        border-color: var(--accent); /* Accent border on focus */
+        background: rgba(255, 255, 255, 0.08); /* Slight background change on focus */
+    }
+
+
+    .mood-theme-modal-content .theme-controls {
+      display: flex;
+      gap: 1rem; /* Increased gap */
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem; /* Consistent spacing */
+    }
+
+    /* Analyze & Transform Button */
+    .mood-theme-modal-content #analyzeBtn {
+      background: none; /* No background initially */
+      border: 1px solid var(--accent); /* Border with accent color */
+      color: var(--accent); /* Text color matching accent */
+      padding: 0.9rem 1.8rem; /* Generous padding */
+      font-weight: 500; /* Slightly bolder text */
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 8px; /* Consistent border-radius */
+      font-size: 1rem;
+      letter-spacing: -0.2px;
+    }
+
+    .mood-theme-modal-content #analyzeBtn:hover {
+      background-color: var(--accent); /* Fill with accent on hover */
+      color: var(--bg); /* Change text to background color on hover */
+      transform: translateY(-2px); /* Slight lift effect */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .mood-theme-modal-content #analyzeBtn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      background: none;
+      color: var(--muted);
+      border-color: var(--muted);
+      box-shadow: none;
+    }
+
+    /* Mode Toggle Buttons */
+    .mood-theme-modal-content .mode-toggle {
+      display: flex;
+      border: 1px solid rgba(255, 255, 255, 0.15); /* More visible border for the toggle group */
+      border-radius: 8px; /* Match other elements' border-radius */
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.03); /* Subtle background for the toggle */
+      transition: all 0.3s ease;
+    }
+
+    .mood-theme-modal-content .mode-toggle button {
+      padding: 0.7rem 1.2rem; /* Adjusted padding */
+      background: none; /* No initial background, only border for separation */
+      border: none; /* No individual button borders */
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      font-family: 'Geist', sans-serif;
+      font-weight: 400;
+    }
+
+    .mood-theme-modal-content .mode-toggle button.active {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 500;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3); /* Inner shadow for active state */
+    }
+
+    .mood-theme-modal-content .mode-toggle button:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.08); /* More visible hover */
+      color: var(--text);
+    }
+
+    /* Mood Result display */
+    .mood-theme-modal-content .mood-result {
+      margin-top: 1.5rem; /* Consistent spacing */
+      padding: 1.2rem; /* Increased padding */
+      border-radius: 8px; /* Consistent border-radius */
+      background: rgba(255, 255, 255, 0.03); /* Slightly different background */
+      border: 1px solid var(--accent); /* Clearer accent border */
+      font-size: 0.95rem; /* Slightly larger text */
+    }
+    .mood-theme-modal-content .mood-result #moodText {
+        margin-bottom: 0.5rem;
+    }
+    .mood-theme-modal-content .mood-result .confidence-bar {
+        background: rgba(255, 255, 255, 0.15); /* More visible bar background */
+        height: 10px; /* Thicker bar */
+        border-radius: 5px; /* Rounded ends */
+    }
+    .mood-theme-modal-content .mood-result .confidence-fill {
+        background: linear-gradient(90deg, var(--accent) 0%, var(--secondary) 100%); /* Maintain gradient */
+        border-radius: 5px; /* Match bar background */
+    }
+    .mood-theme-modal-content .mood-result #confidenceText {
+        margin-top: 0.8rem;
+        font-size: 0.85em; /* Slightly larger confidence text */
+        color: var(--muted);
+    }
+
+    /* Mobile Navigation FABs (Left side) */
+    .mobile-nav-fabs {
+        position: fixed;
+        bottom: 2rem;
+        left: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 999; /* Below modal, above other content */
+        opacity: 0; /* Hidden by default on desktop */
+        pointer-events: none; /* Non-interactive on desktop */
+        visibility: hidden; /* Ensure it's not visible for screen readers etc. */
+    }
+
+    .mobile-nav-fabs .main-fab, .mobile-nav-fabs .section-fab {
+        background-color: var(--secondary); /* Use secondary accent for menu FABs */
+        color: var(--bg);
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.4rem;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        position: absolute; /* Allows for relative positioning */
+        bottom: 0;
+        left: 0;
+    }
+
+    .mobile-nav-fabs .main-fab:hover, .mobile-nav-fabs .section-fab:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Initial state for section FABs (hidden behind main FAB) */
+    .mobile-nav-fabs .section-fab {
+        opacity: 0;
+        transform: translateY(0); /* Initial position */
+        pointer-events: none;
+        background-color: rgba(139, 195, 74, 0.8); /* Slightly transparent secondary */
+        font-size: 1.2rem;
+        transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+    }
+
+    /* Active state for main FAB - rotate icon */
+    .mobile-nav-fabs.open .main-fab i {
+        transform: rotate(90deg); /* Rotate for close icon */
+    }
+
+    /* Open state for section FABs - reveal in a stack */
+    .mobile-nav-fabs.open #fabContact {
+        opacity: 1;
+        transform: translateY(-60px); /* Stack vertically */
+        pointer-events: auto;
+    }
+    .mobile-nav-fabs.open #fabMLResearch {
+        opacity: 1;
+        transform: translateY(-120px);
+        pointer-events: auto;
+    }
+    .mobile-nav-fabs.open #fabAbout {
+        opacity: 1;
+        transform: translateY(-180px);
+        pointer-events: auto;
+    }
+    .mobile-nav-fabs.open #fabProjects {
+        opacity: 1;
+        transform: translateY(-240px);
+        pointer-events: auto;
+    }
+
+    @media (max-width: 768px) {
+      header nav {
+        display: none; /* Hide desktop nav on mobile */
+      }
+
+      .theme-controls {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .mood-theme-modal-content #analyzeBtn,
+      .mood-theme-modal-content .mode-toggle {
+        width: 100%; /* Ensure buttons stack nicely on mobile */
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      header {
+        padding: 2rem 1rem 1rem 1rem;
+      }
+      
+      #moodThemeTrigger {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        opacity: 1; /* Always show trigger on mobile */
+        pointer-events: auto;
+      }
+
+      .mood-theme-modal-content {
+        padding: 1.5rem;
+      }
+      .mood-theme-modal-content h2.section-title {
+        font-size: 1.5rem;
+      }
+
+      /* Show mobile nav FABs on mobile */
+      .mobile-nav-fabs {
+          opacity: 1;
+          pointer-events: auto;
+          visibility: visible;
+          bottom: 1.5rem; /* Match trigger bottom */
+          left: 1.5rem; /* Position on left */
+      }
+      .mobile-nav-fabs .main-fab, .mobile-nav-fabs .section-fab {
+          width: 45px;
+          height: 45px;
+          font-size: 1.3rem;
+      }
+      .mobile-nav-fabs.open #fabContact {
+        transform: translateY(-55px);
+      }
+      .mobile-nav-fabs.open #fabMLResearch {
+          transform: translateY(-110px);
+      }
+      .mobile-nav-fabs.open #fabAbout {
+          transform: translateY(-165px);
+      }
+      .mobile-nav-fabs.open #fabProjects {
+          transform: translateY(-220px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>nirav sawant</h2>
+    <nav>
+      <a href="#projects">projects</a>
+      <a href="#about">tech blogs</a>
+      <a href="#contact">about</a>
+      <a href="#ml-research">ml research</a>
+    </nav>
+  </header>
+
+  <div id="moodThemeTrigger">
+    <i class="fas fa-lightbulb"></i>
+  </div>
+
+  <div class="mobile-nav-fabs">
+      <button id="mainMobileNavFab" class="main-fab">
+          <i class="fas fa-bars"></i>
+      </button>
+      <a href="#projects" class="section-fab" id="fabProjects"><i class="fas fa-folder-open"></i></a>
+      <a href="#about" class="section-fab" id="fabAbout"><i class="fas fa-user"></i></a>
+      <a href="#ml-research" class="section-fab" id="fabMLResearch"><i class="fas fa-flask"></i></a>
+      <a href="#contact" class="section-fab" id="fabContact"><i class="fas fa-envelope"></i></a>
+  </div>
+
+  <div id="moodThemeModal" class="mood-theme-modal-overlay">
+    <div class="mood-theme-modal-content">
+      <button class="close-button" onclick="closeMoodModal()"><i class="fas fa-times"></i></button>
+      <h2 class="section-title">AI Mood Theme</h2>
+      <p style="color: var(--muted); font-weight: 300;">Tell me how you're feeling and I'll adapt the site theme to match your mood</p>
+      <input id="emotionInput" type="text" placeholder="e.g., I'm feeling excited about my new project, but a bit anxious...">
+      <div class="theme-controls">
+        <button id="analyzeBtn" onclick="setThemeFromEmotion()">Analyze & Transform</button>
+        <div class="mode-toggle">
+          <button id="lightMode" onclick="setThemeMode('light')">Light</button>
+          <button id="darkMode" onclick="setThemeMode('dark')">Dark</button>
+        </div>
+      </div>
+      <div id="result" style="display: none;" class="mood-result">
+        <div id="moodText"></div>
+        <div class="confidence-bar">
+          <div id="confidenceFill" class="confidence-fill"></div>
+        </div>
+        <div id="confidenceText" style="font-size: 0.8em; margin-top: 0.5rem; color: var(--muted);"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero">
+    <h1>Building the Future</h1>
+    <p>Mechatronics Engineering student specializing in AI-powered solutions and modern web experiences</p>
+    <div class="cta">
+      <button onclick="location.href='#projects'">View Work</button>
+      <button onclick="location.href='#about'">Tech Stack</button>
+      <button onclick="location.href='#contact'">Contact</button>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2 class="section-title">Projects</h2>
+    <div class="project-card">
+      <h3>AI Health Assistant</h3>
+      <p>Designed and deployed a full-stack AI system to help patients track chronic symptoms and receive real-time feedback using OpenAI + Firebase.</p>
+    </div>
+    <div class="project-card">
+      <h3>CI/CD Auto-Infra</h3>
+      <p>Automated cloud deployments for internal tools using GitHub Actions and Docker on AWS Lambda. Reduced manual work by 80%.</p>
+    </div>
+    <div class="project-card">
+      <h3>Adaptive Theme Engine</h3>
+      <p>Built a free, client-side AI mood detection system that transforms the entire UI based on natural language input. Zero external APIs required.</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-card">
+      <h3>Driven by Purpose</h3>
+      <p>I'm a 20-something developer with a deep interest in infrastructure, automation, and applied AI. My mission is to simplify complex systems and build tools that scale with elegance.</p>
+    </div>
+    <div class="about-card">
+      <h3>Tech Stack</h3>
+      <p>React, Node.js, Python, Docker, Firebase, AWS, PostgreSQL, TailwindCSS, Framer Motion, GitHub Actions, and client-side AI/ML.</p>
+     fungicides</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 class="section-title">Contact Me</h2>
+    <div class="contact-form">
+      <form action="#">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Your Message" rows="6" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="ml-research">
+    <h2 class="section-title">ML Research</h2>
+    <div class="project-card">
+      <h3>NeuroWeave</h3>
+      <p>
+        A fully digital experiment using machine learning to power UI adaptivity from brainwave patterns. Simulates real-time mental state detection using public EEG datasets.
+      </p>
+      <p>
+        Focus: Signal processing, LSTM classification, React-based adaptive UI. Fully open-source and reproducible.
+      </p>
+      <button onclick="window.open('https://github.com/yourusername/NeuroWeave', '_blank')" style="margin-top: 1rem; padding: 0.5rem 1rem; background: var(--accent); color: var(--bg); border: none; border-radius: 6px; cursor: pointer; font-family: 'Geist', sans-serif; font-weight: 400;">View Code</button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="social-links">
+      <a href="https://github.com/yourusername" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://youtube.com/yourchannel" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    </div>
+    <p>© 2025 Nirav Sawant. Made with curiosity and caffeine.</p>
+  </footer>
+
+  <script>
+    // Free sentiment analysis using a lightweight rule-based approach
+    class MoodAnalyzer {
+      constructor() {
+        this.emotionWords = {
+          happy: {
+            words: ['happy', 'joy', 'excited', 'thrilled', 'amazing', 'awesome', 'fantastic', 'great', 'wonderful', 'brilliant', 'perfect', 'excellent', 'delighted', 'cheerful', 'elated', 'ecstatic', 'blissful', 'content', 'satisfied', 'pleased', 'glad', 'merry', 'upbeat', 'optimistic', 'enthusiastic'],
+            weight: 1
+          },
+          sad: {
+            words: ['sad', 'depressed', 'down', 'blue', 'melancholy', 'gloomy', 'dejected', 'despondent', 'miserable', 'sorrowful', 'mournful', 'grieving', 'heartbroken', 'disappointed', 'discouraged', 'hopeless', 'lonely', 'isolated', 'empty', 'hollow', 'hurt', 'pain', 'ache', 'crying', 'tears'],
+            weight: 1
+          },
+          angry: {
+            words: ['angry', 'mad', 'furious', 'rage', 'irritated', 'annoyed', 'frustrated', 'pissed', 'livid', 'outraged', 'infuriated', 'aggravated', 'hostile', 'resentful', 'bitter', 'indignant', 'incensed', 'irate', 'enraged', 'seething', 'fuming', 'steaming', 'boiling', 'heated'],
+            weight: 1
+          },
+          anxious: {
+            words: ['anxious', 'nervous', 'worried', 'stressed', 'tense', 'uneasy', 'apprehensive', 'concerned', 'troubled', 'restless', 'agitated', 'jittery', 'panicked', 'overwhelmed', 'frantic', 'distressed', 'fearful', 'scared', 'afraid', 'terrified', 'petrified', 'alarmed', 'startled', 'rattled'],
+            weight: 1
+          },
+          calm: {
+            words: ['calm', 'peaceful', 'relaxed', 'serene', 'tranquil', 'zen', 'centered', 'balanced', 'composed', 'collected', 'cool', 'mellow', 'laid-back', 'easygoing', 'chilled', 'comfortable', 'at ease', 'stable', 'steady', 'grounded', 'mindful', 'meditative'],
+            weight: 1
+          },
+          energetic: {
+            words: ['energetic', 'pumped', 'hyper', 'vibrant', 'dynamic', 'lively', 'spirited', 'vigorous', 'active', 'animated', 'bouncy', 'zippy', 'peppy', 'bubbly', 'effervescent', 'charged', 'electric', 'motivated', 'driven', 'ambitious', 'determined'],
+            weight: 1
+          }
+        };
+
+        this.negativeWords = ['not', 'no', 'never', 'without', 'barely', 'hardly', 'scarcely', 'little', 'less', 'least'];
+        this.intensifiers = ['very', 'really', 'extremely', 'incredibly', 'absolutely', 'totally', 'completely', 'utterly', 'quite', 'rather', 'pretty', 'so', 'too'];
+      }
+
+      analyzeMood(text) {
+        const words = text.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/);
+        const scores = {};
+        let totalMatches = 0;
+
+        // Initialize scores
+        Object.keys(this.emotionWords).forEach(emotion => {
+          scores[emotion] = 0;
+        });
+
+        // Analyze each word with context
+        for (let i = 0; i < words.length; i++) {
+          const word = words[i];
+          const prevWord = i > 0 ? words[i - 1] : '';
+          // const nextWord = i < words.length - 1 ? words[i + 1] : ''; // nextWord not currently used but good for future expansion
+
+          // Check for emotion words
+          Object.entries(this.emotionWords).forEach(([emotion, data]) => {
+            if (data.words.includes(word)) {
+              let score = data.weight;
+              
+              // Apply modifiers
+              if (this.intensifiers.includes(prevWord)) {
+                score *= 1.5;
+              }
+              if (this.negativeWords.includes(prevWord)) {
+                score *= -0.8; // Negative modifier
+              }
+
+              scores[emotion] += score;
+              totalMatches++;
+            }
+          });
+        }
+
+        // Find dominant emotion
+        let dominantEmotion = 'neutral';
+        let maxScore = 0;
+        
+        Object.entries(scores).forEach(([emotion, score]) => {
+          // Normalize scores by ensuring non-negative values for mood detection
+          const normalizedScore = Math.max(0, score); 
+          if (normalizedScore > maxScore) {
+            maxScore = normalizedScore;
+            dominantEmotion = emotion;
+          }
+        });
+
+        let confidence = 0;
+        // Calculate confidence based on matches and text length
+        // Improved confidence calculation to be more robust
+        if (totalMatches > 0) {
+          // Base confidence from the proportion of emotion words
+          confidence = totalMatches / words.length; 
+          // Add a boost based on the max score achieved for the dominant emotion
+          confidence += (maxScore / totalMatches) * 0.3; // Give more weight to higher scores
+          confidence = Math.min(0.95, confidence); // Cap at 95%
+        } else if (words.length > 0) {
+            // If no emotion words, but text exists, confidence is low for neutral
+            confidence = 0.1; 
+        }
+
+        // Handle special cases for better accuracy
+        if (text.includes('!') && (dominantEmotion === 'happy' || dominantEmotion === 'energetic')) {
+          confidence = Math.min(0.95, confidence * 1.1); // Small boost for exclamation marks
+        }
+        if (text.includes('...') && dominantEmotion === 'sad') {
+          confidence = Math.min(0.95, confidence * 1.1); // Small boost for ellipses
+        }
+
+        return {
+          mood: dominantEmotion,
+          confidence: Math.max(0.1, Math.min(0.95, confidence)), // Ensure confidence is between 10% and 95%
+          scores: scores,
+          details: {
+            wordCount: words.length,
+            emotionMatches: totalMatches
+          }
+        };
+      }
+    }
+
+    const moodAnalyzer = new MoodAnalyzer();
+
+    const themes = {
+      happy: {
+        name: "Sunshine",
+        light: {
+          '--bg': 'linear-gradient(135deg, #fffbf0 0%, #fff8e1 100%)',
+          '--text': '#2d1810',
+          '--accent': '#f57c00',
+          '--secondary': '#ff9800',
+          '--muted': '#8d6e63'
+        },
+        dark: {
+          '--bg': 'linear-gradient(135deg, #1a1611 0%, #2d2418 100%)',
+          '--text': '#fff8e1',
+          '--accent': '#ffb74d',
+          '--secondary': '#ffa726',
+          '--muted': '#bcaaa4'
+        }
+      },
+      sad: {
+        name: "Melancholy",
+        light: {
+          '--bg': 'linear-gradient(135deg, #f3f8ff 0%, #e8f2ff 100%)',
+          '--text': '#1a237e',
+          '--accent': '#1976d2',
+          '--secondary': '#1565c0',
+          '--muted': '#5c6bc0'
+        },
+        dark: {
+          '--bg': 'linear-gradient(135deg, #0d1421 0%, #162938 100%)',
+          '--text': '#bbdefb',
+          '--accent': '#42a5f5',
+          '--secondary': '#2196f3',
+          '--muted': '#7986cb'
+        }
+      },
+      angry: {
+        name: "Intense",
+        light: {
+          '--bg': 'linear-gradient(135deg, #ffebee 0%, #fce4ec 100%)',
+          '--text': '#b71c1c',
+          '--accent': '#d32f2f',
+          '--secondary': '#f44336',
+          '--muted': '#ad1457'
+        },
+        dark: {
+          '--bg': 'linear-gradient(135deg, #1f0c0c 0%, #3d1a1a 100%)',
+          '--text': '#ffcdd2',
+          '--accent': '#ef5350',
+          '--secondary': '#f44336',
+          '--muted': '#e57373'
+        }
+      },
+      anxious: {
+        name: "Storm",
+        light: {
+          '--bg': 'linear-gradient(135deg, #f3e5f5 0%, #fce4ec 100%)',
+          '--text': '#4a148c',
+          '--accent': '#7b1fa2',
+          '--secondary': '#8e24aa',
+          '--muted': '#6a1b9a'
+        },
+        dark: {
+          '--bg': 'linear-gradient(135deg, #1a0d1f 0%, #2d1b35 100%)',
+          '--text': '#e1bee7',
+          '--accent': '#ab47bc',
+          '--secondary': '#9c27b0',
+          '--muted': '#ba68c8'
+        }
+      },
+      calm: {
+        name: "Zen",
+        light: {
+          '--bg': 'linear-gradient(135deg, #f1f8e9 0%, #e8f5e8 100%)',
+          '--text': '#1b5e20',
+          '--accent': '#388e3c',
+          '--secondary': '#4caf50',
+          '--muted': '#2e7d32'
+        },
+        dark: {
+          '--bg': 'linear-gradient(135deg, #0d1f0f 0%, #1b3820 100%)',
+          '--text': '#c8e6c9',
+          '--accent': '#66bb6a',
+          '--secondary': '#4caf50',
+          '--muted': '#81c784'
+        }
+      },
+      energetic: {
+        name: "Electric",
+        light: {
+          '--bg': 'linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%)',
+          '--text': '#e65100',
+          '--accent': '#ff6f00',
+          '--secondary': '#ff8f00',
+          '--muted': '#f57c00'
+        },
+        dark: {
+          '--bg': 'linear-gradient(135deg, #0a0a0a 0%, #1a0d33 100%)',
+          '--text': '#ffffff',
+          '--accent': '#ff4081',
+          '--secondary': '#00e5ff',
+          '--muted': '#b388ff'
+        }
+      },
+      // New 'neutral' theme for default subtle cyber gray/black modern dark mode
+      neutral: {
+        name: "Subtle Cyber",
+        light: {
+          '--bg': 'linear-gradient(135deg, #f0f0f5 0%, #e8e8ed 100%)',
+          '--text': '#333333',
+          '--accent': '#2196f3',
+          '--secondary': '#4caf50',
+          '--muted': '#777777'
+        },
+        dark: {
+          '--bg': 'linear-gradient(135deg, #0f0f12 0%, #1a1a1f 100%)', /* Darker charcoal/gray */
+          '--text': '#e0e0e0', /* Light gray for readability */
+          '--accent': '#00bcd4', /* Cyan/Turquoise for highlights */
+          '--secondary': '#8bc34a', /* Lime green for secondary elements */
+          '--muted': '#888888' /* Muted gray for less important text */
+        }
+      }
+    };
+
+    let currentThemeMode = 'dark'; // Initialize with 'dark' as per your request
+
+    /**
+     * Sets the active theme mode (light or dark) and applies the current mood's colors.
+     * @param {string} mode - 'light' or 'dark'
+     */
+    function setThemeMode(mode) {
+      currentThemeMode = mode;
+      const lightButton = document.getElementById('lightMode');
+      const darkButton = document.getElementById('darkMode');
+
+      if (lightButton && darkButton) { // Ensure buttons exist
+        if (mode === 'light') {
+          lightButton.classList.add('active');
+          darkButton.classList.remove('active');
+        } else {
+          lightButton.classList.remove('active');
+          darkButton.classList.add('active');
+        }
+      }
+      
+      // Re-apply the current detected mood's theme but with the new mode
+      const emotionInput = document.getElementById('emotionInput');
+      const input = emotionInput ? emotionInput.value.trim() : ''; // Safely access value
+
+      if (input) { // If there's an active emotion, re-analyze and apply
+        setThemeFromEmotion();
+      } else { // Otherwise, apply neutral theme in the selected mode
+        applyTheme(themes.neutral[currentThemeMode]);
+      }
+    }
+
+    /**
+     * Analyzes the emotion input and applies the corresponding theme.
+     */
+    async function setThemeFromEmotion() {
+      const inputElement = document.getElementById('emotionInput');
+      const input = inputElement ? inputElement.value.trim() : '';
+      const button = document.getElementById('analyzeBtn');
+      const result = document.getElementById('result');
+      
+      if (!input) {
+        // If input is empty, revert to neutral theme for current mode
+        applyTheme(themes.neutral[currentThemeMode]);
+        const moodText = document.getElementById('moodText');
+        if (moodText) {
+            moodText.textContent = 'Please tell me how you\'re feeling to activate the mood theme!';
+        }
+        if (result) result.style.display = 'block';
+        if (button) {
+            button.disabled = false;
+            button.textContent = '✨ Analyze & Transform';
+        }
+        const confidenceFill = document.getElementById('confidenceFill');
+        const confidenceText = document.getElementById('confidenceText');
+        if (confidenceFill) confidenceFill.style.width = '0%';
+        if (confidenceText) confidenceText.textContent = '';
+        return;
+      }
+
+      // Show loading state
+      if (button) {
+          button.disabled = true;
+          button.textContent = '🧠 Analyzing...';
+      }
+      if (result) result.style.display = 'none';
+
+      // Simulate processing time for better UX
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      try {
+        const analysis = moodAnalyzer.analyzeMood(input);
+        // Access the correct theme object based on currentThemeMode
+        const themeToApply = themes[analysis.mood][currentThemeMode] || themes.neutral[currentThemeMode];
+        
+        // Display results
+        if (result) result.style.display = 'block';
+        const moodText = document.getElementById('moodText');
+        if (moodText) {
+            moodText.innerHTML = `
+              <strong>Detected Mood:</strong> ${analysis.mood.charAt(0).toUpperCase() + analysis.mood.slice(1)} 
+              <span style="color: var(--secondary);">(${themes[analysis.mood].name})</span>
+            `;
+        }
+        
+        // Animate confidence bar
+        const confidenceFill = document.getElementById('confidenceFill');
+        const confidenceText = document.getElementById('confidenceText');
+        
+        if (confidenceFill) {
+            // Reset width before setting for animation effect
+            confidenceFill.style.width = '0%'; 
+            setTimeout(() => {
+              confidenceFill.style.width = `${analysis.confidence * 100}%`;
+            }, 100);
+        }
+        if (confidenceText) {
+            confidenceText.textContent = `Confidence: ${Math.round(analysis.confidence * 100)}%`;
+        }
+
+        // Apply theme with smooth transition
+        applyTheme(themeToApply);
+
+      } catch (error) {
+        console.error('Error analyzing mood:', error);
+        const moodText = document.getElementById('moodText');
+        if (moodText) {
+            moodText.textContent = 'Could not analyze mood. Please try again.';
+        }
+        if (result) result.style.display = 'block';
+      } finally {
+        // Reset button
+        if (button) {
+            button.disabled = false;
+            button.textContent = '✨ Analyze & Transform';
+        }
+      }
+    }
+
+    /**
+     * Applies the given CSS variables to the document root.
+     * @param {object} colors - An object containing CSS variable names and their values.
+     */
+    function applyTheme(colors) {
+      const root = document.documentElement;
+      
+      // Special handling for --bg to ensure it applies to both html and body
+      if (colors['--bg']) {
+        document.body.style.background = colors['--bg'];
+        root.style.setProperty('--bg', colors['--bg']); // Also set the variable for other elements that might use it
+      }
+
+      Object.entries(colors).forEach(([property, value]) => {
+        if (property !== '--bg') { // Avoid setting --bg twice
+          root.style.setProperty(property, value);
+        }
+      });
+    }
+
+    // Modal functions
+    const moodModal = document.getElementById('moodThemeModal');
+    const moodTrigger = document.getElementById('moodThemeTrigger');
+
+    function openMoodModal() {
+      if (moodModal) {
+        moodModal.classList.add('open');
+        // Re-apply theme mode state for buttons when modal opens
+        setThemeMode(currentThemeMode);
+      }
+    }
+
+    function closeMoodModal() {
+      if (moodModal) {
+        moodModal.classList.remove('open');
+      }
+    }
+
+    // Close modal when clicking outside content
+    if (moodModal) {
+      moodModal.addEventListener('click', function(event) {
+        if (event.target === moodModal) { // Check if the click was on the overlay itself
+          closeMoodModal();
+        }
+      });
+    }
+
+    // Mobile Navigation FAB logic
+    const mainMobileNavFab = document.getElementById('mainMobileNavFab');
+    const mobileNavFabsContainer = document.querySelector('.mobile-nav-fabs');
+    const sectionFabs = document.querySelectorAll('.mobile-nav-fabs .section-fab');
+
+    function toggleMobileNav() {
+        if (mobileNavFabsContainer.classList.contains('open')) {
+            mobileNavFabsContainer.classList.remove('open');
+            // Change icon back to bars after transition
+            setTimeout(() => {
+                mainMobileNavFab.querySelector('i').className = 'fas fa-bars';
+            }, 300); // Match transition duration
+        } else {
+            mobileNavFabsContainer.classList.add('open');
+            mainMobileNavFab.querySelector('i').className = 'fas fa-times'; // Change to close icon
+        }
+    }
+
+    // Add click listeners to section FABs to scroll to section and close menu
+    sectionFabs.forEach(fab => {
+        fab.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent default link behavior for smooth scroll
+            const targetId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+                toggleMobileNav(); // Close the menu after clicking a section
+            }
+        });
+    });
+
+    // Initialize the theme mode and FABs on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        // Set initial mode based on the `currentThemeMode` variable (which is 'dark' by default now)
+        setThemeMode(currentThemeMode);
+        // Attach click listener to mood trigger button
+        if (moodTrigger) {
+          moodTrigger.addEventListener('click', openMoodModal);
+        }
+        // Attach click listener to main mobile nav FAB
+        if (mainMobileNavFab) {
+            mainMobileNavFab.addEventListener('click', toggleMobileNav);
+        }
+    });
+
+    // Handle floating trigger visibility on scroll
+    window.addEventListener('scroll', function() {
+      if (moodTrigger) { // Ensure the trigger element exists
+        // Always show on mobile, show only after scroll on desktop
+        if (window.innerWidth <= 768 || window.scrollY > 200) { 
+          moodTrigger.classList.add('show');
+          if (window.innerWidth > 768) { // For desktop, only show mood trigger
+              mobileNavFabsContainer.classList.remove('open'); // Ensure mobile nav is closed on desktop
+          }
+        } else {
+          moodTrigger.classList.remove('show');
+        }
+      }
+
+      // Hide mobile nav FABs on scroll-up if not already open (prevents accidental opens)
+      if (window.innerWidth <= 768) {
+          if (window.scrollY > 200 && !mobileNavFabsContainer.classList.contains('open')) {
+              mobileNavFabsContainer.classList.remove('show'); // If you want to hide main FAB when not scrolling
+          } else {
+              mobileNavFabsContainer.classList.add('show');
+          }
+      }
+    });
+
+
+    // Allow Enter key to trigger analysis inside the modal
+    const emotionInput = document.getElementById('emotionInput');
+    if (emotionInput) { // Ensure input element exists
+      emotionInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          setThemeFromEmotion();
+        }
+      });
+    }
+
+    // Add some example prompts for better UX
+    const examples = [
+      "I'm feeling super excited about my new project!",
+      "Today has been really stressful and overwhelming",
+      "I'm in a peaceful, zen-like mood",
+      "Feeling a bit down and melancholy",
+      "I'm absolutely furious about this situation",
+      "Feeling energetic and ready to conquer the world!"
+    ];
+
+    // Placeholder rotation for inspiration
+    let exampleIndex = 0;
+    setInterval(() => {
+      const input = document.getElementById('emotionInput');
+      if (input) { // Ensure input element exists
+        // Only change placeholder if input is empty
+        if (input.value === '') { 
+          input.placeholder = examples[exampleIndex];
+          exampleIndex = (exampleIndex + 1) % examples.length;
+        }
+      }
+    }, 3000);
+  </script>
+</body>
+</html>
