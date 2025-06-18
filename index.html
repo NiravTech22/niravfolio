@@ -1865,6 +1865,9 @@
           <button onclick="applyPresetTheme('focus')" title="Focus Mode">Focus</button>
           <button onclick="applyPresetTheme('relax')" title="Relax Mode">Relax</button>
           <button onclick="applyPresetTheme('creative')" title="Creative Mode">Creative</button>
+          <button onclick="applyPresetTheme('sunset')" title="Sunset Mode">Sunset</button>
+          <button onclick="applyPresetTheme('ocean')" title="Ocean Mode">Ocean</button>
+          <button onclick="applyPresetTheme('forest')" title="Forest Mode">Forest</button>
         </div>
       </div>
       <div id="result" class="mood-result" style="display: none;">
@@ -1879,6 +1882,9 @@
           </button>
           <button onclick="shareTheme()" class="action-button">
             <i class="fas fa-share-alt"></i> Share
+          </button>
+          <button onclick="showThemeHistory()" class="action-button">
+            <i class="fas fa-history"></i> History
           </button>
         </div>
       </div>
@@ -2235,6 +2241,22 @@
           energetic: {
             words: ['energetic', 'pumped', 'hyper', 'vibrant', 'dynamic', 'lively', 'spirited', 'vigorous', 'active', 'animated', 'bouncy', 'zippy', 'peppy', 'bubbly', 'effervescent', 'charged', 'electric', 'motivated', 'driven', 'ambitious', 'determined'],
             weight: 1
+          },
+          excited: {
+            words: ['excited', 'thrilled', 'pumped', 'stoked', 'hyped', 'ecstatic', 'elated', 'overjoyed', 'euphoric', 'jubilant', 'exhilarated', 'enthusiastic', 'passionate', 'fired up', 'amped', 'buzzed', 'psyched', 'stoked', 'wired', 'charged up'],
+            weight: 1
+          },
+          peaceful: {
+            words: ['peaceful', 'serene', 'tranquil', 'quiet', 'gentle', 'soft', 'mild', 'soothing', 'calming', 'restful', 'harmonious', 'balanced', 'centered', 'grounded', 'stable', 'steady', 'composed', 'collected', 'mindful', 'present'],
+            weight: 1
+          },
+          focused: {
+            words: ['focused', 'concentrated', 'attentive', 'alert', 'sharp', 'clear', 'precise', 'determined', 'resolute', 'single-minded', 'dedicated', 'committed', 'disciplined', 'organized', 'systematic', 'methodical', 'analytical', 'logical', 'rational'],
+            weight: 1
+          },
+          playful: {
+            words: ['playful', 'fun', 'silly', 'goofy', 'whimsical', 'lighthearted', 'cheerful', 'merry', 'jovial', 'amusing', 'entertaining', 'delightful', 'charming', 'cute', 'adorable', 'sweet', 'lovely', 'pleasant', 'enjoyable', 'entertaining'],
+            weight: 1
           }
         };
 
@@ -2256,7 +2278,6 @@
         for (let i = 0; i < words.length; i++) {
           const word = words[i];
           const prevWord = i > 0 ? words[i - 1] : '';
-          // const nextWord = i < words.length - 1 ? words[i + 1] : ''; // nextWord not currently used but good for future expansion
 
           // Check for emotion words
           Object.entries(this.emotionWords).forEach(([emotion, data]) => {
@@ -2292,7 +2313,6 @@
 
         let confidence = 0;
         // Calculate confidence based on matches and text length
-        // Improved confidence calculation to be more robust
         if (totalMatches > 0) {
           // Base confidence from the proportion of emotion words
           confidence = totalMatches / words.length; 
@@ -2326,6 +2346,7 @@
 
     const moodAnalyzer = new MoodAnalyzer();
 
+    // Define themes first
     const themes = {
       happy: {
         name: "Sunshine",
@@ -2487,8 +2508,386 @@
           '--card-border': '#2a2a2f',
           '--hover-bg': '#2a2a2f'
         }
+      },
+      excited: {
+        name: "Vibrant",
+        light: {
+          '--bg': '#fff8e1',
+          '--text': '#e65100',
+          '--accent': '#ff6f00',
+          '--secondary': '#ff8f00',
+          '--muted': '#f57c00',
+          '--card-bg': '#ffffff',
+          '--card-border': '#ffe0b2',
+          '--hover-bg': '#fff3e0'
+        },
+        dark: {
+          '--bg': '#1a0d0f',
+          '--text': '#ffeb3b',
+          '--accent': '#ff9800',
+          '--secondary': '#ffc107',
+          '--muted': '#ffb74d',
+          '--card-bg': '#2d1a1f',
+          '--card-border': '#4d2a2f',
+          '--hover-bg': '#3d3a3f'
+        }
+      },
+      peaceful: {
+        name: "Serenity",
+        light: {
+          '--bg': '#e8f5e8',
+          '--text': '#2e7d32',
+          '--accent': '#4caf50',
+          '--secondary': '#66bb6a',
+          '--muted': '#388e3c',
+          '--card-bg': '#ffffff',
+          '--card-border': '#c8e6c9',
+          '--hover-bg': '#f1f8e9'
+        },
+        dark: {
+          '--bg': '#0d1f0f',
+          '--text': '#a5d6a7',
+          '--accent': '#66bb6a',
+          '--secondary': '#4caf50',
+          '--muted': '#81c784',
+          '--card-bg': '#1b3820',
+          '--card-border': '#2a4a2a',
+          '--hover-bg': '#2a5a2a'
+        }
+      },
+      focused: {
+        name: "Deep Focus",
+        light: {
+          '--bg': '#f5f5f5',
+          '--text': '#212121',
+          '--accent': '#1976d2',
+          '--secondary': '#2196f3',
+          '--muted': '#757575',
+          '--card-bg': '#ffffff',
+          '--card-border': '#e0e0e0',
+          '--hover-bg': '#fafafa'
+        },
+        dark: {
+          '--bg': '#0a0a0a',
+          '--text': '#e0e0e0',
+          '--accent': '#42a5f5',
+          '--secondary': '#2196f3',
+          '--muted': '#9e9e9e',
+          '--card-bg': '#1a1a1a',
+          '--card-border': '#2a2a2a',
+          '--hover-bg': '#2a2a2a'
+        }
+      },
+      playful: {
+        name: "Playful",
+        light: {
+          '--bg': '#fce4ec',
+          '--text': '#c2185b',
+          '--accent': '#e91e63',
+          '--secondary': '#f06292',
+          '--muted': '#ad1457',
+          '--card-bg': '#ffffff',
+          '--card-border': '#f8bbd9',
+          '--hover-bg': '#f3e5f5'
+        },
+        dark: {
+          '--bg': '#1a0d1f',
+          '--text': '#f8bbd9',
+          '--accent': '#e91e63',
+          '--secondary': '#f06292',
+          '--muted': '#ba68c8',
+          '--card-bg': '#2d1b35',
+          '--card-border': '#3d2a45',
+          '--hover-bg': '#4d3a55'
+        }
       }
     };
+
+    // Define preset themes
+    const presetThemes = {
+      focus: {
+        name: "Focus Mode",
+        light: {
+          '--bg': '#f8f9fa',
+          '--text': '#2d3436',
+          '--accent': '#0984e3',
+          '--secondary': '#74b9ff',
+          '--muted': '#dfe6e9',
+          '--card-bg': '#ffffff',
+          '--card-border': '#dfe6e9',
+          '--hover-bg': '#f1f2f6'
+        },
+        dark: {
+          '--bg': '#2d3436',
+          '--text': '#f5f6fa',
+          '--accent': '#0984e3',
+          '--secondary': '#74b9ff',
+          '--muted': '#636e72',
+          '--card-bg': '#353b48',
+          '--card-border': '#636e72',
+          '--hover-bg': '#2f3640'
+        }
+      },
+      relax: {
+        name: "Relax Mode",
+        light: {
+          '--bg': '#f1f8e9',
+          '--text': '#1b5e20',
+          '--accent': '#388e3c',
+          '--secondary': '#4caf50',
+          '--muted': '#2e7d32',
+          '--card-bg': '#ffffff',
+          '--card-border': '#c8e6c9',
+          '--hover-bg': '#e8f5e8'
+        },
+        dark: {
+          '--bg': '#0d1f0f',
+          '--text': '#c8e6c9',
+          '--accent': '#66bb6a',
+          '--secondary': '#4caf50',
+          '--muted': '#81c784',
+          '--card-bg': '#1b3820',
+          '--card-border': '#2a4a2a',
+          '--hover-bg': '#3a5a3a'
+        }
+      },
+      creative: {
+        name: "Creative Mode",
+        light: {
+          '--bg': '#fff3e0',
+          '--text': '#e65100',
+          '--accent': '#ff6f00',
+          '--secondary': '#ff8f00',
+          '--muted': '#f57c00',
+          '--card-bg': '#ffffff',
+          '--card-border': '#ffe0b2',
+          '--hover-bg': '#fff8e1'
+        },
+        dark: {
+          '--bg': '#1a0d1f',
+          '--text': '#e1bee7',
+          '--accent': '#ab47bc',
+          '--secondary': '#9c27b0',
+          '--muted': '#ba68c8',
+          '--card-bg': '#2d1b35',
+          '--card-border': '#3d2a45',
+          '--hover-bg': '#4d3a55'
+        }
+      },
+      sunset: {
+        name: "Sunset Mode",
+        light: {
+          '--bg': '#fff8e1',
+          '--text': '#e65100',
+          '--accent': '#ff6f00',
+          '--secondary': '#ff8f00',
+          '--muted': '#f57c00',
+          '--card-bg': '#ffffff',
+          '--card-border': '#ffe0b2',
+          '--hover-bg': '#fff3e0'
+        },
+        dark: {
+          '--bg': '#1a0d0f',
+          '--text': '#ffeb3b',
+          '--accent': '#ff9800',
+          '--secondary': '#ffc107',
+          '--muted': '#ffb74d',
+          '--card-bg': '#2d1a1f',
+          '--card-border': '#4d2a2f',
+          '--hover-bg': '#3d3a3f'
+        }
+      },
+      ocean: {
+        name: "Ocean Mode",
+        light: {
+          '--bg': '#e3f2fd',
+          '--text': '#1565c0',
+          '--accent': '#1976d2',
+          '--secondary': '#2196f3',
+          '--muted': '#42a5f5',
+          '--card-bg': '#ffffff',
+          '--card-border': '#bbdefb',
+          '--hover-bg': '#f3e5f5'
+        },
+        dark: {
+          '--bg': '#0d1421',
+          '--text': '#bbdefb',
+          '--accent': '#42a5f5',
+          '--secondary': '#2196f3',
+          '--muted': '#7986cb',
+          '--card-bg': '#162938',
+          '--card-border': '#1e3a4f',
+          '--hover-bg': '#2a4a6a'
+        }
+      },
+      forest: {
+        name: "Forest Mode",
+        light: {
+          '--bg': '#e8f5e8',
+          '--text': '#2e7d32',
+          '--accent': '#4caf50',
+          '--secondary': '#66bb6a',
+          '--muted': '#388e3c',
+          '--card-bg': '#ffffff',
+          '--card-border': '#c8e6c9',
+          '--hover-bg': '#f1f8e9'
+        },
+        dark: {
+          '--bg': '#0d1f0f',
+          '--text': '#a5d6a7',
+          '--accent': '#66bb6a',
+          '--secondary': '#4caf50',
+          '--muted': '#81c784',
+          '--card-bg': '#1b3820',
+          '--card-border': '#2a4a2a',
+          '--hover-bg': '#2a5a2a'
+        }
+      }
+    };
+
+    // User tracking and theme rotation system
+    class ThemeManager {
+      constructor() {
+        this.userId = this.getOrCreateUserId();
+        this.usedThemes = this.getUsedThemes();
+        this.themeRotation = this.initializeThemeRotation();
+      }
+
+      // Generate or retrieve unique user ID
+      getOrCreateUserId() {
+        let userId = localStorage.getItem('themeUserId');
+        if (!userId) {
+          userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+          localStorage.setItem('themeUserId', userId);
+        }
+        return userId;
+      }
+
+      // Get list of themes used by this user
+      getUsedThemes() {
+        const used = localStorage.getItem(`usedThemes_${this.userId}`);
+        return used ? JSON.parse(used) : [];
+      }
+
+      // Save used theme to user's history
+      saveUsedTheme(themeName, moodType) {
+        const themeRecord = {
+          name: themeName,
+          moodType: moodType,
+          timestamp: Date.now()
+        };
+        
+        this.usedThemes.push(themeRecord);
+        
+        // Keep only last 20 themes to prevent localStorage bloat
+        if (this.usedThemes.length > 20) {
+          this.usedThemes = this.usedThemes.slice(-20);
+        }
+        
+        localStorage.setItem(`usedThemes_${this.userId}`, JSON.stringify(this.usedThemes));
+      }
+
+      // Initialize theme rotation with all available themes
+      initializeThemeRotation() {
+        const allThemes = Object.keys(themes).filter(key => key !== 'neutral');
+        const presetThemeKeys = Object.keys(presetThemes);
+        
+        return {
+          moodThemes: [...allThemes],
+          presetThemes: [...presetThemeKeys],
+          lastMoodTheme: null,
+          lastPresetTheme: null
+        };
+      }
+
+      // Get next available theme that hasn't been used recently
+      getNextTheme(moodType, themeCategory = 'mood') {
+        if (themeCategory === 'mood') {
+          return this.getNextMoodTheme(moodType);
+        } else {
+          return this.getNextPresetTheme();
+        }
+      }
+
+      // Get next mood theme with rotation logic
+      getNextMoodTheme(moodType) {
+        const availableThemes = this.themeRotation.moodThemes.filter(theme => 
+          theme !== this.themeRotation.lastMoodTheme
+        );
+
+        // If we've used all themes, reset rotation
+        if (availableThemes.length === 0) {
+          this.themeRotation.moodThemes = Object.keys(themes).filter(key => key !== 'neutral');
+          availableThemes.push(...this.themeRotation.moodThemes);
+        }
+
+        // Prefer themes that haven't been used recently
+        const recentlyUsed = this.usedThemes
+          .filter(record => record.timestamp > Date.now() - 24 * 60 * 60 * 1000) // Last 24 hours
+          .map(record => record.name);
+
+        const unusedThemes = availableThemes.filter(theme => 
+          !recentlyUsed.includes(themes[theme].name)
+        );
+
+        // If we have unused themes, use one of those
+        if (unusedThemes.length > 0) {
+          const selectedTheme = unusedThemes[Math.floor(Math.random() * unusedThemes.length)];
+          this.themeRotation.lastMoodTheme = selectedTheme;
+          return selectedTheme;
+        }
+
+        // Otherwise, use any available theme
+        const selectedTheme = availableThemes[Math.floor(Math.random() * availableThemes.length)];
+        this.themeRotation.lastMoodTheme = selectedTheme;
+        return selectedTheme;
+      }
+
+      // Get next preset theme with rotation logic
+      getNextPresetTheme() {
+        const availableThemes = this.themeRotation.presetThemes.filter(theme => 
+          theme !== this.themeRotation.lastPresetTheme
+        );
+
+        if (availableThemes.length === 0) {
+          this.themeRotation.presetThemes = Object.keys(presetThemes);
+          availableThemes.push(...this.themeRotation.presetThemes);
+        }
+
+        const recentlyUsed = this.usedThemes
+          .filter(record => record.timestamp > Date.now() - 24 * 60 * 60 * 1000)
+          .map(record => record.name);
+
+        const unusedThemes = availableThemes.filter(theme => 
+          !recentlyUsed.includes(presetThemes[theme].name)
+        );
+
+        if (unusedThemes.length > 0) {
+          const selectedTheme = unusedThemes[Math.floor(Math.random() * unusedThemes.length)];
+          this.themeRotation.lastPresetTheme = selectedTheme;
+          return selectedTheme;
+        }
+
+        const selectedTheme = availableThemes[Math.floor(Math.random() * availableThemes.length)];
+        this.themeRotation.lastPresetTheme = selectedTheme;
+        return selectedTheme;
+      }
+
+      // Get theme usage statistics
+      getThemeStats() {
+        const stats = {};
+        this.usedThemes.forEach(record => {
+          if (!stats[record.name]) {
+            stats[record.name] = 0;
+          }
+          stats[record.name]++;
+        });
+        return stats;
+      }
+    }
+
+    // Initialize theme manager
+    const themeManager = new ThemeManager();
 
     let currentThemeMode = 'dark'; // Initialize with 'dark' as per your request
 
@@ -2536,12 +2935,12 @@
         applyTheme(themes.neutral[currentThemeMode]);
         const moodText = document.getElementById('moodText');
         if (moodText) {
-            moodText.textContent = 'Please tell me how you\'re feeling to activate the mood theme!';
+            moodText.textContent = 'please tell me how you\'re feeling to set your preferred theme.';
         }
         if (result) result.style.display = 'block';
         if (button) {
             button.disabled = false;
-            button.textContent = '✨ Analyze & Transform';
+            button.textContent = 'change your theme';
         }
         const confidenceFill = document.getElementById('confidenceFill');
         const confidenceText = document.getElementById('confidenceText');
@@ -2553,7 +2952,7 @@
       // Show loading state
       if (button) {
           button.disabled = true;
-          button.textContent = '🧠 Analyzing...';
+          button.textContent = 'Analyzing...';
       }
       if (result) result.style.display = 'none';
 
@@ -2562,8 +2961,10 @@
 
       try {
         const analysis = moodAnalyzer.analyzeMood(input);
-        // Access the correct theme object based on currentThemeMode
-        const themeToApply = themes[analysis.mood][currentThemeMode] || themes.neutral[currentThemeMode];
+        
+        // For now, use direct theme selection to get basic functionality working
+        const selectedThemeKey = analysis.mood;
+        const themeToApply = themes[selectedThemeKey] ? themes[selectedThemeKey][currentThemeMode] : themes.neutral[currentThemeMode];
         
         // Display results
         if (result) result.style.display = 'block';
@@ -2571,7 +2972,7 @@
         if (moodText) {
             moodText.innerHTML = `
               <strong>Detected Mood:</strong> ${analysis.mood.charAt(0).toUpperCase() + analysis.mood.slice(1)} 
-              <span style="color: var(--secondary);">(${themes[analysis.mood].name})</span>
+              <span style="color: var(--secondary);">(${themes[selectedThemeKey] ? themes[selectedThemeKey].name : 'Neutral'})</span>
             `;
         }
         
@@ -2842,83 +3243,13 @@
       });
     });
 
-    // Add new theme presets
-    const presetThemes = {
-      focus: {
-        name: "Focus Mode",
-        light: {
-          '--bg': '#f8f9fa',
-          '--text': '#2d3436',
-          '--accent': '#0984e3',
-          '--secondary': '#74b9ff',
-          '--muted': '#dfe6e9',
-          '--card-bg': '#ffffff',
-          '--card-border': '#dfe6e9',
-          '--hover-bg': '#f1f2f6'
-        },
-        dark: {
-          '--bg': '#2d3436',
-          '--text': '#f5f6fa',
-          '--accent': '#0984e3',
-          '--secondary': '#74b9ff',
-          '--muted': '#636e72',
-          '--card-bg': '#353b48',
-          '--card-border': '#636e72',
-          '--hover-bg': '#2f3640'
-        }
-      },
-      relax: {
-        name: "Relax Mode",
-        light: {
-          '--bg': '#f1f8e9',
-          '--text': '#1b5e20',
-          '--accent': '#388e3c',
-          '--secondary': '#4caf50',
-          '--muted': '#2e7d32',
-          '--card-bg': '#ffffff',
-          '--card-border': '#c8e6c9',
-          '--hover-bg': '#e8f5e8'
-        },
-        dark: {
-          '--bg': '#0d1f0f',
-          '--text': '#c8e6c9',
-          '--accent': '#66bb6a',
-          '--secondary': '#4caf50',
-          '--muted': '#81c784',
-          '--card-bg': '#1b3820',
-          '--card-border': '#2a4a2a',
-          '--hover-bg': '#3a5a3a'
-        }
-      },
-      creative: {
-        name: "Creative Mode",
-        light: {
-          '--bg': '#fff3e0',
-          '--text': '#e65100',
-          '--accent': '#ff6f00',
-          '--secondary': '#ff8f00',
-          '--muted': '#f57c00',
-          '--card-bg': '#ffffff',
-          '--card-border': '#ffe0b2',
-          '--hover-bg': '#fff8e1'
-        },
-        dark: {
-          '--bg': '#1a0d1f',
-          '--text': '#e1bee7',
-          '--accent': '#ab47bc',
-          '--secondary': '#9c27b0',
-          '--muted': '#ba68c8',
-          '--card-bg': '#2d1b35',
-          '--card-border': '#3d2a45',
-          '--hover-bg': '#4d3a55'
-        }
-      }
-    };
-
+    // Preset themes are already defined above - removing duplicate declaration
     function applyPresetTheme(preset) {
+      // For now, use direct preset selection to get basic functionality working
       const theme = presetThemes[preset];
+      
       if (theme) {
-        const mode = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+        const mode = currentThemeMode;
         applyTheme(theme[mode]);
         
         // Update UI
@@ -2991,6 +3322,67 @@
           moodText.innerHTML += '<br><span style="color: var(--accent);">Theme link copied to clipboard!</span>';
         }
       });
+    }
+
+    // Theme history management functions
+    function showThemeHistory() {
+      const themeStats = themeManager.getThemeStats();
+      const usedThemes = themeManager.usedThemes;
+      
+      let historyHTML = '<div style="margin-top: 1rem; padding: 1rem; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px;">';
+      historyHTML += '<h4 style="margin-bottom: 1rem; color: var(--text);">Your Theme History</h4>';
+      
+      if (Object.keys(themeStats).length === 0) {
+        historyHTML += '<p style="color: var(--muted);">No themes used yet. Start exploring!</p>';
+      } else {
+        historyHTML += '<div style="margin-bottom: 1rem;">';
+        historyHTML += '<h5 style="color: var(--text); margin-bottom: 0.5rem;">Theme Usage Count:</h5>';
+        Object.entries(themeStats).forEach(([themeName, count]) => {
+          historyHTML += `<div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+            <span style="color: var(--text);">${themeName}</span>
+            <span style="color: var(--accent); font-weight: 500;">${count} times</span>
+          </div>`;
+        });
+        historyHTML += '</div>';
+        
+        historyHTML += '<div>';
+        historyHTML += '<h5 style="color: var(--text); margin-bottom: 0.5rem;">Recent Activity:</h5>';
+        const recentThemes = usedThemes.slice(-5).reverse(); // Show last 5 themes
+        recentThemes.forEach(record => {
+          const date = new Date(record.timestamp).toLocaleDateString();
+          const time = new Date(record.timestamp).toLocaleTimeString();
+          historyHTML += `<div style="margin-bottom: 0.25rem; font-size: 0.9rem;">
+            <span style="color: var(--text);">${record.name}</span>
+            <span style="color: var(--muted); margin-left: 0.5rem;">(${record.moodType})</span>
+            <span style="color: var(--muted); margin-left: 0.5rem; font-size: 0.8rem;">${date} ${time}</span>
+          </div>`;
+        });
+        historyHTML += '</div>';
+      }
+      
+      historyHTML += '<div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--card-border);">';
+      historyHTML += '<button onclick="resetThemeHistory()" style="background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem;">Reset History</button>';
+      historyHTML += '</div>';
+      historyHTML += '</div>';
+      
+      const moodText = document.getElementById('moodText');
+      if (moodText) {
+        moodText.innerHTML += historyHTML;
+      }
+    }
+
+    function resetThemeHistory() {
+      if (confirm('Are you sure you want to reset your theme history? This will allow themes to repeat again.')) {
+        themeManager.usedThemes = [];
+        localStorage.removeItem(`usedThemes_${themeManager.userId}`);
+        themeManager.themeRotation = null; // Reset rotation
+        themeManager.initializeThemeRotation();
+        
+        const moodText = document.getElementById('moodText');
+        if (moodText) {
+          moodText.innerHTML = '<span style="color: var(--accent);">Theme history reset successfully! You can now experience all themes again.</span>';
+        }
+      }
     }
   </script>
 </body>
