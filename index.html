@@ -51,6 +51,16 @@
       background-image: none;
     }
 
+    /* Invert GitHub icon to white in dark mode */
+    img[src="github-icon.png"] {
+      filter: invert(1);
+      transition: filter 0.35s ease;
+    }
+
+    body.light-mode img[src="github-icon.png"] {
+      filter: invert(0);
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -1123,7 +1133,7 @@
       color: var(--bg);
     }
 
-    /* Modern Sun Icon Theme Button */
+    /* Modern Sun Icon Theme Button - Hidden until hover */
     .theme-btn {
       position: fixed;
       bottom: 2rem;
@@ -1138,6 +1148,9 @@
       align-items: center;
       justify-content: center;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      /* Hidden by default */
+      opacity: 0.15;
+      transform: scale(0.8);
       /* Light mode default: dark button showing dark theme preview */
       background: linear-gradient(145deg, #2a1836, #1a0f22);
       box-shadow:
@@ -1148,7 +1161,7 @@
     .theme-btn svg {
       width: 24px;
       height: 24px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       /* Light mode: dark icon */
       stroke: #3d2850;
       fill: none;
@@ -1157,21 +1170,41 @@
       stroke-linejoin: round;
     }
 
-    /* Hover state */
+    /* Spiral opening animation keyframes */
+    @keyframes spiralOpen {
+      0% {
+        transform: rotate(0deg) scale(0.5);
+        opacity: 0;
+      }
+
+      50% {
+        transform: rotate(180deg) scale(1.1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: rotate(360deg) scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Hover state - reveal button */
     .theme-btn:hover {
-      transform: scale(1.1);
+      opacity: 1;
+      transform: scale(1);
       box-shadow:
         0 6px 25px rgba(0, 0, 0, 0.4),
         inset 0 1px 1px rgba(255, 255, 255, 0.08);
     }
 
     .theme-btn:hover svg {
-      transform: rotate(15deg);
+      animation: spiralOpen 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
     /* Active/click state */
     .theme-btn:active {
       transform: scale(0.95);
+      opacity: 1;
     }
 
     /* Dark mode: light button showing light theme preview */
@@ -1199,6 +1232,8 @@
         right: 1.5rem;
         width: 44px;
         height: 44px;
+        /* Slightly more visible on mobile for touch */
+        opacity: 0.25;
       }
 
       .theme-btn svg {
@@ -1767,8 +1802,19 @@
       <h2>about me</h2>
       <div class="about-content">
         <div class="about-text">
-          <p>hey there! i'm a mechatronics engineering student who loves building cool stuff. when i'm not coding or
-            tinkering with circuits, you'll find me exploring new technologies and working on personal projects.</p>
+          <p>I'm a Mechatronics and Robotics Engineering student focused on building reliable, production-minded
+            autonomous and embedded systems. My interests span robotics integration, perception pipelines, and software
+            that has to work under real-world constraints, not just in controlled environments.</p>
+          <p>I approach projects and internships from a systems perspective, overseeing interactions between components,
+            defining and maintaining interfaces, managing version control history, and actively reducing regression risk
+            as systems evolve. I care as much about how parts fit together and scale as I do about individual algorithms
+            or features.</p>
+          <p>I've applied this mindset through hands-on robotics development in coursework, as well as contributions to
+            open-source autonomous driving software, where code quality, review standards, and long-term maintainability
+            matter the most. I enjoy working in environments that treat engineering as an end to end discipline, from
+            testing and design to deployment and iteration.</p>
+          <p>Long term, I'm aiming to work on real-world autonomous systems where performance, safety, and reliability
+            are non-negotiable.</p>
           <div class="tech-stack">
             <h3>tech stack</h3>
             <div class="tech-grid">
@@ -1777,20 +1823,20 @@
                 <span>python</span>
               </div>
               <div class="tech-item">
-                <i class="fab fa-js"></i>
-                <span>javascript</span>
+                <i class="fas fa-microchip"></i>
+                <span>CUDA</span>
+              </div>
+              <div class="tech-item">
+                <i class="fas fa-code"></i>
+                <span>Julia</span>
+              </div>
+              <div class="tech-item">
+                <i class="fas fa-cogs"></i>
+                <span>C/C++</span>
               </div>
               <div class="tech-item">
                 <i class="fab fa-react"></i>
                 <span>react</span>
-              </div>
-              <div class="tech-item">
-                <i class="fab fa-node-js"></i>
-                <span>node.js</span>
-              </div>
-              <div class="tech-item">
-                <i class="fas fa-microchip"></i>
-                <span>arduino</span>
               </div>
               <div class="tech-item">
                 <i class="fas fa-robot"></i>
