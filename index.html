@@ -1468,9 +1468,10 @@
       /* Hamburger Menu - Top Right */
       .mobile-nav-fabs {
         position: fixed;
-        top: 1.75rem;
-        /* Pushed down to align with logo center */
-        right: 1.5rem;
+        top: 3rem;
+        /* Significantly lower to clear status bar/notch */
+        right: 2rem;
+        /* More breathing room from edge */
         bottom: auto;
         left: auto;
         flex-direction: column;
@@ -1502,13 +1503,23 @@
         /* Removed !important so open state works */
       }
 
-      /* Icons */
+      /* SVG Icons - Force stroke contrast */
       .mobile-nav-fabs .main-fab svg,
-      .theme-btn svg {
+      .mobile-nav-fabs .section-fab svg,
+      .theme-btn svg,
+      .contact-form button svg {
         width: 28px;
         height: 28px;
         stroke-width: 2;
         stroke: var(--text) !important;
+        fill: none !important;
+        /* Ensure no fill interferes */
+      }
+
+      /* Font Icons (Reach Out section) - Force text color */
+      .contact-card i,
+      .contact-card .icon {
+        color: var(--text) !important;
       }
 
       /* Dropdown Menu Items (Slide Down) */
