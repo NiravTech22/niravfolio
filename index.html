@@ -286,8 +286,7 @@
       background:
         linear-gradient(145deg,
           rgba(255, 255, 255, 0.08),
-          rgba(255, 255, 255, 0.02)
-        ),
+          rgba(255, 255, 255, 0.02)),
         radial-gradient(closest-side at 22% 18%, rgba(var(--accent-rgb), 0.14), transparent 62%),
         radial-gradient(closest-side at 85% 85%, rgba(var(--accent-rgb), 0.08), transparent 58%);
       box-shadow:
@@ -306,8 +305,7 @@
       background:
         linear-gradient(145deg,
           rgba(255, 255, 255, 0.78),
-          rgba(255, 255, 255, 0.45)
-        ),
+          rgba(255, 255, 255, 0.45)),
         radial-gradient(closest-side at 20% 15%, rgba(var(--accent-rgb), 0.10), transparent 60%),
         radial-gradient(closest-side at 85% 85%, rgba(var(--accent-rgb), 0.07), transparent 55%);
       box-shadow:
@@ -327,15 +325,13 @@
       pointer-events: none;
       border-radius: inherit;
       opacity: 0.22;
-      background: linear-gradient(
-        120deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.00) 32%,
-        rgba(255, 255, 255, 0.22) 45%,
-        rgba(255, 255, 255, 0.08) 55%,
-        rgba(255, 255, 255, 0.00) 68%,
-        transparent 100%
-      );
+      background: linear-gradient(120deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.00) 32%,
+          rgba(255, 255, 255, 0.22) 45%,
+          rgba(255, 255, 255, 0.08) 55%,
+          rgba(255, 255, 255, 0.00) 68%,
+          transparent 100%);
       transform: translateX(-120%);
       mix-blend-mode: overlay;
       filter: blur(0.2px);
@@ -646,15 +642,13 @@
       inset: 0;
       pointer-events: none;
       opacity: 0.18;
-      background: linear-gradient(
-        120deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.00) 34%,
-        rgba(255, 255, 255, 0.18) 48%,
-        rgba(255, 255, 255, 0.06) 56%,
-        rgba(255, 255, 255, 0.00) 70%,
-        transparent 100%
-      );
+      background: linear-gradient(120deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.00) 34%,
+          rgba(255, 255, 255, 0.18) 48%,
+          rgba(255, 255, 255, 0.06) 56%,
+          rgba(255, 255, 255, 0.00) 70%,
+          transparent 100%);
       transform: translateX(-120%);
       mix-blend-mode: overlay;
       animation: glass-sheen 7.5s ease-in-out infinite;
@@ -745,11 +739,76 @@
       letter-spacing: -1px;
     }
 
-    /* Ultra Minimalist Section Layout */
+    /* Section Layout with Smooth Transitions */
     section {
-      padding: 8rem 4rem;
+      padding: 5rem 4rem;
       max-width: 1200px;
       margin: auto;
+      position: relative;
+    }
+
+    /* Section divider - subtle gradient line */
+    section:not(:first-of-type)::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(80%, 600px);
+      height: 1px;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(var(--accent-rgb), 0.3) 20%,
+          rgba(var(--accent-rgb), 0.5) 50%,
+          rgba(var(--accent-rgb), 0.3) 80%,
+          transparent);
+    }
+
+    /* Fade-in animation for sections */
+    section {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: sectionFadeIn 0.6s ease forwards;
+    }
+
+    section:nth-of-type(1) {
+      animation-delay: 0.1s;
+    }
+
+    section:nth-of-type(2) {
+      animation-delay: 0.15s;
+    }
+
+    section:nth-of-type(3) {
+      animation-delay: 0.2s;
+    }
+
+    section:nth-of-type(4) {
+      animation-delay: 0.25s;
+    }
+
+    section:nth-of-type(5) {
+      animation-delay: 0.3s;
+    }
+
+    section:nth-of-type(6) {
+      animation-delay: 0.35s;
+    }
+
+    section:nth-of-type(7) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes sectionFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Hero section - no divider */
+    section.hero::before {
+      display: none;
     }
 
     /* Ultra Minimalist Footer */
@@ -778,11 +837,16 @@
       color: var(--text);
     }
 
-    /* Ultra Minimalist Mobile Navigation */
+    /* Mobile Navigation */
     @media (max-width: 768px) {
-      header {
-        padding: 1.5rem;
+      section {
+        padding: 3rem 1.5rem;
       }
+
+      header {
+        padding: 1rem 1.5rem;
+      }
+
 
       .hero h1 {
         font-size: 2.2rem;
@@ -992,21 +1056,15 @@
       pointer-events: auto;
     }
 
-    .mobile-nav-fabs.open #fabMLResearch {
+    .mobile-nav-fabs.open #fabAbout {
       opacity: 1;
       transform: translateY(-120px);
       pointer-events: auto;
     }
 
-    .mobile-nav-fabs.open #fabAbout {
-      opacity: 1;
-      transform: translateY(-180px);
-      pointer-events: auto;
-    }
-
     .mobile-nav-fabs.open #fabProjects {
       opacity: 1;
-      transform: translateY(-240px);
+      transform: translateY(-180px);
       pointer-events: auto;
     }
 
@@ -1034,16 +1092,12 @@
         transform: translateY(-55px);
       }
 
-      .mobile-nav-fabs.open #fabMLResearch {
+      .mobile-nav-fabs.open #fabAbout {
         transform: translateY(-110px);
       }
 
-      .mobile-nav-fabs.open #fabAbout {
-        transform: translateY(-165px);
-      }
-
       .mobile-nav-fabs.open #fabProjects {
-        transform: translateY(-220px);
+        transform: translateY(-165px);
       }
     }
 
@@ -1066,6 +1120,90 @@
     .contact-form button:hover {
       background: var(--text);
       color: var(--bg);
+    }
+
+    /* Modern Sun Icon Theme Button */
+    .theme-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 1000;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      /* Light mode default: dark button showing dark theme preview */
+      background: linear-gradient(145deg, #2a1836, #1a0f22);
+      box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .theme-btn svg {
+      width: 24px;
+      height: 24px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      /* Light mode: dark icon */
+      stroke: #3d2850;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Hover state */
+    .theme-btn:hover {
+      transform: scale(1.1);
+      box-shadow:
+        0 6px 25px rgba(0, 0, 0, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .theme-btn:hover svg {
+      transform: rotate(15deg);
+    }
+
+    /* Active/click state */
+    .theme-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Dark mode: light button showing light theme preview */
+    body:not(.light-mode) .theme-btn {
+      background: linear-gradient(145deg, #f8f0ff, #e8dcf5);
+      box-shadow:
+        0 4px 20px rgba(160, 130, 200, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8);
+    }
+
+    body:not(.light-mode) .theme-btn svg {
+      stroke: #8b6aad;
+    }
+
+    body:not(.light-mode) .theme-btn:hover {
+      box-shadow:
+        0 6px 25px rgba(160, 130, 200, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.9);
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .theme-btn {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 44px;
+        height: 44px;
+      }
+
+      .theme-btn svg {
+        width: 22px;
+        height: 22px;
+      }
     }
 
     /* Update card styles to ensure contrast */
@@ -1508,7 +1646,7 @@
   </style>
 </head>
 
-<body>
+<body class="light-mode">
   <canvas id="canvas-bg"></canvas>
   <header>
     <h2>nirav sawant</h2>
@@ -1516,15 +1654,24 @@
       <a href="#projects">projects</a>
       <a href="#about">about me</a>
       <a href="#contact">reach out!</a>
-      <a href="#ml-research">ml research</a>
       <a href="#tech-blog">my thoughts</a>
-      <button id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme"
-        style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:0.8rem; padding:0.5rem; transition:all 0.3s; opacity:0.6;"
-        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
-        <i class="fas fa-moon" id="themeIcon"></i>
-      </button>
     </nav>
   </header>
+
+  <!-- Floating Theme Button -->
+  <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5" />
+      <line x1="12" y1="1" x2="12" y2="3" />
+      <line x1="12" y1="21" x2="12" y2="23" />
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+      <line x1="1" y1="12" x2="3" y2="12" />
+      <line x1="21" y1="12" x2="23" y2="12" />
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+    </svg>
+  </button>
 
   <div class="mobile-nav-fabs">
     <button id="mainMobileNavFab" class="main-fab">
@@ -1542,13 +1689,6 @@
       <svg viewBox="0 0 24 24">
         <path d="M12 12a4 4 0 100-8 4 4 0 000 8z" />
         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-      </svg>
-    </a>
-    <a href="#ml-research" class="section-fab" id="fabMLResearch">
-      <svg viewBox="0 0 24 24">
-        <path
-          d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-        <circle cx="12" cy="12" r="3" />
       </svg>
     </a>
     <a href="#contact" class="section-fab" id="fabContact">
@@ -1711,77 +1851,66 @@
       <div class="projects-grid">
         <div class="project-card">
           <div class="project-content">
-            <h3>Flowguard</h3>
-            <p>A robust, independent safety supervisor for robotics. Intercepts and negates unsafe actions in real-time
-              using a modular policy engine. Ensures ISO-compliant operation for autonomous systems.</p>
+            <h3>StudentIO-v2</h3>
+            <p>StudentIO is an adaptive learning system that treats instruction as a closed loop perception action
+              problem. It infers learner state from interaction signals and adjusts explanation strategies over time for
+              robust, personalized learning.</p>
             <div class="project-tech">
               <span>Python</span>
-              <span>FastAPI</span>
+              <span>Machine Learning</span>
+              <span>Adaptive Systems</span>
+              <span>Education Tech</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/NiravTech22/StudentIO-v2" target="_blank" class="project-link">
+                <i class="fab fa-github" style="margin-right: 0.5rem;"></i>
+                <span>GitHub</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-content">
+            <h3>Invariant</h3>
+            <p>Invariant explores a missing layer in modern robotics: the governance of complex systems using machine
+              learning informed by control theory. Its purpose is to treat workflows themselves as dynamic systems in
+              order to make robotics development more predictable, reproducible, and trustworthy.</p>
+            <div class="project-tech">
+              <span>Python</span>
+              <span>Control Theory</span>
+              <span>ML Governance</span>
               <span>Robotics</span>
-              <span>Safety Critical</span>
             </div>
             <div class="project-links">
-              <a href="#" class="project-link">
-                <span>view architecture</span>
-                <span class="link-arrow">→</span>
+              <a href="https://github.com/NiravTech22/Invariant" target="_blank" class="project-link">
+                <i class="fab fa-github" style="margin-right: 0.5rem;"></i>
+                <span>GitHub</span>
               </a>
             </div>
           </div>
         </div>
 
-        <!-- Add more project cards as needed -->
-      </div>
-
-      <div class="projects-grid">
         <div class="project-card">
           <div class="project-content">
-            <h3>Autoware Contribution</h3>
-            <p>Contributing to the world's leading open-source software for autonomous driving. Debugged and enhanced
-              the `autoware_shadow_recorder` to improve data replay and simulation fidelity.</p>
+            <h3>motion-aware-perception-model</h3>
+            <p>CUDA accelerated machine learning perception model for robotics applications. Leverages GPU parallelism
+              for real-time sensor fusion and object detection in dynamic environments.</p>
             <div class="project-tech">
+              <span>CUDA</span>
               <span>C++</span>
-              <span>ROS 2</span>
-              <span>Autoware</span>
-              <span>Open Source</span>
+              <span>PyTorch</span>
+              <span>Robotics Perception</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/autowarefoundation/autoware" target="_blank" class="project-link">
-                <span>view contribution</span>
-                <span class="link-arrow">→</span>
+              <a href="https://github.com/NiravTech22/motion-aware-perception-model" target="_blank"
+                class="project-link">
+                <i class="fab fa-github" style="margin-right: 0.5rem;"></i>
+                <span>GitHub</span>
               </a>
             </div>
           </div>
         </div>
-
-        <!-- Add more project cards as needed -->
-      </div>
-
-      <div class="projects-grid">
-        <div class="project-card">
-          <div class="project-content">
-            <img src="Screenshot 2025-06-20 095438.png" alt="PromptGen AI Screenshot"
-              style="display:block;max-width:220px;height:auto;margin:0 auto 1rem auto;border-radius:8px;object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,0.08);" />
-            <h3>PromptGen AI</h3>
-            <p>A browser extension that helps users communicate ideas to AI models by condensing their intent into 4 key
-              words, which are then expanded into a detailed prompt for use in any AI system.</p>
-            <div class="project-tech">
-              <span>javascript</span>
-              <span>chrome extension</span>
-              <span>openai</span>
-            </div>
-            <div class="project-links">
-              <a href="#" class="project-link">
-                <span>view code</span>
-                <span class="link-arrow">→</span>
-              </a>
-              <a href="#" class="project-link">
-                <span>live demo</span>
-                <span class="link-arrow">→</span>
-              </a>
-            </div>
-          </div>
-        </div>
-        <!-- Add more project cards as needed -->
       </div>
     </div>
   </section>
@@ -1789,68 +1918,40 @@
   <section id="contact">
     <h2 class="section-title">Contact Me</h2>
     <div class="contact-form">
-      <form action="#">
-        <input type="text" placeholder="Your Name" required>
-        <input type="email" placeholder="Your Email" required>
-        <textarea placeholder="Your Message" rows="6" required></textarea>
+      <form action="https://formspree.io/f/niravsawant22@gmail.com" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message" rows="6" required></textarea>
         <button type="submit">Send Message</button>
       </form>
-    </div>
-  </section>
-
-  <section id="ml-research">
-    <h2 class="section-title">ML Research</h2>
-    <div class="section-grid">
-      <div class="research-card">
-        <h3>Quantum ML</h3>
-        <p>Exploring quantum computing applications in machine learning and optimization problems.</p>
-        <div class="metrics">
-          <div class="metric">
-            <div class="metric-value">3x</div>
-            <div class="metric-label">Speedup</div>
-          </div>
-          <div class="metric">
-            <div class="metric-value">99%</div>
-            <div class="metric-label">Reliability</div>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
   <section id="tech-blog">
     <h2 class="section-title">my thoughts</h2>
     <div class="section-grid">
-      <div class="blog-card">
-        <h3>Why Open-Source AI is Gaining Momentum.</h3>
-        <div class="date">March 15, 2024</div>
-        <p>Exploring best practices for deploying and scaling machine learning models in production environments.</p>
+      <a href="article-studentio.html" class="blog-card" style="text-decoration: none; color: inherit;">
+        <h3>Adaptive Learning Through Closed-Loop Perception</h3>
+        <div class="date">January 2025</div>
+        <p>Exploring how StudentIO reimagines instruction as a perception-action problem, using machine learning to
+          infer learner state and adapt explanation strategies in real-time.</p>
         <div class="tags">
-          <span class="tag">AI</span>
-          <span class="tag">MLOps</span>
-          <span class="tag">DevOps</span>
+          <span class="tag">Machine Learning</span>
+          <span class="tag">Education Tech</span>
+          <span class="tag">Adaptive Systems</span>
         </div>
-      </div>
-      <div class="blog-card">
-        <h3>Modern Web Architecture</h3>
-        <div class="date">March 10, 2024</div>
-        <p>Deep dive into building resilient and performant web applications using modern frameworks and tools.</p>
+      </a>
+      <a href="article-gpu-computing.html" class="blog-card" style="text-decoration: none; color: inherit;">
+        <h3>GPU-Accelerated Computing in Modern AI</h3>
+        <div class="date">January 2025</div>
+        <p>A deep dive into CUDA programming, the GPU computing paradigm, and how parallel processing enables real-time
+          perception in robotics applications.</p>
         <div class="tags">
-          <span class="tag">Web Dev</span>
-          <span class="tag">Architecture</span>
-          <span class="tag">Performance</span>
+          <span class="tag">CUDA</span>
+          <span class="tag">GPU Computing</span>
+          <span class="tag">Deep Learning</span>
         </div>
-      </div>
-      <div class="blog-card">
-        <h3>Cloud Native Development</h3>
-        <div class="date">March 5, 2024</div>
-        <p>Understanding the principles and practices of building applications for the cloud era.</p>
-        <div class="tags">
-          <span class="tag">Cloud</span>
-          <span class="tag">DevOps</span>
-          <span class="tag">Kubernetes</span>
-        </div>
-      </div>
+      </a>
     </div>
   </section>
 
@@ -1860,16 +1961,28 @@
       <div class="contact-card">
         <i class="fas fa-envelope icon"></i>
         <h3>Email</h3>
-        <p> please feel free to reach out to talk about your projects!</p>
-        <a href="mailto: nirav.sawant22@gmail.com"
-          style="color: var(--accent); text-decoration: none;">your.email@example.com</a>
+        <p>please feel free to reach out to talk about your projects!</p>
+        <a href="mailto:niravsawant22@gmail.com"
+          style="color: var(--accent); text-decoration: none;">niravsawant22@gmail.com</a>
       </div>
       <div class="contact-card">
         <i class="fab fa-linkedin icon"></i>
         <h3>LinkedIn</h3>
         <p>let's connect!</p>
-        <a href="https://www.linkedin.com/in/nirav-sawant-11b739300/" target="_blank"
-          style="color: var(--accent); text-decoration: none;">linkedin.com/in/yourprofile</a>
+        <div class="github-window">
+          <div class="github-window__top">
+            <div class="github-window__left">
+              <i class="fab fa-linkedin"></i>
+              <span class="github-window__title">Nirav Sawant</span>
+            </div>
+            <a class="github-window__open" href="https://www.linkedin.com/in/nirav-sawant-11b739300/" target="_blank"
+              rel="noopener noreferrer" aria-label="Open LinkedIn profile">Open</a>
+          </div>
+          <a class="github-window__preview" href="https://www.linkedin.com/in/nirav-sawant-11b739300/" target="_blank"
+            rel="noopener noreferrer" aria-label="Open LinkedIn profile preview">
+            <img src="linkedin-profile-preview.png" alt="LinkedIn profile preview for Nirav Sawant">
+          </a>
+        </div>
       </div>
       <div class="contact-card">
         <i class="fab fa-github icon"></i>
@@ -1881,11 +1994,11 @@
               <i class="fab fa-github"></i>
               <span class="github-window__title">NiravTech22</span>
             </div>
-            <a class="github-window__open" href="https://github.com/NiravTech22" target="_blank" rel="noopener noreferrer"
-              aria-label="Open NiravTech22 GitHub profile">Open</a>
+            <a class="github-window__open" href="https://github.com/NiravTech22" target="_blank"
+              rel="noopener noreferrer" aria-label="Open NiravTech22 GitHub profile">Open</a>
           </div>
-          <a class="github-window__preview" href="https://github.com/NiravTech22" target="_blank" rel="noopener noreferrer"
-            aria-label="Open GitHub profile preview">
+          <a class="github-window__preview" href="https://github.com/NiravTech22" target="_blank"
+            rel="noopener noreferrer" aria-label="Open GitHub profile preview">
             <img src="github-profile-preview.png" alt="GitHub profile preview for NiravTech22">
           </a>
         </div>
@@ -2081,9 +2194,8 @@
     let selectedIndex = 0;
 
     const commands = [
-      { title: 'Go to Projects', subtitle: 'View Flowguard, Autoware...', icon: '<i class="fas fa-code"></i>', action: () => { window.location.href = '#projects'; } },
-      { title: 'View ML Research', subtitle: 'Quantum ML, Optimization...', icon: '<i class="fas fa-brain"></i>', action: () => { window.location.href = '#ml-research'; } },
-      { title: 'Read Blog', subtitle: 'My thoughts on tech...', icon: '<i class="fas fa-rss"></i>', action: () => { window.location.href = '#tech-blog'; } },
+      { title: 'Go to Projects', subtitle: 'View StudentIO, Invariant...', icon: '<i class="fas fa-code"></i>', action: () => { window.location.href = '#projects'; } },
+      { title: 'Read My Thoughts', subtitle: 'Articles on ML and GPU Computing...', icon: '<i class="fas fa-rss"></i>', action: () => { window.location.href = '#tech-blog'; } },
       { title: 'Contact Me', subtitle: 'Send an email or connect...', icon: '<i class="fas fa-envelope"></i>', action: () => { window.location.href = '#contact'; } },
       { title: 'Toggle Theme', subtitle: 'Switch Dark/Light mode', icon: '<i class="fas fa-adjust"></i>', action: () => { toggleTheme(); } },
       { title: 'Copy Email', subtitle: 'nirav.sawant22@gmail.com', icon: '<i class="fas fa-copy"></i>', action: () => { navigator.clipboard.writeText('nirav.sawant22@gmail.com'); alert('Email copied!'); } },
@@ -2153,44 +2265,30 @@
       btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0, 0)'; });
     });
 
-    // 4. Simple Theme Toggle (Light/Dark)
+    // 4. Modern Theme Toggle (Light/Dark)
     function toggleTheme() {
       const body = document.body;
-      const icon = document.getElementById('themeIcon');
       body.classList.toggle('light-mode');
 
       if (body.classList.contains('light-mode')) {
-        if (icon) {
-          icon.classList.remove('fa-moon');
-          icon.classList.add('fa-sun');
-        }
         localStorage.setItem('theme', 'light');
       } else {
-        if (icon) {
-          icon.classList.remove('fa-sun');
-          icon.classList.add('fa-moon');
-        }
         localStorage.setItem('theme', 'dark');
       }
 
       updateCanvasTheme();
     }
 
-    // Check saved theme preference on load
+    // Check saved theme preference on load - DEFAULT TO LIGHT MODE
     document.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('theme');
-      const icon = document.getElementById('themeIcon');
-      if (savedTheme === 'light') {
-        document.body.classList.add('light-mode');
-        if (icon) {
-          icon.classList.remove('fa-moon');
-          icon.classList.add('fa-sun');
-        }
+
+      // Default to light mode if no preference saved
+      if (savedTheme === 'dark') {
+        document.body.classList.remove('light-mode');
       } else {
-        if (icon) {
-          icon.classList.remove('fa-sun');
-          icon.classList.add('fa-moon');
-        }
+        // Light mode is default
+        document.body.classList.add('light-mode');
       }
 
       updateCanvasTheme();

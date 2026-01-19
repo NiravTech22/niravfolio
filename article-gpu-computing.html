@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU-Accelerated Computing in Modern AI | Nirav Sawant</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg: #fff7f5;
+            --text: #2a1036;
+            --accent: #5b2a86;
+            --accent-rgb: 91, 42, 134;
+            --muted: #6b4f74;
+            --card-bg: rgba(255, 255, 255, 0.72);
+            --card-border: rgba(42, 16, 54, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            transition: transform 0.2s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-4px);
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+        }
+
+        .article-header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(var(--accent-rgb), 0.1);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 2.5rem 0 1rem;
+            color: var(--text);
+        }
+
+        .article-content h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 2rem 0 0.75rem;
+            color: var(--accent);
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            opacity: 0.9;
+        }
+
+        .article-content ul {
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            opacity: 0.9;
+        }
+
+        .flowchart {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .flowchart-title {
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--accent);
+        }
+
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .flow-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .flow-box {
+            background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.15), rgba(var(--accent-rgb), 0.05));
+            border: 1px solid rgba(var(--accent-rgb), 0.3);
+            border-radius: 8px;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 400;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .flow-box.primary {
+            background: linear-gradient(135deg, var(--accent), #7b4a9e);
+            color: white;
+            border: none;
+        }
+
+        .flow-box.gpu {
+            background: linear-gradient(135deg, #76b900, #5a8c00);
+            color: white;
+            border: none;
+        }
+
+        .flow-box.memory {
+            background: linear-gradient(135deg, #0066cc, #004d99);
+            color: white;
+            border: none;
+        }
+
+        .flow-arrow {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .flow-arrow.down {
+            transform: rotate(90deg);
+        }
+
+        .flow-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .comparison-table th {
+            background: rgba(var(--accent-rgb), 0.1);
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.1), rgba(var(--accent-rgb), 0.05));
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-style: italic;
+        }
+
+        .code-block {
+            background: #1a1525;
+            color: #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .code-block .keyword {
+            color: #c792ea;
+        }
+
+        .code-block .function {
+            color: #82aaff;
+        }
+
+        .code-block .string {
+            color: #c3e88d;
+        }
+
+        .code-block .comment {
+            color: #676e95;
+        }
+
+        .code-block .decorator {
+            color: #ffcb6b;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--card-border);
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .article-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .article-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .flow-box {
+                min-width: 100px;
+                font-size: 0.75rem;
+                padding: 0.5rem 0.75rem;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <article class="article-container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Portfolio
+        </a>
+
+        <header class="article-header">
+            <h1>GPU-Accelerated Computing in Modern Artificial Intelligence</h1>
+            <div class="article-meta">
+                <span><i class="far fa-calendar"></i> January 2025</span>
+                <span><i class="far fa-clock"></i> 10 min read</span>
+            </div>
+            <div class="tags">
+                <span class="tag">CUDA</span>
+                <span class="tag">GPU Computing</span>
+                <span class="tag">Deep Learning</span>
+                <span class="tag">Robotics</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>
+                The explosion of deep learning over the past decade wasn't just a breakthrough in algorithms—it was
+                fundamentally enabled by <strong>parallel computing hardware</strong>. GPUs, originally designed for
+                rendering graphics, turned out to be extraordinarily well-suited for the matrix operations that
+                underpin neural networks. This article explores how GPU acceleration works, why it matters for AI,
+                and how I've applied these principles in my motion-aware perception model.
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">100x</div>
+                    <div class="stat-label">Speedup vs CPU</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">10,000+</div>
+                    <div class="stat-label">CUDA Cores</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">80GB</div>
+                    <div class="stat-label">HBM Memory</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">~1ms</div>
+                    <div class="stat-label">Inference Latency</div>
+                </div>
+            </div>
+
+            <h2>Why GPUs Excel at AI Workloads</h2>
+
+            <p>
+                The key insight is <strong>parallelism</strong>. While a modern CPU might have 8-16 powerful cores
+                designed for complex sequential tasks, a GPU has thousands of smaller cores optimized for executing
+                the same operation across massive datasets simultaneously.
+            </p>
+
+            <div class="flowchart">
+                <div class="flowchart-title">CPU vs GPU Architecture</div>
+                <div class="flow-diagram">
+                    <div class="flow-row">
+                        <div class="flow-vertical">
+                            <div class="flow-box primary">CPU</div>
+                            <div class="flow-box">8-16 Powerful Cores</div>
+                            <div class="flow-box">Sequential Execution</div>
+                            <div class="flow-box">Complex Logic</div>
+                        </div>
+                        <span style="font-size: 2rem; color: var(--muted);">vs</span>
+                        <div class="flow-vertical">
+                            <div class="flow-box gpu">GPU</div>
+                            <div class="flow-box">10,000+ Simple Cores</div>
+                            <div class="flow-box">Parallel Execution</div>
+                            <div class="flow-box">Matrix Operations</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                Neural network computations are dominated by matrix multiplications—operations where the same
+                calculation is applied independently to millions of numbers. This is exactly what GPUs were
+                built for.
+            </p>
+
+            <h2>The CUDA Programming Model</h2>
+
+            <p>
+                NVIDIA's CUDA platform provides the programming interface for GPU computing. The key concepts are:
+            </p>
+
+            <ul>
+                <li><strong>Kernels:</strong> Functions that run on the GPU, executed by many threads in parallel</li>
+                <li><strong>Thread Blocks:</strong> Groups of threads that can cooperate via shared memory</li>
+                <li><strong>Grid:</strong> The collection of all thread blocks for a kernel launch</li>
+                <li><strong>Memory Hierarchy:</strong> Global, shared, and register memory with different speeds</li>
+            </ul>
+
+            <div class="flowchart">
+                <div class="flowchart-title">CUDA Execution Model</div>
+                <div class="flow-diagram">
+                    <div class="flow-box primary">Host (CPU)</div>
+                    <span class="flow-arrow down">↓</span>
+                    <div class="flow-box">Kernel Launch</div>
+                    <span class="flow-arrow down">↓</span>
+                    <div class="flow-row">
+                        <div class="flow-box gpu">Grid</div>
+                    </div>
+                    <span class="flow-arrow down">↓</span>
+                    <div class="flow-row">
+                        <div class="flow-box">Block 0</div>
+                        <div class="flow-box">Block 1</div>
+                        <div class="flow-box">Block 2</div>
+                        <div class="flow-box">...</div>
+                    </div>
+                    <span class="flow-arrow down">↓</span>
+                    <div class="flow-row">
+                        <div class="flow-box" style="font-size: 0.75rem;">Threads (32 per warp)</div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Application: Motion-Aware Perception</h2>
+
+            <p>
+                In my <strong>motion-aware-perception-model</strong> project, GPU acceleration is essential for
+                real-time robotics applications. The system needs to process sensor data, run neural network
+                inference, and produce outputs fast enough for closed-loop control—typically under 10 milliseconds.
+            </p>
+
+            <h3>The Perception Pipeline</h3>
+
+            <div class="flowchart">
+                <div class="flowchart-title">GPU-Accelerated Perception Pipeline</div>
+                <div class="flow-diagram">
+                    <div class="flow-row">
+                        <div class="flow-box">Sensor Input</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box memory">GPU Memory Transfer</div>
+                    </div>
+                    <span class="flow-arrow down">↓</span>
+                    <div class="flow-row">
+                        <div class="flow-box gpu">Preprocessing Kernel</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box gpu">Feature Extraction</div>
+                    </div>
+                    <span class="flow-arrow down">↓</span>
+                    <div class="flow-row">
+                        <div class="flow-box gpu">Motion Estimation</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box gpu">Object Detection</div>
+                    </div>
+                    <span class="flow-arrow down">↓</span>
+                    <div class="flow-row">
+                        <div class="flow-box gpu">Sensor Fusion</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box primary">Output Predictions</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Custom CUDA Kernels</h3>
+
+            <p>
+                While frameworks like PyTorch provide GPU acceleration out of the box, sometimes you need custom
+                CUDA kernels for domain-specific operations. Here's an example of a motion-aware attention kernel:
+            </p>
+
+            <div class="code-block">
+                <span class="comment">// CUDA kernel for motion-weighted attention</span>
+                <span class="keyword">__global__</span> <span class="keyword">void</span> <span
+                    class="function">motion_attention_kernel</span>(
+                <span class="keyword">const</span> <span class="keyword">float</span>* features, <span
+                    class="comment">// [B, N, C]</span>
+                <span class="keyword">const</span> <span class="keyword">float</span>* motion_vectors, <span
+                    class="comment">// [B, N, 2]</span>
+                <span class="keyword">float</span>* output, <span class="comment">// [B, N, C]</span>
+                <span class="keyword">int</span> batch_size,
+                <span class="keyword">int</span> num_points,
+                <span class="keyword">int</span> channels
+                ) {
+                <span class="keyword">int</span> idx = blockIdx.x * blockDim.x + threadIdx.x;
+                <span class="keyword">if</span> (idx >= batch_size * num_points) <span class="keyword">return</span>;
+
+                <span class="keyword">int</span> b = idx / num_points;
+                <span class="keyword">int</span> n = idx % num_points;
+
+                <span class="comment">// Compute motion magnitude for attention weight</span>
+                <span class="keyword">float</span> mx = motion_vectors[b * num_points * 2 + n * 2];
+                <span class="keyword">float</span> my = motion_vectors[b * num_points * 2 + n * 2 + 1];
+                <span class="keyword">float</span> motion_weight = sqrtf(mx * mx + my * my);
+
+                <span class="comment">// Apply motion-weighted scaling</span>
+                <span class="keyword">for</span> (<span class="keyword">int</span> c = 0; c < channels; c++) { <span
+                    class="keyword">int</span> feat_idx = b * num_points * channels + n * channels + c;
+                    output[feat_idx] = features[feat_idx] * (1.0f + motion_weight);
+                    }
+                    }
+            </div>
+
+            <h2>Performance Considerations</h2>
+
+            <p>
+                Writing efficient GPU code requires understanding the hardware constraints:
+            </p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Optimization</th>
+                    <th>Impact</th>
+                    <th>Technique</th>
+                </tr>
+                <tr>
+                    <td>Memory Coalescing</td>
+                    <td>10-50x bandwidth</td>
+                    <td>Align thread access patterns</td>
+                </tr>
+                <tr>
+                    <td>Shared Memory</td>
+                    <td>100x faster than global</td>
+                    <td>Cache frequently accessed data</td>
+                </tr>
+                <tr>
+                    <td>Occupancy</td>
+                    <td>Hide memory latency</td>
+                    <td>Maximize active warps</td>
+                </tr>
+                <tr>
+                    <td>Kernel Fusion</td>
+                    <td>Reduce memory traffic</td>
+                    <td>Combine sequential operations</td>
+                </tr>
+            </table>
+
+            <div class="highlight-box">
+                <p>
+                    "The goal isn't just to run on a GPU—it's to keep the GPU busy. Memory bandwidth, not compute,
+                    is often the bottleneck in modern AI workloads."
+                </p>
+            </div>
+
+            <h2>The Future: Specialized AI Hardware</h2>
+
+            <p>
+                While GPUs remain the workhorses of AI, we're seeing the rise of specialized accelerators:
+            </p>
+
+            <ul>
+                <li><strong>TPUs:</strong> Google's tensor processing units optimized for matrix operations</li>
+                <li><strong>NPUs:</strong> Neural processing units in mobile and edge devices</li>
+                <li><strong>FPGAs:</strong> Field-programmable arrays for custom, low-latency inference</li>
+                <li><strong>Neuromorphic chips:</strong> Brain-inspired architectures for efficient inference</li>
+            </ul>
+
+            <p>
+                For robotics applications, the trend is toward heterogeneous computing—combining CPUs, GPUs, and
+                specialized accelerators to meet real-time constraints while minimizing power consumption.
+            </p>
+
+            <h2>Conclusion</h2>
+
+            <p>
+                GPU acceleration has transformed what's possible in AI, enabling real-time perception, massive
+                language models, and complex simulations. Understanding these principles—parallelism, memory
+                hierarchy, and efficient kernel design—is essential for anyone building high-performance AI systems.
+            </p>
+
+            <p>
+                My motion-aware-perception-model demonstrates these concepts in practice, achieving sub-millisecond
+                inference times for robotics applications. The code is open-source—feel free to explore,
+                experiment, and reach out if you're working on similar problems.
+            </p>
+        </div>
+    </article>
+
+    <footer>
+        <p>© 2025 Nirav Sawant. Written with curiosity and caffeine.</p>
+    </footer>
+</body>
+
+</html>
