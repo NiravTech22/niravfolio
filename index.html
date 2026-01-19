@@ -1678,26 +1678,34 @@
         padding: 0.25rem 0.5rem;
       }
 
-      /* Mobile Blog Section - Horizontal Scroll Snap */
+      /* Mobile Blog Section - Vertical Stack for Readability */
       #tech-blog .section-grid {
         display: flex;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        gap: 1.5rem;
-        padding-bottom: 2rem;
-        /* Space for scrollbar/shadow */
-        -webkit-overflow-scrolling: touch;
-        margin: 0 -1rem;
-        /* Negative margin to pull to edges */
-        padding-left: 1.5rem;
-        /* Left padding for first card */
-        padding-right: 1.5rem;
-        /* Right padding for last card */
+        flex-direction: column;
+        gap: 2rem;
+        overflow: visible;
+        padding: 0;
+        margin: 0;
       }
 
-      /* Hide scrollbar but allow scrolling */
+      /* Reset Scrollbar Logic */
       #tech-blog .section-grid::-webkit-scrollbar {
         display: none;
+      }
+
+      #tech-blog .blog-card {
+        min-width: 100%;
+        width: 100%;
+        margin: 0;
+
+        /* Premium Sharp Look */
+        background: rgba(var(--card-bg-rgb), 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(var(--card-border), 0.5);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem;
       }
 
       #tech-blog .blog-card {

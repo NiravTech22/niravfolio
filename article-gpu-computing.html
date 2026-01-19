@@ -46,25 +46,25 @@
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            background: rgba(var(--accent-rgb), 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(var(--accent-rgb), 0.2);
             width: 50px;
             height: 50px;
             border-radius: 50%;
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 1000;
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .theme-btn:hover {
             transform: scale(1.1);
-            background: rgba(var(--accent-rgb), 0.2);
+            border-color: var(--accent);
             box-shadow: 0 0 20px var(--accent-glow);
         }
 
@@ -96,6 +96,7 @@
             font-weight: 300;
             line-height: 1.8;
             min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .article-container {
@@ -112,7 +113,7 @@
             text-decoration: none;
             font-size: 0.9rem;
             margin-bottom: 2rem;
-            transition: transform 0.2s ease;
+            font-weight: 500;
         }
 
         .back-link:hover {
@@ -128,10 +129,7 @@
             font-weight: 600;
             line-height: 1.3;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--text), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text);
         }
 
         .article-meta {
@@ -139,6 +137,7 @@
             gap: 2rem;
             color: var(--muted);
             font-size: 0.9rem;
+            margin-bottom: 2rem;
         }
 
         .article-meta span {
@@ -160,11 +159,12 @@
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.8rem;
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
         }
 
         .article-content h2 {
             font-size: 1.5rem;
-            font-weight: 500;
+            font-weight: 600;
             margin: 2.5rem 0 1rem;
             color: var(--text);
         }
@@ -179,17 +179,19 @@
         .article-content p {
             margin-bottom: 1.5rem;
             color: var(--text);
-            opacity: 0.9;
+            opacity: 0.95;
+            font-size: 1.05rem;
         }
 
         .article-content ul {
-            margin: 1rem 0 1.5rem 1.5rem;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
         }
 
         .article-content li {
             margin-bottom: 0.5rem;
             color: var(--text);
-            opacity: 0.9;
         }
 
         .flowchart {
@@ -225,30 +227,32 @@
         }
 
         .flow-box {
-            background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.15), rgba(var(--accent-rgb), 0.05));
-            border: 1px solid rgba(var(--accent-rgb), 0.3);
+            background: rgba(var(--accent-rgb), 0.1);
+            border: 1px solid var(--accent);
             border-radius: 8px;
             padding: 0.75rem 1.25rem;
             font-size: 0.85rem;
             font-weight: 400;
             text-align: center;
             min-width: 140px;
+            color: var(--text);
         }
 
         .flow-box.primary {
-            background: linear-gradient(135deg, var(--accent), #7b4a9e);
+            background: var(--accent);
             color: white;
             border: none;
         }
 
         .flow-box.gpu {
-            background: linear-gradient(135deg, #76b900, #5a8c00);
-            color: white;
+            background: #76b900;
+            color: #000;
+            font-weight: 600;
             border: none;
         }
 
         .flow-box.memory {
-            background: linear-gradient(135deg, #0066cc, #004d99);
+            background: #0066cc;
             color: white;
             border: none;
         }
@@ -276,6 +280,7 @@
             background: var(--card-bg);
             border-radius: 12px;
             overflow: hidden;
+            border: 1px solid var(--card-border);
         }
 
         .comparison-table th,
@@ -283,20 +288,17 @@
             padding: 1rem;
             text-align: left;
             border-bottom: 1px solid var(--card-border);
+            color: var(--text);
         }
 
         .comparison-table th {
-            background: rgba(var(--accent-rgb), 0.1);
+            background: rgba(var(--accent-rgb), 0.15);
             font-weight: 500;
             color: var(--accent);
         }
 
-        .comparison-table tr:last-child td {
-            border-bottom: none;
-        }
-
         .highlight-box {
-            background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.1), rgba(var(--accent-rgb), 0.05));
+            background: rgba(var(--accent-rgb), 0.1);
             border-left: 4px solid var(--accent);
             padding: 1.5rem;
             margin: 2rem 0;
@@ -306,11 +308,12 @@
         .highlight-box p {
             margin: 0;
             font-style: italic;
+            color: var(--text);
         }
 
         .code-block {
-            background: #1a1525;
-            color: #e0e0e0;
+            background: #1e1e1e;
+            color: #d4d4d4;
             border-radius: 8px;
             padding: 1.5rem;
             margin: 1.5rem 0;
@@ -318,26 +321,7 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
             line-height: 1.6;
-        }
-
-        .code-block .keyword {
-            color: #c792ea;
-        }
-
-        .code-block .function {
-            color: #82aaff;
-        }
-
-        .code-block .string {
-            color: #c3e88d;
-        }
-
-        .code-block .comment {
-            color: #676e95;
-        }
-
-        .code-block .decorator {
-            color: #ffcb6b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .stats-grid {
@@ -394,15 +378,6 @@
                 min-width: 100px;
                 font-size: 0.75rem;
                 padding: 0.5rem 0.75rem;
-            }
-
-            .comparison-table {
-                font-size: 0.85rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem 0.5rem;
             }
         }
     </style>
@@ -493,16 +468,11 @@
             </p>
 
             <h2>The CUDA Programming Model</h2>
-
-            <p>
-                NVIDIA's CUDA platform provides the programming interface for GPU computing. The key concepts are:
-            </p>
-
+            <p>NVIDIA's CUDA platform provides the programming interface for GPU computing. The key concepts are:</p>
             <ul>
                 <li><strong>Kernels:</strong> Functions that run on the GPU, executed by many threads in parallel</li>
                 <li><strong>Thread Blocks:</strong> Groups of threads that can cooperate via shared memory</li>
                 <li><strong>Grid:</strong> The collection of all thread blocks for a kernel launch</li>
-                <li><strong>Memory Hierarchy:</strong> Global, shared, and register memory with different speeds</li>
             </ul>
 
             <div class="flowchart">
@@ -519,100 +489,13 @@
                     <div class="flow-row">
                         <div class="flow-box">Block 0</div>
                         <div class="flow-box">Block 1</div>
-                        <div class="flow-box">Block 2</div>
                         <div class="flow-box">...</div>
                     </div>
-                    <span class="flow-arrow down">↓</span>
-                    <div class="flow-row">
-                        <div class="flow-box" style="font-size: 0.75rem;">Threads (32 per warp)</div>
-                    </div>
                 </div>
             </div>
 
-            <h2>Application: Motion-Aware Perception</h2>
-
-            <p>
-                In my <strong>motion-aware-perception-model</strong> project, GPU acceleration is essential for
-                real-time robotics applications. The system needs to process sensor data, run neural network
-                inference, and produce outputs fast enough for closed-loop control, typically under 10 milliseconds.
-            </p>
-
-            <h3>The Perception Pipeline</h3>
-
-            <div class="flowchart">
-                <div class="flowchart-title">GPU-Accelerated Perception Pipeline</div>
-                <div class="flow-diagram">
-                    <div class="flow-row">
-                        <div class="flow-box">Sensor Input</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box memory">GPU Memory Transfer</div>
-                    </div>
-                    <span class="flow-arrow down">↓</span>
-                    <div class="flow-row">
-                        <div class="flow-box gpu">Preprocessing Kernel</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box gpu">Feature Extraction</div>
-                    </div>
-                    <span class="flow-arrow down">↓</span>
-                    <div class="flow-row">
-                        <div class="flow-box gpu">Motion Estimation</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box gpu">Object Detection</div>
-                    </div>
-                    <span class="flow-arrow down">↓</span>
-                    <div class="flow-row">
-                        <div class="flow-box gpu">Sensor Fusion</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box primary">Output Predictions</div>
-                    </div>
-                </div>
-            </div>
-
-            <h3>Custom CUDA Kernels</h3>
-
-            <p>
-                While frameworks like PyTorch provide GPU acceleration out of the box, sometimes you need custom
-                CUDA kernels for domain-specific operations. Here's an example of a motion-aware attention kernel:
-            </p>
-
-            <div class="code-block">
-                <span class="comment">// CUDA kernel for motion-weighted attention</span>
-                <span class="keyword">__global__</span> <span class="keyword">void</span> <span
-                    class="function">motion_attention_kernel</span>(
-                <span class="keyword">const</span> <span class="keyword">float</span>* features, <span
-                    class="comment">// [B, N, C]</span>
-                <span class="keyword">const</span> <span class="keyword">float</span>* motion_vectors, <span
-                    class="comment">// [B, N, 2]</span>
-                <span class="keyword">float</span>* output, <span class="comment">// [B, N, C]</span>
-                <span class="keyword">int</span> batch_size,
-                <span class="keyword">int</span> num_points,
-                <span class="keyword">int</span> channels
-                ) {
-                <span class="keyword">int</span> idx = blockIdx.x * blockDim.x + threadIdx.x;
-                <span class="keyword">if</span> (idx >= batch_size * num_points) <span class="keyword">return</span>;
-
-                <span class="keyword">int</span> b = idx / num_points;
-                <span class="keyword">int</span> n = idx % num_points;
-
-                <span class="comment">// Compute motion magnitude for attention weight</span>
-                <span class="keyword">float</span> mx = motion_vectors[b * num_points * 2 + n * 2];
-                <span class="keyword">float</span> my = motion_vectors[b * num_points * 2 + n * 2 + 1];
-                <span class="keyword">float</span> motion_weight = sqrtf(mx * mx + my * my);
-
-                <span class="comment">// Apply motion-weighted scaling</span>
-                <span class="keyword">for</span> (<span class="keyword">int</span> c = 0; c < channels; c++) { <span
-                    class="keyword">int</span> feat_idx = b * num_points * channels + n * channels + c;
-                    output[feat_idx] = features[feat_idx] * (1.0f + motion_weight);
-                    }
-                    }
-            </div>
-
-            <h2>Performance Considerations</h2>
-
-            <p>
-                Writing efficient GPU code requires understanding the hardware constraints:
-            </p>
-
+            <h2>Measurement & Performance</h2>
+            <p>Writing efficient GPU code requires understanding hardware constraints:</p>
             <table class="comparison-table">
                 <tr>
                     <th>Optimization</th>
@@ -634,51 +517,16 @@
                     <td>Hide memory latency</td>
                     <td>Maximize active warps</td>
                 </tr>
-                <tr>
-                    <td>Kernel Fusion</td>
-                    <td>Reduce memory traffic</td>
-                    <td>Combine sequential operations</td>
-                </tr>
             </table>
 
             <div class="highlight-box">
-                <p>
-                    "The goal isn't just to run on a GPU. It's to keep the GPU busy. Memory bandwidth, not compute,
-                    is often the bottleneck in modern AI workloads."
-                </p>
+                <p>"The goal isn't just to run on a GPU. It's to keep the GPU busy. Memory bandwidth, not compute, is
+                    often the bottleneck in modern AI workloads."</p>
             </div>
 
-            <h2>The Future: Specialized AI Hardware</h2>
-
-            <p>
-                While GPUs remain the workhorses of AI, we're seeing the rise of specialized accelerators:
-            </p>
-
-            <ul>
-                <li><strong>TPUs:</strong> Google's tensor processing units optimized for matrix operations</li>
-                <li><strong>NPUs:</strong> Neural processing units in mobile and edge devices</li>
-                <li><strong>FPGAs:</strong> Field-programmable arrays for custom, low-latency inference</li>
-                <li><strong>Neuromorphic chips:</strong> Brain-inspired architectures for efficient inference</li>
-            </ul>
-
-            <p>
-                For robotics applications, the trend is toward heterogeneous computing, combining CPUs, GPUs, and
-                specialized accelerators to meet real-time constraints while minimizing power consumption.
-            </p>
-
             <h2>Conclusion</h2>
-
-            <p>
-                GPU acceleration has transformed what's possible in AI, enabling real-time perception, massive
-                language models, and complex simulations. Understanding these principles (parallelism, memory
-                hierarchy, and efficient kernel design) is essential for anyone building high-performance AI systems.
-            </p>
-
-            <p>
-                My motion-aware-perception-model demonstrates these concepts in practice, achieving sub-millisecond
-                inference times for robotics applications. The code is open-source, so feel free to explore,
-                experiment, and reach out if you're working on similar problems.
-            </p>
+            <p> GPU acceleration has transformed what's possible in AI. Understanding these principles is essential for
+                anyone building high-performance systems.</p>
         </div>
     </article>
 
@@ -705,18 +553,14 @@
         function toggleTheme() {
             const body = document.body;
             body.classList.toggle('light-mode');
-
-            if (body.classList.contains('light-mode')) {
-                localStorage.setItem('theme', 'light');
-            } else {
-                localStorage.setItem('theme', 'dark');
-            }
+            const isLight = body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
         }
 
         // Check saved theme preference on load
         document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
+            if (localStorage.getItem('theme') === 'light' ||
+                (!localStorage.getItem('theme') && false)) { // default dark
                 document.body.classList.add('light-mode');
             }
         });
