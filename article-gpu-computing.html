@@ -12,13 +12,75 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
+            /* Dark Mode (default) */
+            --bg: #050505;
+            --text: #e0e0e0;
+            --accent: #3b82f6;
+            --accent-rgb: 59, 130, 246;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --secondary: #1f2937;
+            --muted: #9ca3af;
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --hover-bg: rgba(255, 255, 255, 0.05);
+            --grid-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Light Mode - Warm, Easy on Eyes */
+        body.light-mode {
             --bg: #fff7f5;
             --text: #2a1036;
             --accent: #5b2a86;
             --accent-rgb: 91, 42, 134;
+            --accent-glow: rgba(91, 42, 134, 0.22);
+            --secondary: #3b2354;
             --muted: #6b4f74;
             --card-bg: rgba(255, 255, 255, 0.72);
             --card-border: rgba(42, 16, 54, 0.12);
+            --hover-bg: rgba(91, 42, 134, 0.06);
+            --grid-color: rgba(42, 16, 54, 0.05);
+        }
+
+        /* Floating Theme Button */
+        .theme-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(var(--accent-rgb), 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            background: rgba(var(--accent-rgb), 0.2);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .theme-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text);
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.5s ease;
+        }
+
+        body.light-mode .theme-btn svg {
+            stroke: var(--text);
         }
 
         * {
@@ -620,9 +682,45 @@
         </div>
     </article>
 
+    <!-- Theme Toggle Button -->
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+        <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+    </button>
+
     <footer>
         <p>© 2025 Nirav Sawant. Written with curiosity and caffeine.</p>
     </footer>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('light-mode');
+
+            if (body.classList.contains('light-mode')) {
+                localStorage.setItem('theme', 'light');
+            } else {
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Check saved theme preference on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+            }
+        });
+    </script>
 </body>
 
 </html>

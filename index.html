@@ -23,6 +23,8 @@
       --secondary: #1f2937;
       --muted: #9ca3af;
       --card-bg: rgba(20, 20, 20, 0.6);
+      --card-bg-rgb: 20, 20, 20;
+      /* Added for glasmorphism alpha variants */
       --card-border: rgba(255, 255, 255, 0.1);
       --hover-bg: rgba(255, 255, 255, 0.05);
       --grid-color: rgba(255, 255, 255, 0.02);
@@ -40,6 +42,8 @@
       --secondary: #3b2354;
       --muted: #6b4f74;
       --card-bg: rgba(255, 255, 255, 0.72);
+      --card-bg-rgb: 255, 255, 255;
+      /* Added for glasmorphism alpha variants */
       --card-border: rgba(42, 16, 54, 0.12);
       --hover-bg: rgba(91, 42, 134, 0.06);
       --grid-color: rgba(42, 16, 54, 0.05);
@@ -1532,11 +1536,25 @@
         opacity: 0;
         pointer-events: none;
         transform: translateY(0);
-        background: var(--header-bg) !important;
-        /* Minimal background just for readability */
-        backdrop-filter: blur(10px);
+
+        /* Modern iOS Glassmorphism "Squircle" Look */
+        background: rgba(var(--card-bg-rgb), 0.6) !important;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+
+        width: 44px !important;
+        height: 44px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px !important;
+        /* iOS squircle-ish */
+
         margin-right: 0.25rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        /* Bouncy spring effect */
       }
 
       /* Open State - Vertical List Downwards */
@@ -1660,12 +1678,63 @@
         padding: 0.25rem 0.5rem;
       }
 
-      .blog-card {
-        padding: 1.25rem;
+      /* Mobile Blog Section - Horizontal Scroll Snap */
+      #tech-blog .section-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1.5rem;
+        padding-bottom: 2rem;
+        /* Space for scrollbar/shadow */
+        -webkit-overflow-scrolling: touch;
+        margin: 0 -1rem;
+        /* Negative margin to pull to edges */
+        padding-left: 1.5rem;
+        /* Left padding for first card */
+        padding-right: 1.5rem;
+        /* Right padding for last card */
       }
 
-      .blog-card h3 {
-        font-size: 1rem;
+      /* Hide scrollbar but allow scrolling */
+      #tech-blog .section-grid::-webkit-scrollbar {
+        display: none;
+      }
+
+      #tech-blog .blog-card {
+        min-width: 85vw;
+        /* Showing adjacent card peek */
+        flex-shrink: 0;
+        /* IMPERATIVE: Prevents squishing, forces scroll */
+        scroll-snap-align: center;
+        margin-right: 0;
+
+        /* Premium Sharp Look on Mobile */
+        background: rgba(var(--card-bg-rgb), 0.4);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        /* Sharper border */
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        /* Slightly less rounded for sharpness */
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: auto;
+        /* Allow content to dictate height */
+      }
+
+      /* Make the title sharp and prominent */
+      #tech-blog .blog-card h3 {
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.02em;
+      }
+
+      .blog-card {
+        padding: 1.25rem;
       }
 
       .blog-card p {
@@ -2244,26 +2313,33 @@
 
   <div class="mobile-nav-fabs">
     <button id="mainMobileNavFab" class="main-fab">
-      <svg viewBox="0 0 24 24">
-        <path d="M4 6h16M4 12h16M4 18h16" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
       </svg>
     </button>
-    <a href="#projects" class="section-fab" id="fabProjects">
-      <svg viewBox="0 0 24 24">
-        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2z" />
-        <path d="M3 7l4-4h10l4 4" />
+    <a href="#projects" class="section-fab" id="fabProjects" aria-label="Projects">
+      <!-- iOS Style Grid/App Icon -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
       </svg>
     </a>
-    <a href="#about" class="section-fab" id="fabAbout">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 12a4 4 0 100-8 4 4 0 000 8z" />
-        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+    <a href="#about" class="section-fab" id="fabAbout" aria-label="About Me">
+      <!-- iOS Style Person Icon -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
       </svg>
     </a>
-    <a href="#contact" class="section-fab" id="fabContact">
-      <svg viewBox="0 0 24 24">
-        <path
-          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    <a href="#contact" class="section-fab" id="fabContact" aria-label="Contact">
+      <!-- iOS Style Paper Plane -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
       </svg>
     </a>
   </div>
@@ -2570,7 +2646,7 @@
         </div>
       </div>
       <div class="contact-card">
-        <img src="github-icon.png" alt="GitHub" class="icon" style="width: 2rem; height: 2rem;">
+        <i class="fab fa-github icon"></i>
         <h3>GitHub</h3>
         <p>Check out my code</p>
         <div class="github-window">
