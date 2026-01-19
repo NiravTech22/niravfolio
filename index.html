@@ -1446,23 +1446,120 @@
 
     /* iPhone and mobile phones */
     @media (max-width: 480px) {
+
+      /* Mobile Header Layout */
       header {
-        padding: 1rem;
+        padding: 1rem 1.5rem;
+        justify-content: space-between;
       }
 
-      /* Hide text logo, show giraffe icon on mobile */
+      /* Logo on Left */
+      header .logo-icon {
+        display: block;
+        animation: scaleIn 0.4s ease;
+        margin-right: auto;
+      }
+
+      /* text logo hidden */
       header h2.logo-text {
         display: none;
       }
 
-      header .logo-icon {
-        display: block;
-        animation: scaleIn 0.4s ease;
+      /* Hamburger Menu - Top Right */
+      .mobile-nav-fabs {
+        position: fixed;
+        top: 1.75rem;
+        /* Pushed down to align with logo center */
+        right: 1.5rem;
+        bottom: auto;
+        left: auto;
+        flex-direction: column;
+        align-items: flex-end;
+        /* Align to right */
+        z-index: 1001;
+        /* Above header */
+        transition: all 0.4s ease;
+
+        /* Force Visibility on Mobile */
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+
+      /* Clean Button Styling (No circles) */
+      .mobile-nav-fabs .main-fab,
+      .mobile-nav-fabs .section-fab,
+      .theme-btn {
+        background: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        width: auto !important;
+        height: auto !important;
+        padding: 0.5rem;
+        border-radius: 8px;
+        /* Subtle radius */
+        transform: none;
+        /* Removed !important so open state works */
+      }
+
+      /* Icons */
+      .mobile-nav-fabs .main-fab svg,
+      .theme-btn svg {
+        width: 28px;
+        height: 28px;
+        stroke-width: 2;
+        stroke: var(--text) !important;
+      }
+
+      /* Dropdown Menu Items (Slide Down) */
+      .mobile-nav-fabs .section-fab {
+        position: absolute;
+        top: 0;
+        right: 0;
+        /* Align right */
+        margin-top: 0;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(0);
+        background: var(--header-bg) !important;
+        /* Minimal background just for readability */
+        backdrop-filter: blur(10px);
+        margin-right: 0.25rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Open State - Vertical List Downwards */
+      .mobile-nav-fabs.open .section-fab {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .mobile-nav-fabs.open #fabContact {
+        transform: translateY(50px) !important;
+      }
+
+      .mobile-nav-fabs.open #fabAbout {
+        transform: translateY(100px) !important;
+      }
+
+      .mobile-nav-fabs.open #fabProjects {
+        transform: translateY(150px) !important;
+      }
+
+      /* Theme Button - Bottom Right on mobile */
+      .theme-btn {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        left: auto;
+        opacity: 0.8;
+        /* Visible by default on mobile */
       }
 
       .hero {
         min-height: 85vh;
-        padding: 5rem 1rem 2rem;
+        padding: 6rem 1rem 2rem;
+        /* More top padding for header space */
       }
 
       .hero-text h1 {
