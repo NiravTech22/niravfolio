@@ -4,6 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Portfolio of Nirav Sawant - Mechatronics Engineering Student specializing in Autonomous Systems, Robotics, and Machine Learning.">
+  <meta name="keywords"
+    content="Robotics, Mechatronics, Engineering, Machine Learning, CUDA, Autonomous Systems, StudentIO">
   <title>portfolio | nirav</title>
   <link rel="icon" type="image/jpeg" href="favicon.jpg">
   <link
@@ -126,54 +130,246 @@
       opacity: 0;
     }
 
-    /* Ultra Minimalist Header */
+    /* --- PREMIUM RESPONSIVE NAVIGATION --- */
+
     header {
+      position: fixed;
+      top: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 900px;
+      z-index: 1000;
+
+      /* Glassmorphism & Shape */
+      background: rgba(var(--card-bg-rgb), 0.7);
+      backdrop-filter: blur(20px) saturate(1.8);
+      -webkit-backdrop-filter: blur(20px) saturate(1.8);
+      border: 1px solid var(--header-border);
+      border-radius: 100px;
+
+      /* Buttery Smooth Transitions */
+      transition:
+        top 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        border-radius 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        background 0.4s ease,
+        padding 0.4s ease;
+
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .header-content {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 2rem 4rem;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: var(--header-bg);
-      border-bottom: 1px solid var(--header-border);
-      backdrop-filter: blur(12px);
+      padding: 0.6rem 2rem;
+      width: 100%;
       transition: padding 0.4s ease;
     }
 
-    header h2.logo-text {
+    /* Logo Styling */
+    .logo-text {
       font-family: 'JetBrains Mono', monospace;
-      font-weight: 400;
-      font-size: 1rem;
+      font-weight: 600;
+      font-size: 1.1rem;
       letter-spacing: -0.5px;
       color: var(--text);
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      margin: 0;
+      white-space: nowrap;
     }
 
-    /* Giraffe logo icon - hidden by default on desktop */
-    header .logo-icon {
-      display: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-      transition: opacity 0.4s ease, transform 0.4s ease;
+    /* Desktop Navigation */
+    .desktop-nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
     }
 
-    nav a {
-      margin-left: 3rem;
+    .desktop-nav a {
       text-decoration: none;
       color: var(--muted);
-      transition: color 0.2s ease;
-      font-weight: 300;
       font-size: 0.9rem;
-      letter-spacing: -0.3px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      position: relative;
     }
 
-    nav a:hover {
+    .desktop-nav a:hover {
       color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .desktop-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .desktop-nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Mobile Menu Toggle (Hidden on Desktop) */
+    .mobile-menu-btn {
+      display: none;
+      /* Desktop default */
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background-color: currentColor;
+      margin: 3px 0;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      border-radius: 2px;
+    }
+
+    /* COMPACT STATE (RECTANGULAR) */
+    header.header-compact {
+      top: 0;
+      width: 100%;
+      max-width: 100%;
+      border-radius: 0;
+      background: rgba(var(--card-bg-rgb), 0.95);
+      /* Higher opacity for robust feel */
+      border: none;
+      border-bottom: 1px solid var(--header-border);
+    }
+
+    header.header-compact .header-content {
+      padding: 0.8rem 2rem;
+      /* Expand slightly for bar feel */
+      max-width: 1200px;
+      /* Constrain content inside the full width bar */
+      margin: 0 auto;
+    }
+
+    /* MOBILE STYLES */
+    @media (max-width: 768px) {
+      header {
+        width: 92%;
+        padding: 0;
+        /* Reset padding, handled by header-content */
+        top: 1rem;
+      }
+
+      .header-content {
+        padding: 0.6rem 1.25rem;
+      }
+
+      header.header-compact .header-content {
+        padding: 0.8rem 1.25rem;
+      }
+
+      .desktop-nav {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Logo font size adjustment for mobile */
+      .logo-text {
+        font-size: 1rem;
+      }
+    }
+
+    /* MOBILE NAV OVERLAY (Dropdown) */
+    .mobile-nav-overlay {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: rgba(var(--card-bg-rgb), 0.95);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--header-border);
+      border-radius: 0 0 20px 20px;
+
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+      padding: 1rem 0;
+      overflow: hidden;
+      margin-top: 10px;
+      /* Gap from pill */
+    }
+
+    /* When compact, attach seamless to rect */
+    header.header-compact .mobile-nav-overlay {
+      margin-top: 0;
+      border-radius: 0 0 12px 12px;
+      border-top: 1px solid var(--header-border);
+      background: rgba(var(--card-bg-rgb), 0.98);
+    }
+
+    header.menu-open .mobile-nav-overlay {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* Hamburger Animation */
+    header.menu-open .mobile-menu-btn span:nth-child(1) {
+      transform: rotate(45deg) translate(2.5px, 2.5px);
+    }
+
+    header.menu-open .mobile-menu-btn span:nth-child(2) {
+      transform: rotate(-45deg) translate(3.5px, -4.5px);
+    }
+
+    .mobile-nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 0 1.5rem;
+    }
+
+    .mobile-nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 1.1rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      transition: color 0.2s;
+    }
+
+    .mobile-nav-links a:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-nav-links a:hover {
+      color: var(--accent);
+      padding-left: 5px;
+    }
+
+    /* Magnetic Nav Items */
+    nav a {
+      position: relative;
+      display: inline-block;
+      /* Required for transform */
+      transition: color 0.2s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+      /* Faster transform return */
     }
 
     /* Ultra Minimalist Hero */
@@ -645,6 +841,39 @@
       font-size: 0.85rem;
     }
 
+    /* Interactive Card Global Styles */
+    .slider-card,
+    .section-card,
+    .blog-card,
+    .research-card,
+    .contact-card,
+    .code-block {
+      /* Base setup for spotlight */
+      background: var(--card-bg);
+      /* Fallback */
+      /* Use a gradient capable background for the spotlight mix */
+      background: radial-gradient(800px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+          rgba(255, 255, 255, 0.06),
+          transparent 40%), var(--card-bg);
+
+      will-change: transform;
+      transition: transform 0.1s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+    }
+
+    /* Light mode spotlight adjustment */
+    body.light-mode .slider-card,
+    body.light-mode .section-card,
+    body.light-mode .blog-card,
+    body.light-mode .research-card,
+    body.light-mode .contact-card,
+    body.light-mode .code-block {
+      background: radial-gradient(800px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+          rgba(91, 42, 134, 0.05),
+          transparent 40%), var(--card-bg);
+    }
+
     .contact-card a:hover {
       text-decoration: underline;
     }
@@ -691,6 +920,107 @@
       .github-window::after {
         animation: none;
       }
+    }
+
+    /* Micro-Interactions */
+
+    /* Text Link Underline Draw */
+    p a,
+    .text-link {
+      background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0% 1px no-repeat;
+      transition: background-size 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    p a:hover,
+    .text-link:hover {
+      background-size: 100% 1px;
+      color: var(--accent);
+    }
+
+    /* Button & Interactive Element Compression */
+    button,
+    .btn,
+    .hero-link,
+    .github-window__open {
+      transition: transform 0.1s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease !important;
+    }
+
+    button:active,
+    .btn:active,
+    .hero-link:active,
+    .github-window__open:active,
+    a:active {
+      transform: scale(0.96) !important;
+    }
+
+    /* Icon Hover Motion */
+    .icon-hover-move i,
+    .link-arrow,
+    .contact-card .icon {
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .contact-card:hover .icon {
+      transform: translateY(-3px) scale(1.1);
+      color: var(--accent);
+    }
+
+    .hero-link:hover .link-arrow {
+      transform: translateX(4px) scale(1.1);
+    }
+
+    /* Visual Depth & Animations */
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1,
+    .reveal-text {
+      animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      /* Ensures it starts hidden */
+    }
+
+    /* Staggered animation for hero elements */
+    .hero-greeting {
+      animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+      opacity: 0;
+    }
+
+    h1 {
+      animation-delay: 0.2s;
+    }
+
+    .hero-subtitle {
+      animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+      opacity: 0;
+    }
+
+    .hero-description {
+      animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+      opacity: 0;
+    }
+
+    .hero-links {
+      animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+      opacity: 0;
+    }
+
+    /* Refined Typography */
+    .hero-text h1 {
+      line-height: 1.1;
+      letter-spacing: -0.03em;
     }
 
     .github-window__top {
@@ -2294,14 +2624,35 @@
 <body class="light-mode">
   <canvas id="canvas-bg"></canvas>
   <header>
-    <h2 class="logo-text">nirav sawant</h2>
-    <img src="favicon.jpg" alt="Logo" class="logo-icon">
-    <nav>
-      <a href="#projects">projects</a>
-      <a href="#about">about me</a>
-      <a href="#contact">reach out!</a>
-      <a href="#tech-blog">my thoughts</a>
-    </nav>
+    <div class="header-content">
+      <div class="logo-container">
+        <h2 class="logo-text">nirav sawant</h2>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="desktop-nav">
+        <a href="#projects">projects</a>
+        <a href="#about">about me</a>
+        <a href="#contact">reach out!</a>
+        <a href="#tech-blog">my thoughts</a>
+      </nav>
+
+      <!-- Mobile Nav Toggle -->
+      <button class="mobile-menu-btn" aria-label="Toggle Menu" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <nav class="mobile-nav-links">
+        <a href="#projects" onclick="toggleMobileMenu()">projects</a>
+        <a href="#about" onclick="toggleMobileMenu()">about me</a>
+        <a href="#contact" onclick="toggleMobileMenu()">reach out!</a>
+        <a href="#tech-blog" onclick="toggleMobileMenu()">my thoughts</a>
+      </nav>
+    </div>
   </header>
 
   <!-- Floating Theme Button -->
@@ -2319,38 +2670,7 @@
     </svg>
   </button>
 
-  <div class="mobile-nav-fabs">
-    <button id="mainMobileNavFab" class="main-fab">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-      </svg>
-    </button>
-    <a href="#projects" class="section-fab" id="fabProjects" aria-label="Projects">
-      <!-- iOS Style Grid/App Icon -->
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="3" width="7" height="7"></rect>
-        <rect x="14" y="3" width="7" height="7"></rect>
-        <rect x="14" y="14" width="7" height="7"></rect>
-        <rect x="3" y="14" width="7" height="7"></rect>
-      </svg>
-    </a>
-    <a href="#about" class="section-fab" id="fabAbout" aria-label="About Me">
-      <!-- iOS Style Person Icon -->
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-        <circle cx="12" cy="7" r="4"></circle>
-      </svg>
-    </a>
-    <a href="#contact" class="section-fab" id="fabContact" aria-label="Contact">
-      <!-- iOS Style Paper Plane -->
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="22" y1="2" x2="11" y2="13"></line>
-        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-      </svg>
-    </a>
-  </div>
+
 
   <!-- Simple theme toggle is in the header nav -->
   <!-- Command Palette Modal -->
@@ -2397,22 +2717,182 @@
         </div>
       </div>
       <div class="hero-visual">
-        <div class="code-block">
-          <pre><code>class Developer {
-  constructor() {
-    this.name = "nirav";
-    this.role = "student";
-    this.skills = [
-      "full-stack",
-      "ai/ml",
-      "robotics"
-    ];
-  }
-}</code></pre>
+        <div class="code-block" style="padding: 0; background: none; box-shadow: none; border: none;">
+          <!-- Modern MacOS Glass Window -->
+          <div class="mac-window">
+            <div class="mac-header">
+              <div class="mac-buttons">
+                <div class="mac-btn close"></div>
+                <div class="mac-btn minimize"></div>
+                <div class="mac-btn maximize"></div>
+              </div>
+              <div class="mac-title">
+                <i class="fas fa-terminal" style="margin-right: 8px; opacity: 0.7; font-size: 0.8rem;"></i>
+                me
+              </div>
+            </div>
+            <div class="mac-content">
+              <canvas id="arch-canvas"></canvas>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Modern Tech Stack Carousel (Infinity Scan) -->
+  <!-- Modern Tech Stack Carousel (Infinity Scan) -->
+  <section class="tech-carousel-section">
+    <div class="carousel-header">TECH STACK</div>
+    <div class="carousel-container">
+      <div class="carousel-track">
+        <!-- Original Set -->
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python">
+        </div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt="C++">
+        </div>
+        <div class="tech-logo"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ros/ros-original.svg"
+            alt="ROS 2"></div>
+        <div class="tech-logo"><img src="cuda-logo.png" alt="CUDA"
+            style="mix-blend-mode: multiply; border-radius: 4px;"></div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux"></div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker">
+        </div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+            alt="AWS"></div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React"></div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" alt="Arduino">
+        </div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/raspberrypi/raspberrypi-original.svg"
+            alt="Raspberry Pi"></div>
+        <div class="tech-logo"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg"
+            alt="C"></div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg"
+            alt="PostgreSQL"></div>
+
+        <!-- Duplicate Set for Infinity Scroll -->
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python">
+        </div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt="C++">
+        </div>
+        <div class="tech-logo"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ros/ros-original.svg"
+            alt="ROS 2"></div>
+        <div class="tech-logo"><img src="cuda-logo.png" alt="CUDA"
+            style="mix-blend-mode: multiply; border-radius: 4px;"></div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux"></div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker">
+        </div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+            alt="AWS"></div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React"></div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" alt="Arduino">
+        </div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/raspberrypi/raspberrypi-original.svg"
+            alt="Raspberry Pi"></div>
+        <div class="tech-logo"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg"
+            alt="C"></div>
+        <div class="tech-logo"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg"
+            alt="PostgreSQL"></div>
+      </div>
+    </div>
+    <style>
+      .tech-carousel-section {
+        padding: 3rem 0;
+        background: transparent;
+        border-bottom: 1px solid var(--card-border);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .carousel-header {
+        text-align: center;
+        font-family: 'Space Mono', monospace;
+        font-size: 0.9rem;
+        letter-spacing: 0.2rem;
+        color: var(--muted);
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        opacity: 0.6;
+      }
+
+      .carousel-container {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      }
+
+      .carousel-track {
+        display: flex;
+        gap: 5rem;
+        width: max-content;
+        animation: scroll 40s linear infinite;
+        padding: 1rem 0;
+        align-items: center;
+      }
+
+      .carousel-track:hover {
+        animation-play-state: paused;
+      }
+
+      .tech-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        filter: grayscale(100%) opacity(0.6);
+        transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        cursor: pointer;
+      }
+
+      .tech-logo img {
+        height: 55px;
+        /* Slightly larger for visibility */
+        width: auto;
+        display: block;
+        transition: transform 0.4s ease;
+      }
+
+      .tech-logo:hover {
+        filter: grayscale(0%) opacity(1);
+        transform: translateY(-5px);
+      }
+
+      .tech-logo:hover img {
+        transform: scale(1.15);
+        filter: drop-shadow(0 10px 20px rgba(var(--accent-rgb), 0.3));
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+    </style>
+  </section>
+
 
   <section id="about" class="about">
     <div class="section-content">
@@ -2432,35 +2912,7 @@
             testing and design to deployment and iteration.</p>
           <p>Long term, I'm aiming to work on real-world autonomous systems where performance, safety, and reliability
             are non-negotiable.</p>
-          <div class="tech-stack">
-            <h3>tech stack</h3>
-            <div class="tech-grid">
-              <div class="tech-item">
-                <i class="fab fa-python"></i>
-                <span>python</span>
-              </div>
-              <div class="tech-item">
-                <i class="fas fa-microchip"></i>
-                <span>CUDA</span>
-              </div>
-              <div class="tech-item">
-                <i class="fas fa-code"></i>
-                <span>Julia</span>
-              </div>
-              <div class="tech-item">
-                <i class="fas fa-cogs"></i>
-                <span>C/C++</span>
-              </div>
-              <div class="tech-item">
-                <i class="fab fa-golang"></i>
-                <span>Go</span>
-              </div>
-              <div class="tech-item">
-                <i class="fas fa-robot"></i>
-                <span>ros</span>
-              </div>
-            </div>
-          </div>
+          <div class="tech-stack" style="display: none;"></div>
         </div>
       </div>
     </div>
@@ -2924,7 +3376,7 @@
     }
 
     // 3. Magnetic Buttons
-    const magneticBtns = document.querySelectorAll('.cta button, .close-button');
+    const magneticBtns = document.querySelectorAll('.cta button, .close-button, .mac-btn');
     magneticBtns.forEach(btn => {
       btn.addEventListener('mousemove', e => {
         const rect = btn.getBoundingClientRect();
@@ -2960,11 +3412,342 @@
         // Light mode is default
         document.body.classList.add('light-mode');
       }
-
       updateCanvasTheme();
     });
 
   </script>
+  <!-- Global Noise Overlay -->
+  <style>
+    .noise-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+
+    body.light-mode .noise-overlay {
+      opacity: 0.08;
+      mix-blend-mode: multiply;
+    }
+
+    /* Lenis Recommended CSS */
+    html.lenis,
+    html.lenis body {
+      height: auto;
+    }
+
+    .lenis.lenis-smooth {
+      scroll-behavior: auto !important;
+    }
+
+    .lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+
+    .lenis.lenis-scrolling iframe {
+      pointer-events: none;
+    }
+  </style>
+
+  <div class="noise-overlay"></div>
+
+  <!-- Smooth Scroll (Lenis) and Global Scripts -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+  <script>
+    // Initialize Lenis for smooth scrolling
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+    });
+
+    // RAF loop
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Integrate with internal anchor links if any
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        lenis.scrollTo(this.getAttribute('href'));
+      });
+    });
+
+
+
+    // Header Expansion/Contraction
+    const header = document.querySelector('header');
+
+    function toggleHeader(e) {
+      // Determine scroll position safely
+      let scrollPosition = window.scrollY || document.documentElement.scrollTop;
+
+      // If triggered by Lenis, use its provided scroll value
+      if (e && typeof e.scroll === 'number') {
+        scrollPosition = e.scroll;
+      }
+
+      // Threshold for transition
+      if (scrollPosition > 20) {
+        if (!header.classList.contains('header-compact')) {
+          header.classList.add('header-compact');
+        }
+      } else {
+        if (header.classList.contains('header-compact')) {
+          header.classList.remove('header-compact');
+        }
+      }
+    }
+
+    // Bind to both window scroll (native) and Lenis (smooth) to ensure it catches
+    window.addEventListener('scroll', toggleHeader);
+    lenis.on('scroll', toggleHeader);
+
+    // Check initial state
+    toggleHeader();
+
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+      const header = document.querySelector('header');
+      header.classList.toggle('menu-open');
+    }
+
+    // Magnetic Navigation
+    const navLinks = document.querySelectorAll('nav a');
+
+    navLinks.forEach(link => {
+      link.addEventListener('mousemove', (e) => {
+        const rect = link.getBoundingClientRect();
+        // Calculate distance from center
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        // Apply magnetic pull (0.4 multiplier for strength)
+        link.style.transform = `translate(${x * 0.4}px, ${y * 0.4}px)`;
+      });
+
+      link.addEventListener('mouseleave', () => {
+        link.style.transform = 'translate(0, 0)';
+      });
+    });
+
+    // Interactive Cards (Tilt & Spotlight)
+    const cards = document.querySelectorAll('.slider-card, .section-card, .blog-card, .research-card, .contact-card, .code-block');
+
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Calculate tilt
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const percentX = (x - centerX) / centerX;
+        const percentY = (y - centerY) / centerY;
+
+        // Max tilt 3deg
+        const rotateX = percentY * -3;
+        const rotateY = percentX * 3;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+
+        // Update spotlight position
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+
+      card.addEventListener('mouseleave', () => {
+        // Reset
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        card.style.setProperty('--mouse-x', `-999px`);
+        card.style.setProperty('--mouse-y', `-999px`);
+      });
+    });
+  </script>
+
+  <!-- Skill Network Dependencies (None needed, native Canvas) -->
+  <style>
+    /* MacOS Window Styles */
+    .mac-window {
+      width: 100%;
+      height: 400px;
+      /* Glassmorphism */
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      /* Subtle border */
+      border-radius: 12px;
+
+      /* Premium Shadow */
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    body.light-mode .mac-window {
+      background: rgba(255, 255, 255, 0.45);
+      /* Lighter glass for light mode */
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+    }
+
+    .mac-window:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Header */
+    .mac-header {
+      height: 38px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      /* Separator */
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      position: relative;
+      user-select: none;
+    }
+
+    body.light-mode .mac-header {
+      background: rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .mac-buttons {
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+      /* Ensure clickable above title */
+    }
+
+    .mac-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    /* Authentic Mac Colors */
+    .mac-btn.close {
+      background: #ff5f56;
+      box-shadow: inset 0 0 0 1px #e0443e;
+    }
+
+    .mac-btn.minimize {
+      background: #ffbd2e;
+      box-shadow: inset 0 0 0 1px #d69e05;
+    }
+
+    .mac-btn.maximize {
+      background: #27c93f;
+      box-shadow: inset 0 0 0 1px #1aab29;
+    }
+
+    /* Hover symbols */
+    .mac-buttons:hover .mac-btn.close::before {
+      content: '×';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4e0000;
+      font-size: 10px;
+      font-weight: 700;
+      opacity: 0.6;
+      padding-bottom: 1px;
+    }
+
+    .mac-buttons:hover .mac-btn.minimize::before {
+      content: '−';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5a3d00;
+      font-size: 10px;
+      font-weight: 700;
+      opacity: 0.6;
+      padding-bottom: 1px;
+    }
+
+    .mac-buttons:hover .mac-btn.maximize::before {
+      content: '+';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #003600;
+      font-size: 10px;
+      font-weight: 700;
+      opacity: 0.6;
+      padding-bottom: 1px;
+    }
+
+    .mac-title {
+      position: absolute;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      opacity: 0.8;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.2px;
+    }
+
+    .mac-content {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      cursor: crosshair;
+      /* Indicate interactivity */
+    }
+
+    #skill-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  </style>
+
+  <script src="intent-visualizer.js"></script>
 </body>
 
 </html>
