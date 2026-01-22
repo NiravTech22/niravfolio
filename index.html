@@ -147,16 +147,19 @@
       border: 1px solid var(--header-border);
       border-radius: 100px;
 
-      /* Buttery Smooth Transitions */
+      /* Instant Transitions - No delay on scroll up */
       transition:
-        top 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        border-radius 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        background 0.4s ease,
-        padding 0.4s ease;
+        top 0.2s ease-out,
+        width 0.2s ease-out,
+        max-width 0.2s ease-out,
+        border-radius 0.2s ease-out,
+        background 0.2s ease-out,
+        padding 0.2s ease-out,
+        backdrop-filter 0.2s ease-out,
+        box-shadow 0.2s ease-out;
 
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+      will-change: top, width, max-width, border-radius;
     }
 
     .header-content {
@@ -165,7 +168,7 @@
       align-items: center;
       padding: 0.6rem 2rem;
       width: 100%;
-      transition: padding 0.4s ease;
+      transition: padding 0.2s ease-out;
     }
 
     /* Logo Styling */
@@ -181,7 +184,7 @@
       border-radius: 50%;
       object-fit: cover;
       display: none;
-      /* Hidden on desktop */
+      /* Hidden on desktop - only show on mobile/tablet */
     }
 
     .logo-text {
@@ -192,6 +195,8 @@
       color: var(--text);
       margin: 0;
       white-space: nowrap;
+      display: block;
+      /* Show on desktop - hide on mobile/tablet */
     }
 
     /* Desktop Navigation */
@@ -280,8 +285,8 @@
       margin: 0 auto;
     }
 
-    /* MOBILE STYLES */
-    @media (max-width: 768px) {
+    /* MOBILE & TABLET STYLES */
+    @media (max-width: 1024px) {
       header {
         width: 95%;
         padding: 0;
@@ -302,9 +307,13 @@
         padding: 0;
       }
 
+      /* Show ONLY logo on mobile/tablet */
       .logo-icon {
         display: block;
-        /* Show on mobile */
+      }
+
+      .logo-text {
+        display: none !important;
       }
 
       .desktop-nav {
@@ -315,13 +324,6 @@
         display: flex;
         flex-direction: column;
         padding: 0.3rem;
-      }
-
-      /* Logo font size adjustment for mobile */
-      .logo-text {
-        font-size: 0.9rem;
-        margin: 0;
-        padding: 0;
       }
     }
 
