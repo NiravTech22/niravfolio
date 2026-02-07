@@ -17,22 +17,22 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     :root {
-      /* Dark Mode (default) */
-      --bg: #050505;
-      --text: #e0e0e0;
-      --accent: #3b82f6;
-      --accent-rgb: 59, 130, 246;
-      --accent-glow: rgba(59, 130, 246, 0.5);
-      --secondary: #1f2937;
-      --muted: #9ca3af;
-      --card-bg: rgba(20, 20, 20, 0.6);
-      --card-bg-rgb: 20, 20, 20;
+      /* Dark Purple Mode (default) */
+      --bg: #0a0412;
+      --text: #e8d8ff;
+      --accent: #a855f7;
+      --accent-rgb: 168, 85, 247;
+      --accent-glow: rgba(168, 85, 247, 0.5);
+      --secondary: #2d1b4e;
+      --muted: #b8a4d1;
+      --card-bg: rgba(30, 15, 50, 0.6);
+      --card-bg-rgb: 30, 15, 50;
       /* Added for glasmorphism alpha variants */
-      --card-border: rgba(255, 255, 255, 0.1);
-      --hover-bg: rgba(255, 255, 255, 0.05);
-      --grid-color: rgba(255, 255, 255, 0.02);
-      --header-bg: rgba(5, 5, 5, 0.65);
-      --header-border: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(168, 85, 247, 0.15);
+      --hover-bg: rgba(168, 85, 247, 0.08);
+      --grid-color: rgba(168, 85, 247, 0.04);
+      --header-bg: rgba(10, 4, 18, 0.70);
+      --header-border: rgba(168, 85, 247, 0.12);
     }
 
     /* Light Mode - Warm, Easy on Eyes */
@@ -290,16 +290,16 @@
       header {
         width: 95%;
         padding: 0;
-        top: 0.75rem;
+        top: 0.5rem;
       }
 
       .header-content {
-        padding: 0.4rem 0.8rem;
-        /* Much slimmer */
+        padding: 0.25rem 0.6rem;
+        /* Ultra slim */
       }
 
       header.header-compact .header-content {
-        padding: 0.5rem 0.8rem;
+        padding: 0.3rem 0.6rem;
       }
 
       .logo-container {
@@ -310,6 +310,8 @@
       /* Show ONLY logo on mobile/tablet */
       .logo-icon {
         display: block;
+        width: 28px;
+        height: 28px;
       }
 
       .logo-text {
@@ -323,7 +325,9 @@
       .mobile-menu-btn {
         display: flex;
         flex-direction: column;
-        padding: 0.3rem;
+        padding: 0.2rem;
+        width: 36px;
+        height: 36px;
       }
     }
 
@@ -2730,8 +2734,7 @@
     <div class="hero-content">
       <div class="hero-text">
         <div class="hero-greeting"
-          style="opacity:0.7; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;">Mechatronics &
-          Robotics
+          style="opacity:0.7; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;">AI AND ROBOTICS
         </div>
         <h1>Engineering Intelligent <br>Autonomous Systems.</h1>
         <p class="hero-subtitle">Embedded Systems • Control Theory • Machine Learning • GPU Computing</p>
@@ -3004,18 +3007,38 @@
       <div class="projects-grid">
         <div class="project-card">
           <div class="project-content">
-            <h3>StudentIO-v2</h3>
-            <p>StudentIO is an adaptive learning system that treats instruction as a closed loop perception action
-              problem. It infers learner state from interaction signals and adjusts explanation strategies over time for
-              robust, personalized learning.</p>
+            <h3>Autodidax</h3>
+            <p>Treating learning as a control problem. Autodidax maintains a belief about your cognitive state and picks
+              instructional actions that optimize for actual long-term learning. Uses meta-learning to adapt fast to new
+              learners and POMDP-based planning for personalized instruction.</p>
             <div class="project-tech">
-              <span>Python</span>
+              <span>Julia</span>
+              <span>Flux.jl</span>
               <span>Machine Learning</span>
-              <span>Adaptive Systems</span>
               <span>Education Tech</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/NiravTech22/StudentIO-v2" target="_blank" class="project-link">
+              <a href="https://github.com/NiravTech22/Autodidax" target="_blank" class="project-link">
+                <img src="github-icon.png" alt="GitHub"
+                  style="width: 1rem; height: 1rem; margin-right: 0.5rem; vertical-align: middle;">
+                <span>GitHub</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-content">
+            <h3>latent-failure</h3>
+            <p>Generative discovery and analysis of structured failure modes in autonomous robotic systems.</p>
+            <div class="project-tech">
+              <span>Python</span>
+              <span>ROS 2</span>
+              <span>Machine Learning</span>
+              <span>Autonomous Systems</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/NiravTech22/latent-failure" target="_blank" class="project-link">
                 <img src="github-icon.png" alt="GitHub"
                   style="width: 1rem; height: 1rem; margin-right: 0.5rem; vertical-align: middle;">
                 <span>GitHub</span>
@@ -3087,14 +3110,14 @@
     <h2 class="section-title">my thoughts</h2>
     <div class="section-grid">
       <a href="article-studentio.html" class="blog-card" style="text-decoration: none; color: inherit;">
-        <h3>Adaptive Learning Through Closed-Loop Perception</h3>
+        <h3>Learning as a Control Problem</h3>
         <div class="date">January 2025</div>
-        <p>Exploring how StudentIO reimagines instruction as a perception-action problem, using machine learning to
-          infer learner state and adapt explanation strategies in real-time.</p>
+        <p>Exploring how Autodidax treats instruction as a control problem, using meta-learning and belief filtering to
+          optimize for long-term learning outcomes rather than immediate performance.</p>
         <div class="tags">
           <span class="tag">Machine Learning</span>
           <span class="tag">Education Tech</span>
-          <span class="tag">Adaptive Systems</span>
+          <span class="tag">Control Theory</span>
         </div>
       </a>
       <a href="article-gpu-computing.html" class="blog-card" style="text-decoration: none; color: inherit;">
