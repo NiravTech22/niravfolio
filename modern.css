@@ -85,7 +85,6 @@ textarea:focus-visible {
     box-shadow var(--dur-base) var(--ease-out-expo),
     border-color var(--dur-base) var(--ease-out-expo);
   transition-delay: var(--reveal-delay, 0ms);
-  will-change: transform;
 }
 
 .project-card:hover,

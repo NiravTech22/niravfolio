@@ -83,7 +83,10 @@
       font-weight: 300;
       overflow-x: hidden;
       line-height: 1.6;
-      scroll-behavior: smooth;
+      /* Smooth scrolling is delegated to Lenis, with an explicit
+         scrollIntoView fallback for anchors if it fails to load. Declaring
+         it here as well put a second animation on the same property. */
+      scroll-behavior: auto;
       min-height: 100vh;
       transition: background-color 0.35s ease, color 0.35s ease;
       /* No animation - lazy elegance */
@@ -3602,16 +3605,29 @@
     // Initialize Lenis for smooth scrolling. Guarded: if the CDN is
     // unreachable the page falls back to native scrolling rather than
     // throwing and killing the scripts that follow.
+    // Option names below are the Lenis v1 API. The previous config used the
+    // pre-v1 names (direction, gestureDirection, smooth, mouseMultiplier),
+    // which v1 silently ignores, so four of them were doing nothing.
     const lenis = (typeof Lenis === 'undefined') ? null : new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
+      duration: 0.85,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      syncTouch: false,
+      touchMultiplier: 1.6,
     });
+
+    if (lenis) {
+      // Lenis owns the scroll position. Native CSS smooth scrolling sets a
+      // second animation running against the same property, and the two
+      // fight: the page stutters, overshoots and drifts after the wheel
+      // stops. Clearing it here covers every source of the declaration,
+      // including the one inside a media query. If Lenis failed to load,
+      // the CSS value is left alone so native smooth scrolling still works.
+      document.documentElement.style.scrollBehavior = 'auto';
+    }
 
     // RAF loop
     function raf(time) {
