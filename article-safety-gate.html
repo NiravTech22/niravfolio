@@ -284,6 +284,7 @@
             border-radius: 4px;
         }
     </style>
+    <link rel="stylesheet" href="modern.css">
 </head>
 
 <body>
@@ -308,23 +309,23 @@
         </header>
 
         <div class="article-content">
-            <p>Most safety work on learned manipulation policies asks the model what it
-                <em>thinks</em> will happen and then acts on that prediction. I think that is backwards. A world model is least
-                accurate exactly when it matters most — in the situations it has seen least of. Its point prediction is the
-                weakest signal available at the moment you need the strongest one. Its <strong>uncertainty</strong>, on the
-                other hand, is a live estimate of how far outside familiar territory the system currently is.</p>
+            <p>The usual way to gate a learned manipulation policy is to ask the model what it predicts will happen and act on
+                that prediction. This inverts the reliability ordering. A world model's accuracy degrades fastest on states it
+                has seen least often, which is precisely the regime a safety mechanism exists to handle. Its point prediction is
+                the weakest available signal at the moment you depend on it most.</p>
 
-            <p>So the thesis I'm testing is narrow and falsifiable: <strong>a learned world model's epistemic uncertainty, not
-                its prediction, is what should be allowed to veto an action.</strong></p>
+            <p>Epistemic uncertainty behaves differently. It measures distance from the training distribution rather than
+                asserting an outcome, so it degrades gracefully instead of confidently. The thesis under test is therefore
+                narrow and falsifiable: <strong>a learned world model's epistemic uncertainty, not its point prediction, should
+                hold veto authority over an action.</strong></p>
 
-            <p>To test it I need a domain small enough that ground truth is cheap and physical enough that failure is
-                unambiguous. Jenga extraction with an SO-101 arm is that domain. A tower either stands or it doesn't. There is
-                no partial credit and no arguing with the video.</p>
+            <p>Jenga extraction on an SO-101 arm is a reasonable testbed for this. The state space is low-dimensional and
+                physically legible, ground truth is cheap to obtain, and failure is binary. The tower stands or it does not.</p>
 
-            <h2>The setup, and the honest starting point</h2>
+            <h2>Starting conditions</h2>
 
-            <p>VR teleoperation works. That is all that works. Everything else in the table below is something I have to build,
-                in order, where each step produces the thing the next one consumes.</p>
+            <p>VR teleoperation is functional. Nothing else is. Each remaining component produces an artifact the next one
+                consumes, so the build order is fixed.</p>
 
             <div class="table-wrap">
                 <table>
@@ -343,47 +344,47 @@
                 </table>
             </div>
 
-            <h2>Deciding what runs where, before installing anything</h2>
+            <h2>Compute placement</h2>
 
-            <p>The first real decision isn't algorithmic, it's architectural: what runs on which machine. Get this wrong and
-                you install the wrong frameworks and discover it six steps later.</p>
+            <p>The first decision is which machine runs which component, because it determines the dependency set installed at
+                every later step. Getting it wrong surfaces six steps downstream, after the wrong framework is already
+                embedded.</p>
 
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>Component</th><th>Runs on</th><th>Why</th></tr>
+                        <tr><th>Component</th><th>Runs on</th><th>Constraint</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>VR teleop &rarr; IK &rarr; arm control</td><td>Host PC</td><td>Low latency, close to the arm</td></tr>
-                        <tr><td>Dataset recording</td><td>Same host PC</td><td>Recording happens on the machine driving the arm</td></tr>
+                        <tr><td>VR teleop, IK, arm control</td><td>Host PC</td><td>Latency budget requires proximity to the arm</td></tr>
+                        <tr><td>Dataset recording</td><td>Host PC</td><td>Recording is co-located with arm control</td></tr>
                         <tr><td>Policy training (ACT)</td><td>Host PC or GPU machine</td><td>One-time offline cost</td></tr>
-                        <tr><td>V-JEPA distillation</td><td>GPU machine</td><td>V-JEPA itself never runs on the edge device</td></tr>
-                        <tr><td>Live inference (policy + detector + gate)</td><td>Orange Pi Zero 2W</td><td>The actual edge deployment</td></tr>
+                        <tr><td>V-JEPA distillation</td><td>GPU machine</td><td>Teacher never runs at inference time</td></tr>
+                        <tr><td>Live inference</td><td>Orange Pi Zero 2W</td><td>Edge deployment target</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <p>Only the distilled student model ever touches the Pi. The teacher is a one-time offline expense, which is the
-                entire point of distillation here.</p>
+            <p>Only the distilled student model executes on the Pi. The V-JEPA teacher is an offline expense paid once, which
+                is the reason for distilling at all rather than deploying the teacher directly.</p>
 
-            <h2>Ground truth has to be dumber than the thing it judges</h2>
+            <h2>Ground truth cannot be learned</h2>
 
-            <p>Steps 1 and 2 are deliberately boring: mount two cameras rigidly, fix the lighting, then extract tower state with
-                classical CV — ArUco markers at the base for a world frame, edge detection for per-layer block occupancy, a
-                lean-angle estimate from the side camera.</p>
+            <p>Steps 1 and 2 are conventional computer vision. Two rigidly mounted cameras, fixed lighting, ArUco markers at the
+                tower base establishing a world frame, edge detection for per-layer block occupancy, and a lean estimate from
+                the side camera.</p>
 
-            <p>No learning anywhere in that pipeline, and that's not laziness. If tower state came from a learned model, then
-                scoring a learned anomaly detector against it would be circular — two models agreeing tells you nothing about
-                whether either is right. Classical CV gives me a ground-truth signal that is independent of everything it is
-                later used to evaluate.</p>
+            <p>Nothing in that pipeline is learned, and that constraint is load-bearing. If tower state came from a learned
+                model, then evaluating a learned anomaly detector against it would be circular. Agreement between two models
+                trained on overlapping data is not evidence that either is correct. Classical CV yields a reference signal whose
+                failure modes are uncorrelated with the systems it is used to score.</p>
 
-            <p>The exit condition is 20 out of 20 on manual validation trials. Not 18. If tower-state extraction is
-                untrustworthy, every number produced downstream is decoration.</p>
+            <p>The exit condition is 20 correct reconstructions out of 20 manual validation trials. Anything below that
+                invalidates every metric computed downstream, so the pipeline stops there until it passes.</p>
 
-            <h2>The data campaign</h2>
+            <h2>Data collection</h2>
 
-            <p>Twenty-two sessions minimum, spread deliberately across regimes rather than collected until it feels like
-                enough:</p>
+            <p>Twenty-two sessions minimum, allocated across regimes rather than collected until the dataset feels adequate.</p>
 
             <div class="table-wrap">
                 <table>
@@ -402,26 +403,31 @@
                 </table>
             </div>
 
-            <p>The recovery episodes matter more than their count suggests. A dataset of clean successes teaches a policy what
-                good looks like but never what recovering from bad looks like.</p>
+            <p>The three recovery episodes carry disproportionate weight. A dataset composed entirely of clean successes
+                contains no demonstration of corrective action, so a policy trained on it has no behavior to fall back on when a
+                tower starts to shift.</p>
 
-            <h2>Control group, then treatment group</h2>
+            <p>Time alignment between frames, joint states, and actions is verified per episode rather than assumed.
+                Misalignment in teleoperated data is silent, survives visual inspection of individual frames, and corrupts every
+                model trained afterward.</p>
 
-            <p>Step 5 trains an ACT policy and runs it autonomously with no gate at all, across held-out scenarios. That table
-                of numbers gets frozen the moment it's recorded. It is the control group, and a control group you revise after
-                seeing the treatment results isn't a control group.</p>
+            <h2>Control condition and treatment condition</h2>
 
-            <p>Step 6 builds the detector in two halves that run in parallel. Part A, on the GPU machine: pull the smallest
-                published V-JEPA checkpoint, extract embeddings over the Step 4 frames, and distill a shallow student model that
-                regresses an anomaly score from raw pixels, trained against V-JEPA's embedding-space prediction error. Part B is
-                manual and unglamorous: hand-label roughly 75 held-out frames as structurally normal or risky, used for
-                evaluation only, never for training.</p>
+            <p>Step 5 trains an ACT policy and runs it autonomously with no gate across held-out scenarios. Those numbers are
+                frozen on recording. A control condition revised after the treatment results are known is not a control
+                condition.</p>
 
-            <p>Step 7 wires the gate — an Invariant DAG node taking a proposed action plus an anomaly score and emitting
-                execute or block — and then <strong>locks the threshold</strong>. Tuned against Step 6's validation set, never
-                against live runs. In the implementation this is enforced in code rather than left to discipline: the gate object
-                refuses to evaluate without a locked threshold, and refuses to be re-locked once set. If you genuinely need a
-                different threshold you are running a new experiment, and you should have to say so out loud.</p>
+            <p>Step 6 builds the detector in two parallel tracks. Track A runs on the GPU machine: pull the smallest published
+                V-JEPA checkpoint, extract embeddings over the Step 4 frames, and train a shallow student network to regress an
+                anomaly score from raw pixels against the teacher's embedding-space prediction error. Track B is manual
+                labeling of roughly 75 held-out frames as structurally normal or risky, reserved for evaluation and excluded
+                from training.</p>
+
+            <p>Step 7 wires the gate as an Invariant DAG node taking a proposed action and an anomaly score, emitting execute
+                or block, and then locks the threshold. Tuning happens against the Step 6 validation set only. The constraint is
+                enforced in the API rather than by convention: the gate raises on evaluation with no locked threshold, and
+                raises again on any attempt to re-lock. Changing the threshold requires constructing a new gate, which makes the
+                decision explicit in the code and in the commit history.</p>
 
             <div class="flowchart">
                 <div class="flow-diagram">
@@ -447,14 +453,14 @@
                 </div>
             </div>
 
-            <p>The gate fails closed. Any exception inside the scorer is treated as a maximal anomaly and blocks the action. A
-                safety mechanism that fails open when its own machinery breaks is not a safety mechanism, it's a comfort
-                blanket.</p>
+            <p>The gate fails closed. Any exception raised inside the scorer is caught, recorded as a detector failure, and
+                resolved as a block with an infinite anomaly score. A gate that fails open when its own scoring path breaks
+                provides no guarantee in the one condition where a guarantee matters.</p>
 
-            <h2>The one table that is the entire result</h2>
+            <h2>The comparison</h2>
 
-            <p>Step 8 reruns the identical policy across the identical held-out scenarios, now behind the locked gate. Step 9 is
-                subtraction.</p>
+            <p>Step 8 reruns the identical policy across the identical held-out scenarios with the locked gate in the loop.
+                Step 9 subtracts.</p>
 
             <div class="table-wrap">
                 <table>
@@ -471,24 +477,24 @@
                 </table>
             </div>
 
-            <p>The thesis is supported only if catastrophic failures drop meaningfully <em>and</em> success rate doesn't
-                collapse <em>and</em> the false-positive rate stays low enough that the gate is discriminating rather than just
-                refusing to act. All three, or it doesn't count. A gate that blocks everything achieves a perfect safety record
-                and is completely useless.</p>
+            <p>Three conditions have to hold jointly for the thesis to survive. Catastrophic failure rate drops by a margin
+                above noise, success rate does not collapse, and the gate's false-positive rate stays low enough to establish
+                that it discriminates rather than refuses. A gate that blocks every action achieves a zero failure rate and has
+                no utility, so the false-positive ceiling is not a secondary metric.</p>
 
-            <p>This verdict logic lives in code, with explicit thresholds, precisely so that I can't talk myself into a
-                generous reading of a marginal result at 2am.</p>
+            <p>The verdict logic is implemented with explicit numeric thresholds rather than evaluated by inspection, which
+                removes the opportunity to reinterpret a marginal result favorably after seeing it.</p>
 
-            <h2>The result I'm actually prepared for</h2>
+            <h2>Expected outcomes</h2>
 
-            <p>The gate may not help. Or it may help only by being so conservative that the robot barely acts. Both outcomes get
-                written up exactly as they happen. A clean negative result with sound methodology is worth more than a positive
-                one assembled by moving the goalposts — and in safety work specifically, a false positive published as a win is
-                how people end up trusting things they shouldn't.</p>
+            <p>There is a real possibility that the gate produces no measurable improvement, or improves the failure rate only
+                by acting so conservatively that task throughput drops to near zero. Both results get published as measured. A
+                negative result with sound methodology constrains the design space; a positive result assembled by adjusting
+                criteria after the fact does not, and in safety work it actively misleads whoever builds on it next.</p>
 
-            <p>The build is sequential and I'm partway through it. The repo carries the plan as its source of truth, a progress
-                tracker that gets updated as steps close, and an execution-observability log so that when something fails I can
-                tell which node failed and why rather than guessing from a video.</p>
+            <p>The build is sequential and currently in progress. The repository carries the plan as its specification, a
+                progress tracker updated as steps close, and an append-only event log so that a failure can be attributed to a
+                specific node rather than reconstructed from video afterward.</p>
         </div>
     </article>
 
@@ -525,6 +531,7 @@
             document.body.classList.add('light-mode');
         }
     </script>
+    <script src="motion.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,248 @@
+/* ---------------------------------------------------------------------------
+   modern.css — layered refinement on top of each page's existing inline styles.
+   Loaded last so it wins on the few properties it touches. Deliberately
+   additive: no layout is restructured here, only depth, rhythm and motion.
+--------------------------------------------------------------------------- */
+
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 620ms;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.10);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.18), 0 12px 32px rgba(0, 0, 0, 0.14);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.22), 0 24px 64px rgba(0, 0, 0, 0.18);
+}
+
+body.light-mode {
+  --shadow-sm: 0 1px 2px rgba(42, 16, 54, 0.05), 0 2px 8px rgba(42, 16, 54, 0.05);
+  --shadow-md: 0 4px 12px rgba(42, 16, 54, 0.07), 0 12px 32px rgba(42, 16, 54, 0.07);
+  --shadow-lg: 0 8px 24px rgba(42, 16, 54, 0.09), 0 24px 64px rgba(42, 16, 54, 0.09);
+}
+
+/* --- Typography -------------------------------------------------------- */
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, .section-title {
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+}
+
+p, li {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: rgba(var(--accent-rgb), 0.22);
+  color: var(--text);
+}
+
+/* --- Focus visibility --------------------------------------------------- */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* --- Scroll reveal ------------------------------------------------------ */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out-expo),
+    transform var(--dur-slow) var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- Cards -------------------------------------------------------------- */
+
+.project-card,
+.blog-card {
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  /* Includes opacity so the reveal fade still runs; the shorthand would
+     otherwise reset transition-delay, so the stagger is restated below. */
+  transition:
+    opacity var(--dur-slow) var(--ease-out-expo),
+    transform var(--dur-base) var(--ease-out-expo),
+    box-shadow var(--dur-base) var(--ease-out-expo),
+    border-color var(--dur-base) var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: transform;
+}
+
+.project-card:hover,
+.blog-card:hover {
+  /* Reveal stagger must not delay the hover response. */
+  transition-delay: 0ms;
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(var(--accent-rgb), 0.45);
+}
+
+.project-card:active,
+.blog-card:active {
+  transform: translateY(-1px);
+  transition-duration: var(--dur-fast);
+}
+
+/* Accent hairline that wipes in on hover. */
+.blog-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-slow) var(--ease-out-expo);
+}
+
+.blog-card:hover::after {
+  transform: scaleX(1);
+}
+
+.tag {
+  transition:
+    background-color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease,
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+.blog-card:hover .tag,
+.article-header .tag:hover {
+  border-color: rgba(var(--accent-rgb), 0.45);
+}
+
+/* --- Article reading experience ----------------------------------------- */
+
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--accent), rgba(var(--accent-rgb), 0.35));
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.article-container {
+  max-width: 46rem;
+}
+
+.article-header h1 {
+  font-size: clamp(2rem, 1.4rem + 2.2vw, 3rem);
+  line-height: 1.15;
+}
+
+.article-header {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--card-border);
+  margin-bottom: 2.5rem;
+}
+
+.article-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.article-content > p:first-of-type {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.article-content h2 {
+  margin-top: 3.25rem;
+  font-size: 1.375rem;
+  letter-spacing: -0.015em;
+}
+
+.article-content p,
+.article-content li {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.article-content table tbody tr {
+  transition: background-color var(--dur-fast) ease;
+}
+
+.article-content table tbody tr:hover {
+  background: rgba(var(--accent-rgb), 0.05);
+}
+
+.code-block,
+.flowchart {
+  box-shadow: var(--shadow-sm);
+}
+
+.flow-box {
+  transition: transform var(--dur-base) var(--ease-spring),
+              box-shadow var(--dur-base) var(--ease-out-expo);
+}
+
+.flow-box:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--shadow-sm);
+}
+
+.back-link {
+  transition: transform var(--dur-base) var(--ease-out-expo), opacity var(--dur-fast) ease;
+}
+
+.back-link:hover {
+  transform: translateX(-4px);
+}
+
+.theme-btn {
+  box-shadow: var(--shadow-md);
+}
+
+/* --- Reduced motion ----------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .reading-progress {
+    display: none;
+  }
+
+  .project-card:hover,
+  .blog-card:hover,
+  .flow-box:hover,
+  .back-link:hover {
+    transform: none;
+  }
+}

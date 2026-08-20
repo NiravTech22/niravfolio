@@ -2657,6 +2657,7 @@
       margin-right: 0.3rem;
     }
   </style>
+    <link rel="stylesheet" href="modern.css">
 </head>
 
 <body class="light-mode">
@@ -3008,8 +3009,8 @@
         <div class="project-card">
           <div class="project-content">
             <h3>jenga-safety-gate</h3>
-            <p>Testing whether a world model's uncertainty — not its prediction — should be allowed to veto a robot's
-              action. An SO-101 arm extracts Jenga blocks behind a fail-closed safety gate driven by a V-JEPA-distilled
+            <p>Testing whether a world model's epistemic uncertainty, rather than its point prediction, should hold veto
+              authority over a robot's action. An SO-101 arm extracts Jenga blocks behind a fail-closed safety gate driven by a V-JEPA-distilled
               anomaly detector, scored against an ungated control group on the same held-out scenarios. Classical CV
               provides ground-truth tower state so the evaluation isn't circular.</p>
             <div class="project-tech">
@@ -3140,8 +3141,8 @@
         <h3>Uncertainty, Not Prediction, Should Hold the Veto</h3>
         <div class="date">August 2026</div>
         <p>A world model is least accurate exactly when it matters most. The full experimental plan for testing
-          whether epistemic uncertainty makes a better safety signal than a point prediction — control group, locked
-          threshold, and a result I'm prepared to have go against me.</p>
+          whether epistemic uncertainty is a better safety signal than a point prediction. Frozen control condition,
+          locked gate threshold, and a result I am prepared to have go against me.</p>
         <div class="tags">
           <span class="tag">Robotics Safety</span>
           <span class="tag">World Models</span>
@@ -3175,7 +3176,7 @@
       <a href="article-natural-intelligence.html" class="blog-card" style="text-decoration: none; color: inherit;">
         <h3>Why AI Won't Outsmart Natural Intelligence</h3>
         <div class="date">August 2026</div>
-        <p>Not a claim about benchmarks — machines will win those. A claim that "smarter" needs a shared purpose and
+        <p>Not a claim about benchmarks, which machines will win. A claim that "smarter" needs a shared purpose and
           there isn't one: natural intelligence is a survival system that generates its own stakes, and that position
           isn't reachable by scaling.</p>
         <div class="tags">
@@ -3596,10 +3597,12 @@
   <div class="noise-overlay"></div>
 
   <!-- Smooth Scroll (Lenis) and Global Scripts -->
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
   <script>
-    // Initialize Lenis for smooth scrolling
-    const lenis = new Lenis({
+    // Initialize Lenis for smooth scrolling. Guarded: if the CDN is
+    // unreachable the page falls back to native scrolling rather than
+    // throwing and killing the scripts that follow.
+    const lenis = (typeof Lenis === 'undefined') ? null : new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
@@ -3612,16 +3615,22 @@
 
     // RAF loop
     function raf(time) {
-      lenis.raf(time);
+      if (lenis) lenis.raf(time);
       requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
+    if (lenis) requestAnimationFrame(raf);
 
     // Integrate with internal anchor links if any
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
+        var target = document.querySelector(this.getAttribute('href'));
+        if (!target) return;
         e.preventDefault();
-        lenis.scrollTo(this.getAttribute('href'));
+        if (lenis) {
+          lenis.scrollTo(target);
+        } else {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
 
@@ -3655,7 +3664,7 @@
 
     // Bind to both window scroll (native) and Lenis (smooth) to ensure it catches
     window.addEventListener('scroll', toggleHeader);
-    lenis.on('scroll', toggleHeader);
+    if (lenis) lenis.on('scroll', toggleHeader);
 
     // Check initial state
     toggleHeader();
@@ -3892,6 +3901,7 @@
 
   <script src="intent-visualizer.js"></script>
   <script src="navbar-scroll.js"></script>
+    <script src="motion.js"></script>
 </body>
 
 </html>

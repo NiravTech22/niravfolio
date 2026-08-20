@@ -284,6 +284,7 @@
             border-radius: 4px;
         }
     </style>
+    <link rel="stylesheet" href="modern.css">
 </head>
 
 <body>
@@ -308,72 +309,70 @@
         </header>
 
         <div class="article-content">
-            <p>Invariant started as something unglamorous: an execution-observability layer for a robot arm. Every node in a
-                workflow emits an event — node id, stage, status, timestamp, latency, references to its input and output, and a
-                failure reason when it fails. A flight recorder for a DAG.</p>
+            <p>Invariant began as an execution-observability layer for a robot arm. Each node in a workflow emits an event
+                carrying a node identifier, stage, status, timestamp, latency, references to its input and output, and a failure
+                reason when applicable. The schema is small and the storage is an append-only JSONL file.</p>
 
-            <p>The interesting part wasn't the schema. It was what the schema kept turning into every time I pointed it at a
-                harder problem.</p>
+            <p>The schema itself is unremarkable. What proved interesting is the set of capabilities it enabled as it was
+                applied to progressively harder problems.</p>
 
-            <h2>From logging to diagnostics</h2>
+            <h2>From logging to per-node diagnostics</h2>
 
-            <p>The first extension was obvious once the events existed: if you log the same DAG in simulation and on hardware,
-                you can diff them <em>per node</em>. Not "sim-to-real gap" as a vague quantity, but a specific node whose latency
-                distribution or output reference diverges from its simulated twin. That turns a research cliché into a
-                debuggable location.</p>
+            <p>The first extension follows directly from having structured events: log the same DAG in simulation and on
+                hardware, then diff them per node. The result is not an aggregate sim-to-real gap but a specific node whose
+                latency distribution or output reference diverges from its simulated counterpart. That converts a general
+                research problem into a localized defect.</p>
 
-            <p>The second extension came from embedding events spatially. A robot's failures are rarely uniform across its
-                workspace — they cluster where reach is marginal, where a camera is glare-blind, where a joint sits near the end
-                of its calibrated range. Attaching end-effector pose to each event turns the log into a map, and the map shows
-                you things a time series won't.</p>
+            <p>The second extension attaches end-effector pose to each event. Robot failures cluster spatially. They
+                concentrate where reach is marginal, where a camera faces a glare source, or where a joint operates near the
+                limit of its calibrated range. Spatially indexed events expose that structure, which a time-ordered log does
+                not.</p>
 
-            <p>The third is where it got sharp: a <strong>proprioceptive veto</strong>. Compare what the high-level policy
-                believes it is doing against what the low-level sensors say is actually happening, and stop when they disagree.
-                That comparison is only meaningful if the two signals are genuinely independent. Which raises the question that
-                ended up reorganizing the whole project.</p>
+            <p>The third extension is a proprioceptive veto: compare the high-level policy's intended action against low-level
+                sensor and motor telemetry, and halt on disagreement. The comparison carries information only if the two signals
+                are independent, which raised the question that reorganized the rest of the project.</p>
 
-            <h2>Independent of what, exactly?</h2>
+            <h2>Independence as a design requirement</h2>
 
-            <p>A monitor that shares the policy's cameras, the policy's clock, and the policy's learned representation will
-                fail in the same conditions the policy fails in. Correlated failure is the default outcome of monitoring a
-                system with a component that resembles it. You don't get a second opinion by asking the same model twice.</p>
+            <p>A monitor sharing the policy's cameras, clock, and learned representation fails under the same conditions the
+                policy fails under. Correlated failure is the default outcome when a system is monitored by a component that
+                resembles it, and querying the same model twice yields no additional information.</p>
 
-            <p>Meaningful independence means different sensors, different timing, and ideally a different <em>kind</em> of
-                model — which is exactly why, in the Jenga safety-gate experiment, tower state comes from classical CV while the
-                anomaly signal comes from a distilled world model. Two mechanisms with different failure surfaces.</p>
+            <p>Useful independence requires different sensors, different timing, and preferably a different model class. In the
+                Jenga safety-gate experiment this is why tower state is extracted with classical CV while the anomaly signal
+                comes from a distilled world model. The two have uncorrelated failure surfaces, so agreement between them is
+                evidence rather than an artifact of shared training data.</p>
 
-            <h2>Why this matters most in construction</h2>
+            <h2>Attestation in construction robotics</h2>
 
-            <p>Apply the same structure to construction robotics and it stops being a debugging tool and becomes an
-                <strong>attestation layer</strong>.</p>
+            <p>Applied to construction, the same structure functions as an attestation layer rather than a debugging tool.</p>
 
-            <p>The blocker on unattended autonomous work on a real job site is not that the machines can't do the task. For a
-                growing set of bounded tasks, they can. The blocker is that nobody with liability exposure will accept the
-                output without evidence. A general contractor, a surety, an inspector — none of them are in a position to
-                evaluate a neural network. They need an auditable record from something that wasn't the robot's own optimistic
-                self-report.</p>
+            <p>The constraint on unattended autonomous work at a job site is not task capability. For a growing set of bounded
+                tasks the capability exists. The constraint is that parties carrying liability will not accept the output
+                without evidence, and a general contractor, a surety, or an inspector is not positioned to evaluate a neural
+                network. What they can evaluate is an auditable execution record produced by something other than the system
+                under review.</p>
 
-            <p>That reframes the monitor's job. It isn't there to make the robot safer in the abstract. It's there to make the
-                robot's execution <em>legible to a third party who has every reason to be skeptical</em>. Different requirement,
-                different design:</p>
+            <p>That reframes the monitor's specification. Its function is not to improve safety in the abstract but to make
+                execution legible to a third party with an incentive to find problems. The requirements follow:</p>
 
             <ul>
-                <li><strong>Independence is a hard requirement, not an optimization.</strong> A monitor sharing the policy's
-                    perception stack is worth roughly nothing as evidence.</li>
-                <li><strong>The record must be append-only and complete,</strong> including the runs that went badly. A log you
-                    can curate after the fact is a marketing document.</li>
-                <li><strong>Blocked actions are as important as executed ones.</strong> "The system declined to act 14 times and
-                    here is the state that triggered each" is the part an inspector actually cares about.</li>
-                <li><strong>Diversity beats redundancy.</strong> Three copies of the same monitor fail together. Two different
-                    monitors disagree usefully.</li>
+                <li><strong>Independence is mandatory, not an optimization.</strong> A monitor sharing the policy's perception
+                    stack has negligible evidentiary value.</li>
+                <li><strong>The record is append-only and complete,</strong> including runs that failed. A log that can be
+                    curated retroactively is not evidence.</li>
+                <li><strong>Blocked actions are recorded with the state that triggered them.</strong> The count of declined
+                    actions and their justification is the portion an inspector examines first.</li>
+                <li><strong>Diversity outperforms redundancy.</strong> Replicated identical monitors fail simultaneously.
+                    Heterogeneous monitors disagree, and the disagreement carries information.</li>
             </ul>
 
-            <h2>What it looks like in practice</h2>
+            <h2>Event structure</h2>
 
-            <p>The event schema in the Jenga experiment is deliberately the same minimal one, applied to a domain small enough
-                to actually finish. Six stage types, six statuses, one append-only log. Two of the statuses exist specifically
-                for this purpose: <code>blocked</code>, when the gate vetoed a proposed action, and <code>flagged</code>, when
-                an anomaly was noted but allowed through as advisory.</p>
+            <p>The schema used in the Jenga experiment is the same minimal one applied to a domain small enough to complete.
+                Six stage types, six statuses, one append-only log. Two statuses exist specifically for the attestation use
+                case: <code>blocked</code>, recording a vetoed action, and <code>flagged</code>, recording an anomaly noted but
+                permitted through as advisory.</p>
 
             <div class="code-block">
                 <pre><code>{
@@ -382,7 +381,7 @@
               "status": "blocked",
               "timestamp": 1755712043.118,
               "latency_ms": 3.7,
-              "input_ref": "ep-0d41…:117",
+              "input_ref": "ep-0d41:117",
               "output_ref": "block",
               "failure_reason": null,
               "robot_id": "so101-default",
@@ -390,15 +389,16 @@
             }</code></pre>
             </div>
 
-            <p>That single record says what decided, at which stage, how long it took, on which timestep of which episode,
-                where the arm was in space, and what it decided. Aggregate a few thousand of them and you have something you can
-                hand to someone who doesn't trust you — which is the actual deliverable.</p>
+            <p>One record identifies the deciding node, its stage, its latency, the episode and timestep it acted on, the arm's
+                pose at decision time, and the decision itself. Aggregated across a deployment, these records constitute a
+                reviewable execution history, which is the artifact the liability-carrying party actually requires.</p>
 
-            <h2>The unglamorous claim</h2>
+            <h2>Position</h2>
 
-            <p>I don't think the next unlock in field robotics is a better policy. I think it's the boring infrastructure that
-                lets a policy's behaviour be audited by someone who wasn't in the room. Capability is advancing fine on its own.
-                Accountability isn't, and accountability is what's actually gating deployment.</p>
+            <p>The binding constraint in field robotics is not policy performance. It is the absence of infrastructure that
+                allows a policy's behavior to be audited by someone who was not present during execution. Capability is
+                improving without intervention. Accountability is not, and accountability is what currently gates
+                deployment.</p>
         </div>
     </article>
 
@@ -435,6 +435,7 @@
             document.body.classList.add('light-mode');
         }
     </script>
+    <script src="motion.js"></script>
 </body>
 
 </html>

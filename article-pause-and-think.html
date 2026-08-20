@@ -284,6 +284,7 @@
             border-radius: 4px;
         }
     </style>
+    <link rel="stylesheet" href="modern.css">
 </head>
 
 <body>
@@ -308,102 +309,101 @@
         </header>
 
         <div class="article-content">
-            <p>"The robot should pause and think when conditions get bad" is one of those sentences everyone nods along to and
-                nobody implements, because it isn't one idea. It's three, they have almost nothing to do with each other, and
-                conflating them is how safety proposals end up sounding complete while leaving the hard part untouched.</p>
+            <p>"The robot should pause and think when conditions degrade" is a requirement that survives design review because
+                it sounds like one specification. It is three, they operate at different layers, and they fail independently.
+                Conflating them produces safety architectures that look complete while leaving the hardest component
+                unimplemented.</p>
 
-            <p>Pulled apart, they are: <strong>staying able to stop</strong>, <strong>thinking harder when unsure</strong>, and
-                <strong>knowing when to ask a human</strong>. Only one of them is genuinely hard, and it's the one that gets the
-                least attention.</p>
+            <p>Separated out: maintaining the ability to stop, allocating more inference compute under uncertainty, and
+                transferring control to a human. Only the first is an open problem, and it receives the least attention.</p>
 
-            <h2>1. Abort reachability — the hard one</h2>
+            <h2>1. Abort reachability</h2>
 
-            <p>"Pause" presupposes that pausing is available. For a physical system mid-motion, that is a real assumption and
-                frequently a false one. A gripper halfway through extracting a friction-fit block has already committed part of
-                the structure's load path. Freezing in place is an action with consequences, not the absence of one.</p>
+            <p>Pausing presupposes that a safe stop is available from the current state. For a system mid-motion this is a
+                substantive assumption and frequently false. A gripper partway through extracting a friction-fit block has
+                already altered the structure's load path. Holding position is a control input with consequences, not a null
+                action.</p>
 
-            <p>So the property you actually want is continuous: <em>at every instant, there exists a control sequence from the
-                current state that reaches a safe terminating state.</em> Not "can I stop right now" but "am I still inside the
-                region from which stopping is possible at all."</p>
+            <p>The property worth specifying is continuous rather than instantaneous: at every timestep, there exists a control
+                sequence from the current state that terminates in a safe set. The operative question is not whether the system
+                can halt now, but whether it remains inside the region from which halting safely is still reachable.</p>
 
-            <p>This is a reachability question, and it's the natural home for latent safety filters — the line of work applying
-                Hamilton-Jacobi reachability inside the latent space of a generative world model, so the safety set is defined
-                over learned dynamics rather than a hand-written model that doesn't exist for contact-rich manipulation. The
-                uncertainty-aware extensions push further, treating calibrated epistemic uncertainty as a proxy for
-                out-of-distribution states, which is precisely where a learned dynamics model's reachability claims stop being
-                trustworthy.</p>
+            <p>This is a reachability problem, and it maps onto latent safety filters, which apply Hamilton-Jacobi reachability
+                within the latent space of a generative world model. That formulation matters for contact-rich manipulation,
+                where an analytic dynamics model adequate for computing reachable sets does not exist. Uncertainty-aware
+                extensions treat calibrated epistemic uncertainty as an out-of-distribution proxy, bounding the region where the
+                learned dynamics, and therefore the reachability computation built on top of them, retain validity.</p>
 
-            <p>Mostly, though, this remains unsolved outside of narrow settings, and it's worth being blunt about that. A
-                system that detects danger but has already left the region where it can do anything about it has detected danger
-                the way a passenger detects a crash.</p>
+            <p>Outside constrained settings this remains unsolved, and the gap is worth stating directly. A system that detects
+                hazard after leaving the recoverable set has produced a measurement, not a mitigation.</p>
 
-            <h2>2. Spending more compute when uncertainty is high</h2>
+            <h2>2. Uncertainty-triggered compute allocation</h2>
 
-            <p>The second reading is the cheapest and the most tractable: run a bigger search, sample more rollouts, take more
-                denoising steps — but only when the situation warrants it. Uniform deliberation is wasteful; a robot doesn't
-                need to agonize over the fiftieth identical easy extraction.</p>
+            <p>The second reading is tractable and mostly an engineering problem: widen the search, sample additional rollouts,
+                increase denoising steps, but only when the state warrants it. Uniform deliberation wastes budget on the
+                forty-ninth routine extraction.</p>
 
-            <p>The interesting design question is what triggers the extra spend, and the answer shouldn't be the model's
-                prediction. It should be its uncertainty. A model that confidently predicts disaster and a model that has no
-                idea what's about to happen call for different responses, and only the second one is a reason to think longer.</p>
+            <p>The design question is what triggers the additional allocation. Prediction is the wrong trigger. A model
+                confidently predicting failure and a model with no basis for prediction call for different responses, and only
+                the second indicates that further computation will change the answer. Confident predictions do not improve with
+                more sampling; they are already at the model's resolution limit.</p>
 
-            <p>There's a latency budget constraint that makes this concrete on small hardware. On an Orange Pi Zero 2W the
-                per-action budget is tight enough that "think harder" has to mean a bounded, measured increase, not an open-ended
-                search. Which is a useful forcing function: it makes you specify what the extra compute actually buys.</p>
+            <p>Hardware imposes a useful constraint here. On an Orange Pi Zero 2W the per-action latency budget forces
+                "allocate more compute" to mean a bounded, measured increase rather than an open-ended search, which in turn
+                forces an explicit statement of what the additional compute purchases.</p>
 
-            <h2>3. Deferring to a human, at a rate you can state in advance</h2>
+            <h2>3. Calibrated deferral</h2>
 
-            <p>The third reading is asking for help. Easy to implement badly — a confidence threshold and a beep — and
-                surprisingly subtle to implement well, because the property you want isn't "asks when unsure." It's <em>asks at a
-                rate you can guarantee before deployment</em>.</p>
+            <p>The third reading is escalation to a human operator. Implementing it badly takes an afternoon: threshold the
+                model's confidence and raise an alert. Implementing it correctly is harder, because the requirement is not that
+                the system asks when uncertain. The requirement is a deferral rate that can be stated before deployment.</p>
 
-            <p>This is where conformal prediction earns its place. Instead of trusting a model's raw confidence — which is
-                typically miscalibrated in exactly the situations that matter — you calibrate on held-out data to get a
-                distribution-free guarantee: the system will achieve a target success rate while deferring to a human no more
-                than some stated fraction of the time. Work in this direction (KnowNo and its relatives) reframes "should I ask?"
-                from a heuristic into a statistical guarantee, which is the difference between a demo and something an operator
-                can staff around.</p>
+            <p>Conformal prediction supplies this. Rather than relying on raw model confidence, which is typically
+                miscalibrated in exactly the distributional regions where deferral matters, calibration against held-out data
+                yields a distribution-free guarantee: a target task success rate subject to a bounded intervention rate. Work in
+                this direction, including KnowNo, converts the escalation decision from a tuned heuristic into a statistical
+                guarantee.</p>
 
-            <p>An operator can plan for "this will ask you roughly once every forty actions." Nobody can plan for "this asks
-                when it feels unsure."</p>
+            <p>An operator can staff around "this system requests input approximately once per forty actions." No staffing
+                model accommodates "this system requests input when its confidence is low."</p>
 
-            <h2>Why the distinction is load-bearing</h2>
-
-            <p>These three sit at different points in the stack and fail in different ways:</p>
+            <h2>Failure modes and composition</h2>
 
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>Mechanism</th><th>Question it answers</th><th>Fails by</th></tr>
+                        <tr><th>Mechanism</th><th>Question answered</th><th>Failure mode</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>Abort reachability</td><td>Can I still stop safely?</td><td>Silently leaving the recoverable set</td></tr>
-                        <tr><td>Adaptive compute</td><td>Should I think longer here?</td><td>Spending effort uniformly, or too late</td></tr>
-                        <tr><td>Calibrated deferral</td><td>Should a human decide this?</td><td>Asking at an unpredictable rate</td></tr>
+                        <tr><td>Abort reachability</td><td>Is a safe stop still reachable?</td><td>Silent exit from the recoverable set</td></tr>
+                        <tr><td>Compute allocation</td><td>Is more inference warranted here?</td><td>Uniform spend, or spend applied too late</td></tr>
+                        <tr><td>Calibrated deferral</td><td>Should a human decide this?</td><td>Unpredictable intervention rate</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <p>A system can be excellent at all three and still be unsafe, because they compose in one direction only: deferral
-                is worthless if the human is consulted after the recoverable region has been left, and extra compute is worthless
-                if it's spent deliberating past the last moment an abort was available. Reachability is the substrate; the other
-                two are scheduling decisions on top of it.</p>
+            <p>The three compose in one direction only. Deferral has no value if the operator is consulted after the
+                recoverable set has been exited, and additional inference compute has no value if it is spent deliberating past
+                the last timestep at which an abort was available. Reachability is the substrate. The other two are scheduling
+                policies that assume it holds.</p>
 
-            <p>The runtime-monitoring literature is largely orthogonal to all three — approaches that check task progress with
-                a vision-language model, or predict failure likelihood from a policy's own internal features, are detectors, and
-                a detector is not a controller. Knowing you're in trouble and having somewhere to go are separate
-                achievements.</p>
+            <p>Most of the runtime-monitoring literature sits orthogonal to all three. Approaches that verify task progress
+                with a vision-language model, or estimate failure likelihood from a policy's internal features, produce
+                detectors. A detector is not a controller, and detecting that the system is in trouble is a separate
+                achievement from having a control sequence that leads out of it.</p>
 
-            <h2>Where the Jenga rig fits</h2>
+            <h2>Scope of the Jenga testbed</h2>
 
-            <p>The safety-gate experiment I'm running is a deliberately small testbed for the first two. A block extraction is
-                a discrete commitment with a physically legible point of no return, which makes "was an abort still available"
-                an answerable question rather than a philosophical one. The gate itself is the crudest possible version of
-                mechanism two: a locked threshold on an anomaly score, veto or proceed, no gradations.</p>
+            <p>The safety-gate experiment addresses the first two mechanisms in a constrained setting. A block extraction is a
+                discrete commitment with a physically identifiable point of no return, which makes "was an abort still
+                available" an empirical question rather than a definitional one. The gate implements the crudest version of the
+                second mechanism: a locked threshold on an anomaly score producing a binary veto, with no graduated
+                response.</p>
 
-            <p>Starting crude is intentional. If a binary veto on an uncertainty signal doesn't reduce catastrophic failures in
-                a domain this constrained, that's information — and it's information I'd rather have before building anything
-                more elaborate on top of the assumption that it would have worked.</p>
+            <p>Starting at that level is deliberate. If a binary veto on an uncertainty signal fails to reduce catastrophic
+                failures in a domain this constrained, the result bounds what more elaborate mechanisms can be expected to
+                deliver, and it is cheaper to obtain that bound now than after building the elaborate version on top of an
+                unverified assumption.</p>
         </div>
     </article>
 
@@ -440,6 +440,7 @@
             document.body.classList.add('light-mode');
         }
     </script>
+    <script src="motion.js"></script>
 </body>
 
 </html>
