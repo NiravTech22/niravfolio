@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why AI Won't Outsmart Natural Intelligence | Nirav Sawant</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpg">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            /* Dark Mode (default) */
+            --bg: #050505;
+            --text: #e0e0e0;
+            --accent: #3b82f6;
+            --accent-rgb: 59, 130, 246;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --secondary: #1f2937;
+            --muted: #9ca3af;
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --hover-bg: rgba(255, 255, 255, 0.05);
+            --grid-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Light Mode - Warm, Easy on Eyes */
+        body.light-mode {
+            --bg: #fff7f5;
+            --text: #2a1036;
+            --accent: #5b2a86;
+            --accent-rgb: 91, 42, 134;
+            --accent-glow: rgba(91, 42, 134, 0.22);
+            --secondary: #3b2354;
+            --muted: #6b4f74;
+            --card-bg: rgba(255, 255, 255, 0.72);
+            --card-border: rgba(42, 16, 54, 0.12);
+            --hover-bg: rgba(91, 42, 134, 0.06);
+            --grid-color: rgba(42, 16, 54, 0.05);
+        }
+
+        /* Floating Theme Button */
+        .theme-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .theme-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text);
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.5s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            line-height: 1.8;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Rest of CSS same as before, ensuring contrast */
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .article-header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(var(--accent-rgb), 0.1);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+            color: var(--text);
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            opacity: 0.95;
+            font-size: 1.05rem;
+        }
+
+        .article-content ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .flowchart {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .flow-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .flow-box {
+            background: rgba(var(--accent-rgb), 0.1);
+            border: 1px solid var(--accent);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            color: var(--text);
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .flow-box.primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            /* Consistent dark code block even in light mode for readability */
+            color: #d4d4d4;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--card-border);
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .article-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .article-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Additions for research articles: tables, pull-notes, inline code */
+        .article-content .table-wrap {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .article-content th,
+        .article-content td {
+            border: 1px solid var(--card-border);
+            padding: 0.65rem 0.85rem;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .article-content th {
+            background: rgba(var(--accent-rgb), 0.08);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content .lede-note {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.98rem;
+            color: var(--text);
+        }
+
+        .article-content p code,
+        .article-content li code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            background: rgba(var(--accent-rgb), 0.1);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <article class="article-container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Portfolio
+        </a>
+
+        <header class="article-header">
+            <h1>Why AI Won't Outsmart Natural Intelligence</h1>
+            <div class="article-meta">
+                <span><i class="far fa-calendar"></i> August 2026</span>
+                <span><i class="far fa-clock"></i> 11 min read</span>
+            </div>
+            <div class="tags">
+                <span class="tag">Psychology</span>
+                <span class="tag">Cognitive Science</span>
+                <span class="tag">Embodiment</span>
+                <span class="tag">AI</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p class="lede-note"><strong>A note on what this argues.</strong> This is a position piece, not a survey. The claim
+                isn't that machines will stay behind on benchmarks — they won't, and that race is largely over on any task you
+                can score. The claim is that "outsmarting" is the wrong frame entirely, because natural intelligence is not a
+                performance system that happens to run on meat. It's a survival system, and its intelligence is inseparable from
+                what it's <em>for</em>. Reasonable people disagree with this. It's an argument, and I've tried to make the honest
+                version of it rather than the flattering one.</p>
+
+            <h2>The oldest embarrassment in AI</h2>
+
+            <p>Moravec's paradox has been sitting in the field's lap since the 1980s and has never really been dislodged: the
+                things humans find hard — symbolic logic, chess, integration by parts — turned out to be comparatively easy to
+                mechanize, while the things any toddler does effortlessly — walking over uneven ground, recognizing that a
+                half-hidden object is still an object, picking up a cup you've never seen — turned out to be brutally hard.</p>
+
+            <p>The usual explanation is evolutionary time. Sensorimotor competence has had hundreds of millions of years of
+                optimization behind it; formal reasoning has had a few thousand. That's true, but it undersells the point. The
+                difficulty isn't that perception and movement are computationally larger problems. It's that they're
+                <em>differently shaped</em>. They are not problems with answers. They're ongoing negotiations with a world that
+                doesn't hold still, conducted by a body that has something at stake in the outcome.</p>
+
+            <h2>Intelligence in service of staying alive</h2>
+
+            <p>Every biological nervous system is, first, a homeostatic device. Before it was ever in the business of solving
+                problems it was in the business of keeping internal variables inside survivable bounds — temperature, glucose,
+                oxygen, hydration. Cognition grew out of that regulatory loop as an extension of it, not as a separate faculty
+                bolted on top.</p>
+
+            <p>This is why Damasio's work on somatic markers cuts so deep. Patients with damage to the ventromedial prefrontal
+                cortex frequently retain intact IQ, intact logic, intact language — and become catastrophically bad at deciding
+                anything. They can enumerate options all afternoon. What they've lost is the bodily valuation signal that makes
+                one option <em>matter</em> more than another. Their reasoning is fine. Their reasoning is also useless, because
+                reasoning was never the thing that ranked outcomes.</p>
+
+            <p>A system with no homeostasis has no stakes. It can be given an objective, and it will optimize the objective
+                beautifully. But the objective is exogenous — handed down, not generated by any condition it is in. Nothing is at
+                risk for it. And the entire structure of natural intelligence, from attention to memory consolidation to
+                emotion, is built around the fact that something is always at risk.</p>
+
+            <h2>Situated in a world, not trained on a description of one</h2>
+
+            <p>The enactivist tradition — Varela, Thompson, and Rosch's argument that cognition is enacted through a body's
+                coupling with its environment rather than computed over internal representations of it — makes a claim that has
+                aged well: an organism doesn't perceive a world and then decide what to do about it. It perceives a world
+                already carved into possibilities for action.</p>
+
+            <p>Gibson called these affordances. A chair affords sitting to an adult and climbing to a two-year-old. Neither of
+                them computes this; it's what the chair looks like to a body of that size with those goals. The perception and
+                the action possibility arrive together, because the perceiving system is the acting system.</p>
+
+            <p>This is also why the frame problem — Dreyfus's long-running objection to symbolic AI — never really went away.
+                An embodied creature doesn't face a combinatorial explosion of possibly-relevant facts when a situation changes,
+                because relevance isn't computed. Relevance is what a body with needs finds salient. Systems that learn from
+                descriptions of the world inherit an enormous amount about how the world is described. What they don't inherit is
+                the standpoint from which some parts of it matter.</p>
+
+            <h2>Priors that were paid for</h2>
+
+            <p>A newborn is not a blank slate running gradient descent. Infants arrive with structured expectations about
+                objects, agents, and number that show up in looking-time studies far too early to be learned from data. Gopnik's
+                work on children as active experimenters describes what happens next: they don't passively fit the data, they
+                intervene, run little experiments, and go out of their way to seek out exactly the observations that would
+                disambiguate competing hypotheses.</p>
+
+            <p>Two things about that are hard to replicate by scaling:</p>
+
+            <ul>
+                <li><strong>The priors are extremely cheap to use and were paid for over evolutionary time.</strong> A child
+                    needs a handful of examples where a model needs millions, because the child isn't starting from
+                    scratch.</li>
+                <li><strong>The curiosity is endogenous.</strong> Nobody assigns a toddler an exploration bonus. The drive to
+                    find out comes from inside a system that will still be alive tomorrow and would benefit from
+                    knowing.</li>
+            </ul>
+
+            <p>Gigerenzer's ecological rationality makes the complementary point about the supposed irrationality of human
+                heuristics. Judged against formal optimality, human shortcuts look like bugs. Judged against the actual
+                conditions of decision-making — incomplete information, time pressure, real consequences — they're often better
+                calibrated than the optimal procedure, because they're fitted to the environment they evolved in rather than to
+                an idealized version of it.</p>
+
+            <h2>The asymmetry that doesn't close</h2>
+
+            <p>Predictive processing — the framework where the brain is fundamentally minimizing prediction error, with
+                perception and action as two ways of doing the same job — makes the difference precise. A biological system can
+                reduce surprise two ways: update its model, or <em>change the world so the prediction comes true</em>. Both are
+                available all the time, because it has a body in the same world its predictions are about.</p>
+
+            <p>That second option is the one that doesn't transfer. Learned systems minimize error by updating. That's the only
+                lever they have on the loop. It's a genuinely different relationship to being wrong.</p>
+
+            <h2>What this does and doesn't mean</h2>
+
+            <p>None of this predicts a ceiling on capability. Machines will keep getting better at essentially everything
+                measurable, and I expect to be wrong about specific timelines in the embarrassing direction. Nor is any of it
+                mystical — I'm not appealing to consciousness, souls, or Gödel. Everything above is mechanism.</p>
+
+            <p>The claim is narrower and, I think, more durable: <strong>"smarter" is a comparison that requires a shared
+                purpose, and there isn't one.</strong> Natural intelligence is the behaviour of a system that must keep itself
+                alive, generates its own goals as a consequence, and finds relevance through having something at stake.
+                Artificial intelligence is the behaviour of a system that optimizes objectives it was handed, with nothing at
+                stake, in a world it isn't in. These are different kinds of thing. One can exceed the other at every task on a
+                list without ever occupying the position the other occupies.</p>
+
+            <p>Which has a practical edge, and it's the reason I care about this while building robots. If you assume the
+                difference is degree, then safety is a capability problem: keep improving the model until it's reliable enough.
+                If the difference is kind, then no amount of capability produces a system that has skin in the game — and the
+                stakes have to be supplied from outside, by monitors, by constraints, by humans who remain accountable. That is
+                an engineering commitment, and it's the one I'd rather build on.</p>
+        </div>
+    </article>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+        <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+    </button>
+
+    <footer>
+        <p>© 2025 Nirav Sawant. Written with curiosity and caffeine.</p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('light-mode');
+            const isLight = body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+
+        // Initialize
+        if (localStorage.getItem('theme') === 'light' ||
+            (!localStorage.getItem('theme') && false)) { // default dark
+            document.body.classList.add('light-mode');
+        }
+    </script>
+</body>
+
+</html>

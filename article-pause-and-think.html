@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three Things People Mean by "Pause and Think" | Nirav Sawant</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpg">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            /* Dark Mode (default) */
+            --bg: #050505;
+            --text: #e0e0e0;
+            --accent: #3b82f6;
+            --accent-rgb: 59, 130, 246;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --secondary: #1f2937;
+            --muted: #9ca3af;
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --hover-bg: rgba(255, 255, 255, 0.05);
+            --grid-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Light Mode - Warm, Easy on Eyes */
+        body.light-mode {
+            --bg: #fff7f5;
+            --text: #2a1036;
+            --accent: #5b2a86;
+            --accent-rgb: 91, 42, 134;
+            --accent-glow: rgba(91, 42, 134, 0.22);
+            --secondary: #3b2354;
+            --muted: #6b4f74;
+            --card-bg: rgba(255, 255, 255, 0.72);
+            --card-border: rgba(42, 16, 54, 0.12);
+            --hover-bg: rgba(91, 42, 134, 0.06);
+            --grid-color: rgba(42, 16, 54, 0.05);
+        }
+
+        /* Floating Theme Button */
+        .theme-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .theme-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text);
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.5s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            line-height: 1.8;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Rest of CSS same as before, ensuring contrast */
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .article-header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(var(--accent-rgb), 0.1);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+            color: var(--text);
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            opacity: 0.95;
+            font-size: 1.05rem;
+        }
+
+        .article-content ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .flowchart {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .flow-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .flow-box {
+            background: rgba(var(--accent-rgb), 0.1);
+            border: 1px solid var(--accent);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            color: var(--text);
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .flow-box.primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            /* Consistent dark code block even in light mode for readability */
+            color: #d4d4d4;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--card-border);
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .article-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .article-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Additions for research articles: tables, pull-notes, inline code */
+        .article-content .table-wrap {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .article-content th,
+        .article-content td {
+            border: 1px solid var(--card-border);
+            padding: 0.65rem 0.85rem;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .article-content th {
+            background: rgba(var(--accent-rgb), 0.08);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content .lede-note {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.98rem;
+            color: var(--text);
+        }
+
+        .article-content p code,
+        .article-content li code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            background: rgba(var(--accent-rgb), 0.1);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <article class="article-container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Portfolio
+        </a>
+
+        <header class="article-header">
+            <h1>Three Things People Mean by "Pause and Think"</h1>
+            <div class="article-meta">
+                <span><i class="far fa-calendar"></i> August 2026</span>
+                <span><i class="far fa-clock"></i> 10 min read</span>
+            </div>
+            <div class="tags">
+                <span class="tag">Safety</span>
+                <span class="tag">Uncertainty</span>
+                <span class="tag">Reachability</span>
+                <span class="tag">Human-Robot Interaction</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>"The robot should pause and think when conditions get bad" is one of those sentences everyone nods along to and
+                nobody implements, because it isn't one idea. It's three, they have almost nothing to do with each other, and
+                conflating them is how safety proposals end up sounding complete while leaving the hard part untouched.</p>
+
+            <p>Pulled apart, they are: <strong>staying able to stop</strong>, <strong>thinking harder when unsure</strong>, and
+                <strong>knowing when to ask a human</strong>. Only one of them is genuinely hard, and it's the one that gets the
+                least attention.</p>
+
+            <h2>1. Abort reachability — the hard one</h2>
+
+            <p>"Pause" presupposes that pausing is available. For a physical system mid-motion, that is a real assumption and
+                frequently a false one. A gripper halfway through extracting a friction-fit block has already committed part of
+                the structure's load path. Freezing in place is an action with consequences, not the absence of one.</p>
+
+            <p>So the property you actually want is continuous: <em>at every instant, there exists a control sequence from the
+                current state that reaches a safe terminating state.</em> Not "can I stop right now" but "am I still inside the
+                region from which stopping is possible at all."</p>
+
+            <p>This is a reachability question, and it's the natural home for latent safety filters — the line of work applying
+                Hamilton-Jacobi reachability inside the latent space of a generative world model, so the safety set is defined
+                over learned dynamics rather than a hand-written model that doesn't exist for contact-rich manipulation. The
+                uncertainty-aware extensions push further, treating calibrated epistemic uncertainty as a proxy for
+                out-of-distribution states, which is precisely where a learned dynamics model's reachability claims stop being
+                trustworthy.</p>
+
+            <p>Mostly, though, this remains unsolved outside of narrow settings, and it's worth being blunt about that. A
+                system that detects danger but has already left the region where it can do anything about it has detected danger
+                the way a passenger detects a crash.</p>
+
+            <h2>2. Spending more compute when uncertainty is high</h2>
+
+            <p>The second reading is the cheapest and the most tractable: run a bigger search, sample more rollouts, take more
+                denoising steps — but only when the situation warrants it. Uniform deliberation is wasteful; a robot doesn't
+                need to agonize over the fiftieth identical easy extraction.</p>
+
+            <p>The interesting design question is what triggers the extra spend, and the answer shouldn't be the model's
+                prediction. It should be its uncertainty. A model that confidently predicts disaster and a model that has no
+                idea what's about to happen call for different responses, and only the second one is a reason to think longer.</p>
+
+            <p>There's a latency budget constraint that makes this concrete on small hardware. On an Orange Pi Zero 2W the
+                per-action budget is tight enough that "think harder" has to mean a bounded, measured increase, not an open-ended
+                search. Which is a useful forcing function: it makes you specify what the extra compute actually buys.</p>
+
+            <h2>3. Deferring to a human, at a rate you can state in advance</h2>
+
+            <p>The third reading is asking for help. Easy to implement badly — a confidence threshold and a beep — and
+                surprisingly subtle to implement well, because the property you want isn't "asks when unsure." It's <em>asks at a
+                rate you can guarantee before deployment</em>.</p>
+
+            <p>This is where conformal prediction earns its place. Instead of trusting a model's raw confidence — which is
+                typically miscalibrated in exactly the situations that matter — you calibrate on held-out data to get a
+                distribution-free guarantee: the system will achieve a target success rate while deferring to a human no more
+                than some stated fraction of the time. Work in this direction (KnowNo and its relatives) reframes "should I ask?"
+                from a heuristic into a statistical guarantee, which is the difference between a demo and something an operator
+                can staff around.</p>
+
+            <p>An operator can plan for "this will ask you roughly once every forty actions." Nobody can plan for "this asks
+                when it feels unsure."</p>
+
+            <h2>Why the distinction is load-bearing</h2>
+
+            <p>These three sit at different points in the stack and fail in different ways:</p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Mechanism</th><th>Question it answers</th><th>Fails by</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Abort reachability</td><td>Can I still stop safely?</td><td>Silently leaving the recoverable set</td></tr>
+                        <tr><td>Adaptive compute</td><td>Should I think longer here?</td><td>Spending effort uniformly, or too late</td></tr>
+                        <tr><td>Calibrated deferral</td><td>Should a human decide this?</td><td>Asking at an unpredictable rate</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>A system can be excellent at all three and still be unsafe, because they compose in one direction only: deferral
+                is worthless if the human is consulted after the recoverable region has been left, and extra compute is worthless
+                if it's spent deliberating past the last moment an abort was available. Reachability is the substrate; the other
+                two are scheduling decisions on top of it.</p>
+
+            <p>The runtime-monitoring literature is largely orthogonal to all three — approaches that check task progress with
+                a vision-language model, or predict failure likelihood from a policy's own internal features, are detectors, and
+                a detector is not a controller. Knowing you're in trouble and having somewhere to go are separate
+                achievements.</p>
+
+            <h2>Where the Jenga rig fits</h2>
+
+            <p>The safety-gate experiment I'm running is a deliberately small testbed for the first two. A block extraction is
+                a discrete commitment with a physically legible point of no return, which makes "was an abort still available"
+                an answerable question rather than a philosophical one. The gate itself is the crudest possible version of
+                mechanism two: a locked threshold on an anomaly score, veto or proceed, no gradations.</p>
+
+            <p>Starting crude is intentional. If a binary veto on an uncertainty signal doesn't reduce catastrophic failures in
+                a domain this constrained, that's information — and it's information I'd rather have before building anything
+                more elaborate on top of the assumption that it would have worked.</p>
+        </div>
+    </article>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+        <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+    </button>
+
+    <footer>
+        <p>© 2025 Nirav Sawant. Written with curiosity and caffeine.</p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('light-mode');
+            const isLight = body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+
+        // Initialize
+        if (localStorage.getItem('theme') === 'light' ||
+            (!localStorage.getItem('theme') && false)) { // default dark
+            document.body.classList.add('light-mode');
+        }
+    </script>
+</body>
+
+</html>

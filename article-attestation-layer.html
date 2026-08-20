@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Attestation Layer: Autonomy's Real Blocker Isn't Capability | Nirav Sawant</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpg">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            /* Dark Mode (default) */
+            --bg: #050505;
+            --text: #e0e0e0;
+            --accent: #3b82f6;
+            --accent-rgb: 59, 130, 246;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --secondary: #1f2937;
+            --muted: #9ca3af;
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --hover-bg: rgba(255, 255, 255, 0.05);
+            --grid-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Light Mode - Warm, Easy on Eyes */
+        body.light-mode {
+            --bg: #fff7f5;
+            --text: #2a1036;
+            --accent: #5b2a86;
+            --accent-rgb: 91, 42, 134;
+            --accent-glow: rgba(91, 42, 134, 0.22);
+            --secondary: #3b2354;
+            --muted: #6b4f74;
+            --card-bg: rgba(255, 255, 255, 0.72);
+            --card-border: rgba(42, 16, 54, 0.12);
+            --hover-bg: rgba(91, 42, 134, 0.06);
+            --grid-color: rgba(42, 16, 54, 0.05);
+        }
+
+        /* Floating Theme Button */
+        .theme-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .theme-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text);
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.5s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            line-height: 1.8;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Rest of CSS same as before, ensuring contrast */
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .article-header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(var(--accent-rgb), 0.1);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+            color: var(--text);
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            opacity: 0.95;
+            font-size: 1.05rem;
+        }
+
+        .article-content ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .flowchart {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .flow-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .flow-box {
+            background: rgba(var(--accent-rgb), 0.1);
+            border: 1px solid var(--accent);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            color: var(--text);
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .flow-box.primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            /* Consistent dark code block even in light mode for readability */
+            color: #d4d4d4;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--card-border);
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .article-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .article-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Additions for research articles: tables, pull-notes, inline code */
+        .article-content .table-wrap {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .article-content th,
+        .article-content td {
+            border: 1px solid var(--card-border);
+            padding: 0.65rem 0.85rem;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .article-content th {
+            background: rgba(var(--accent-rgb), 0.08);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content .lede-note {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.98rem;
+            color: var(--text);
+        }
+
+        .article-content p code,
+        .article-content li code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            background: rgba(var(--accent-rgb), 0.1);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <article class="article-container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Portfolio
+        </a>
+
+        <header class="article-header">
+            <h1>The Attestation Layer: Autonomy's Real Blocker Isn't Capability</h1>
+            <div class="article-meta">
+                <span><i class="far fa-calendar"></i> August 2026</span>
+                <span><i class="far fa-clock"></i> 9 min read</span>
+            </div>
+            <div class="tags">
+                <span class="tag">Robotics</span>
+                <span class="tag">Construction Automation</span>
+                <span class="tag">Runtime Monitoring</span>
+                <span class="tag">Trust</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>Invariant started as something unglamorous: an execution-observability layer for a robot arm. Every node in a
+                workflow emits an event — node id, stage, status, timestamp, latency, references to its input and output, and a
+                failure reason when it fails. A flight recorder for a DAG.</p>
+
+            <p>The interesting part wasn't the schema. It was what the schema kept turning into every time I pointed it at a
+                harder problem.</p>
+
+            <h2>From logging to diagnostics</h2>
+
+            <p>The first extension was obvious once the events existed: if you log the same DAG in simulation and on hardware,
+                you can diff them <em>per node</em>. Not "sim-to-real gap" as a vague quantity, but a specific node whose latency
+                distribution or output reference diverges from its simulated twin. That turns a research cliché into a
+                debuggable location.</p>
+
+            <p>The second extension came from embedding events spatially. A robot's failures are rarely uniform across its
+                workspace — they cluster where reach is marginal, where a camera is glare-blind, where a joint sits near the end
+                of its calibrated range. Attaching end-effector pose to each event turns the log into a map, and the map shows
+                you things a time series won't.</p>
+
+            <p>The third is where it got sharp: a <strong>proprioceptive veto</strong>. Compare what the high-level policy
+                believes it is doing against what the low-level sensors say is actually happening, and stop when they disagree.
+                That comparison is only meaningful if the two signals are genuinely independent. Which raises the question that
+                ended up reorganizing the whole project.</p>
+
+            <h2>Independent of what, exactly?</h2>
+
+            <p>A monitor that shares the policy's cameras, the policy's clock, and the policy's learned representation will
+                fail in the same conditions the policy fails in. Correlated failure is the default outcome of monitoring a
+                system with a component that resembles it. You don't get a second opinion by asking the same model twice.</p>
+
+            <p>Meaningful independence means different sensors, different timing, and ideally a different <em>kind</em> of
+                model — which is exactly why, in the Jenga safety-gate experiment, tower state comes from classical CV while the
+                anomaly signal comes from a distilled world model. Two mechanisms with different failure surfaces.</p>
+
+            <h2>Why this matters most in construction</h2>
+
+            <p>Apply the same structure to construction robotics and it stops being a debugging tool and becomes an
+                <strong>attestation layer</strong>.</p>
+
+            <p>The blocker on unattended autonomous work on a real job site is not that the machines can't do the task. For a
+                growing set of bounded tasks, they can. The blocker is that nobody with liability exposure will accept the
+                output without evidence. A general contractor, a surety, an inspector — none of them are in a position to
+                evaluate a neural network. They need an auditable record from something that wasn't the robot's own optimistic
+                self-report.</p>
+
+            <p>That reframes the monitor's job. It isn't there to make the robot safer in the abstract. It's there to make the
+                robot's execution <em>legible to a third party who has every reason to be skeptical</em>. Different requirement,
+                different design:</p>
+
+            <ul>
+                <li><strong>Independence is a hard requirement, not an optimization.</strong> A monitor sharing the policy's
+                    perception stack is worth roughly nothing as evidence.</li>
+                <li><strong>The record must be append-only and complete,</strong> including the runs that went badly. A log you
+                    can curate after the fact is a marketing document.</li>
+                <li><strong>Blocked actions are as important as executed ones.</strong> "The system declined to act 14 times and
+                    here is the state that triggered each" is the part an inspector actually cares about.</li>
+                <li><strong>Diversity beats redundancy.</strong> Three copies of the same monitor fail together. Two different
+                    monitors disagree usefully.</li>
+            </ul>
+
+            <h2>What it looks like in practice</h2>
+
+            <p>The event schema in the Jenga experiment is deliberately the same minimal one, applied to a domain small enough
+                to actually finish. Six stage types, six statuses, one append-only log. Two of the statuses exist specifically
+                for this purpose: <code>blocked</code>, when the gate vetoed a proposed action, and <code>flagged</code>, when
+                an anomaly was noted but allowed through as advisory.</p>
+
+            <div class="code-block">
+                <pre><code>{
+              "node_id": "gate_decision-4f2a9c1b",
+              "stage": "gate_decision",
+              "status": "blocked",
+              "timestamp": 1755712043.118,
+              "latency_ms": 3.7,
+              "input_ref": "ep-0d41…:117",
+              "output_ref": "block",
+              "failure_reason": null,
+              "robot_id": "so101-default",
+              "spatial_pose": [0.212, -0.038, 0.094]
+            }</code></pre>
+            </div>
+
+            <p>That single record says what decided, at which stage, how long it took, on which timestep of which episode,
+                where the arm was in space, and what it decided. Aggregate a few thousand of them and you have something you can
+                hand to someone who doesn't trust you — which is the actual deliverable.</p>
+
+            <h2>The unglamorous claim</h2>
+
+            <p>I don't think the next unlock in field robotics is a better policy. I think it's the boring infrastructure that
+                lets a policy's behaviour be audited by someone who wasn't in the room. Capability is advancing fine on its own.
+                Accountability isn't, and accountability is what's actually gating deployment.</p>
+        </div>
+    </article>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+        <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+    </button>
+
+    <footer>
+        <p>© 2025 Nirav Sawant. Written with curiosity and caffeine.</p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('light-mode');
+            const isLight = body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+
+        // Initialize
+        if (localStorage.getItem('theme') === 'light' ||
+            (!localStorage.getItem('theme') && false)) { // default dark
+            document.body.classList.add('light-mode');
+        }
+    </script>
+</body>
+
+</html>

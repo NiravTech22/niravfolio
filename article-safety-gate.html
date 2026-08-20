@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uncertainty, Not Prediction, Should Hold the Veto | Nirav Sawant</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpg">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            /* Dark Mode (default) */
+            --bg: #050505;
+            --text: #e0e0e0;
+            --accent: #3b82f6;
+            --accent-rgb: 59, 130, 246;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --secondary: #1f2937;
+            --muted: #9ca3af;
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --hover-bg: rgba(255, 255, 255, 0.05);
+            --grid-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Light Mode - Warm, Easy on Eyes */
+        body.light-mode {
+            --bg: #fff7f5;
+            --text: #2a1036;
+            --accent: #5b2a86;
+            --accent-rgb: 91, 42, 134;
+            --accent-glow: rgba(91, 42, 134, 0.22);
+            --secondary: #3b2354;
+            --muted: #6b4f74;
+            --card-bg: rgba(255, 255, 255, 0.72);
+            --card-border: rgba(42, 16, 54, 0.12);
+            --hover-bg: rgba(91, 42, 134, 0.06);
+            --grid-color: rgba(42, 16, 54, 0.05);
+        }
+
+        /* Floating Theme Button */
+        .theme-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .theme-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text);
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.5s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            line-height: 1.8;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Rest of CSS same as before, ensuring contrast */
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .article-header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(var(--accent-rgb), 0.1);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+            color: var(--text);
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            opacity: 0.95;
+            font-size: 1.05rem;
+        }
+
+        .article-content ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .flowchart {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .flow-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .flow-box {
+            background: rgba(var(--accent-rgb), 0.1);
+            border: 1px solid var(--accent);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            color: var(--text);
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .flow-box.primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            /* Consistent dark code block even in light mode for readability */
+            color: #d4d4d4;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--card-border);
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .article-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .article-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Additions for research articles: tables, pull-notes, inline code */
+        .article-content .table-wrap {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .article-content th,
+        .article-content td {
+            border: 1px solid var(--card-border);
+            padding: 0.65rem 0.85rem;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .article-content th {
+            background: rgba(var(--accent-rgb), 0.08);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content .lede-note {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.98rem;
+            color: var(--text);
+        }
+
+        .article-content p code,
+        .article-content li code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            background: rgba(var(--accent-rgb), 0.1);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <article class="article-container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Portfolio
+        </a>
+
+        <header class="article-header">
+            <h1>Uncertainty, Not Prediction, Should Hold the Veto</h1>
+            <div class="article-meta">
+                <span><i class="far fa-calendar"></i> August 2026</span>
+                <span><i class="far fa-clock"></i> 12 min read</span>
+            </div>
+            <div class="tags">
+                <span class="tag">Robotics Safety</span>
+                <span class="tag">World Models</span>
+                <span class="tag">Manipulation</span>
+                <span class="tag">Experiment Design</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>Most safety work on learned manipulation policies asks the model what it
+                <em>thinks</em> will happen and then acts on that prediction. I think that is backwards. A world model is least
+                accurate exactly when it matters most — in the situations it has seen least of. Its point prediction is the
+                weakest signal available at the moment you need the strongest one. Its <strong>uncertainty</strong>, on the
+                other hand, is a live estimate of how far outside familiar territory the system currently is.</p>
+
+            <p>So the thesis I'm testing is narrow and falsifiable: <strong>a learned world model's epistemic uncertainty, not
+                its prediction, is what should be allowed to veto an action.</strong></p>
+
+            <p>To test it I need a domain small enough that ground truth is cheap and physical enough that failure is
+                unambiguous. Jenga extraction with an SO-101 arm is that domain. A tower either stands or it doesn't. There is
+                no partial credit and no arguing with the video.</p>
+
+            <h2>The setup, and the honest starting point</h2>
+
+            <p>VR teleoperation works. That is all that works. Everything else in the table below is something I have to build,
+                in order, where each step produces the thing the next one consumes.</p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Component</th><th>Status at kickoff</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>SO-101 follower arm</td><td>Built, calibrated</td></tr>
+                        <tr><td>VR teleoperation</td><td>Working</td></tr>
+                        <tr><td>Camera pipeline</td><td>Not built</td></tr>
+                        <tr><td>Dataset</td><td>Does not exist</td></tr>
+                        <tr><td>Policy</td><td>Does not exist</td></tr>
+                        <tr><td>Anomaly detector</td><td>Does not exist</td></tr>
+                        <tr><td>Invariant safety gate</td><td>Not wired to this project</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Deciding what runs where, before installing anything</h2>
+
+            <p>The first real decision isn't algorithmic, it's architectural: what runs on which machine. Get this wrong and
+                you install the wrong frameworks and discover it six steps later.</p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Component</th><th>Runs on</th><th>Why</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>VR teleop &rarr; IK &rarr; arm control</td><td>Host PC</td><td>Low latency, close to the arm</td></tr>
+                        <tr><td>Dataset recording</td><td>Same host PC</td><td>Recording happens on the machine driving the arm</td></tr>
+                        <tr><td>Policy training (ACT)</td><td>Host PC or GPU machine</td><td>One-time offline cost</td></tr>
+                        <tr><td>V-JEPA distillation</td><td>GPU machine</td><td>V-JEPA itself never runs on the edge device</td></tr>
+                        <tr><td>Live inference (policy + detector + gate)</td><td>Orange Pi Zero 2W</td><td>The actual edge deployment</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>Only the distilled student model ever touches the Pi. The teacher is a one-time offline expense, which is the
+                entire point of distillation here.</p>
+
+            <h2>Ground truth has to be dumber than the thing it judges</h2>
+
+            <p>Steps 1 and 2 are deliberately boring: mount two cameras rigidly, fix the lighting, then extract tower state with
+                classical CV — ArUco markers at the base for a world frame, edge detection for per-layer block occupancy, a
+                lean-angle estimate from the side camera.</p>
+
+            <p>No learning anywhere in that pipeline, and that's not laziness. If tower state came from a learned model, then
+                scoring a learned anomaly detector against it would be circular — two models agreeing tells you nothing about
+                whether either is right. Classical CV gives me a ground-truth signal that is independent of everything it is
+                later used to evaluate.</p>
+
+            <p>The exit condition is 20 out of 20 on manual validation trials. Not 18. If tower-state extraction is
+                untrustworthy, every number produced downstream is decoration.</p>
+
+            <h2>The data campaign</h2>
+
+            <p>Twenty-two sessions minimum, spread deliberately across regimes rather than collected until it feels like
+                enough:</p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Scenario category</th><th>Description</th><th>Sessions</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Stable tower, easy extraction</td><td>Standard tower, loose blocks</td><td>5</td></tr>
+                        <tr><td>Stable tower, tight extraction</td><td>Snug, friction-fit blocks</td><td>4</td></tr>
+                        <tr><td>Leaning tower</td><td>Built with an intentional lean</td><td>4</td></tr>
+                        <tr><td>Near-collapse tower</td><td>Several blocks already removed</td><td>3</td></tr>
+                        <tr><td>Off-center placement</td><td>Irregular geometry</td><td>3</td></tr>
+                        <tr><td>Recovery scenarios</td><td>Induced wobble, corrected mid-extraction</td><td>3</td></tr>
+                        <tr><td><strong>Total</strong></td><td></td><td><strong>22</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>The recovery episodes matter more than their count suggests. A dataset of clean successes teaches a policy what
+                good looks like but never what recovering from bad looks like.</p>
+
+            <h2>Control group, then treatment group</h2>
+
+            <p>Step 5 trains an ACT policy and runs it autonomously with no gate at all, across held-out scenarios. That table
+                of numbers gets frozen the moment it's recorded. It is the control group, and a control group you revise after
+                seeing the treatment results isn't a control group.</p>
+
+            <p>Step 6 builds the detector in two halves that run in parallel. Part A, on the GPU machine: pull the smallest
+                published V-JEPA checkpoint, extract embeddings over the Step 4 frames, and distill a shallow student model that
+                regresses an anomaly score from raw pixels, trained against V-JEPA's embedding-space prediction error. Part B is
+                manual and unglamorous: hand-label roughly 75 held-out frames as structurally normal or risky, used for
+                evaluation only, never for training.</p>
+
+            <p>Step 7 wires the gate — an Invariant DAG node taking a proposed action plus an anomaly score and emitting
+                execute or block — and then <strong>locks the threshold</strong>. Tuned against Step 6's validation set, never
+                against live runs. In the implementation this is enforced in code rather than left to discipline: the gate object
+                refuses to evaluate without a locked threshold, and refuses to be re-locked once set. If you genuinely need a
+                different threshold you are running a new experiment, and you should have to say so out loud.</p>
+
+            <div class="flowchart">
+                <div class="flow-diagram">
+                    <div class="flow-row">
+                        <div class="flow-box">Camera frame</div>
+                        <span>&rarr;</span>
+                        <div class="flow-box">Policy (ACT)</div>
+                        <span>&rarr;</span>
+                        <div class="flow-box">Proposed action</div>
+                    </div>
+                    <span>&darr;</span>
+                    <div class="flow-row">
+                        <div class="flow-box">Anomaly score</div>
+                        <span>&rarr;</span>
+                        <div class="flow-box primary">Gate: execute / block</div>
+                    </div>
+                    <span>&darr;</span>
+                    <div class="flow-row">
+                        <div class="flow-box">Actuation</div>
+                        <span>+</span>
+                        <div class="flow-box">Invariant event log</div>
+                    </div>
+                </div>
+            </div>
+
+            <p>The gate fails closed. Any exception inside the scorer is treated as a maximal anomaly and blocks the action. A
+                safety mechanism that fails open when its own machinery breaks is not a safety mechanism, it's a comfort
+                blanket.</p>
+
+            <h2>The one table that is the entire result</h2>
+
+            <p>Step 8 reruns the identical policy across the identical held-out scenarios, now behind the locked gate. Step 9 is
+                subtraction.</p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Metric</th><th>Ungated (Step 5)</th><th>Gated (Step 8)</th><th>&Delta;</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Success rate</td><td></td><td></td><td></td></tr>
+                        <tr><td>Catastrophic failure rate</td><td></td><td></td><td></td></tr>
+                        <tr><td>Near-miss rate</td><td></td><td></td><td></td></tr>
+                        <tr><td>Gate false-positive rate</td><td>n/a</td><td></td><td></td></tr>
+                        <tr><td>Added latency (ms/action)</td><td>n/a</td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>The thesis is supported only if catastrophic failures drop meaningfully <em>and</em> success rate doesn't
+                collapse <em>and</em> the false-positive rate stays low enough that the gate is discriminating rather than just
+                refusing to act. All three, or it doesn't count. A gate that blocks everything achieves a perfect safety record
+                and is completely useless.</p>
+
+            <p>This verdict logic lives in code, with explicit thresholds, precisely so that I can't talk myself into a
+                generous reading of a marginal result at 2am.</p>
+
+            <h2>The result I'm actually prepared for</h2>
+
+            <p>The gate may not help. Or it may help only by being so conservative that the robot barely acts. Both outcomes get
+                written up exactly as they happen. A clean negative result with sound methodology is worth more than a positive
+                one assembled by moving the goalposts — and in safety work specifically, a false positive published as a win is
+                how people end up trusting things they shouldn't.</p>
+
+            <p>The build is sequential and I'm partway through it. The repo carries the plan as its source of truth, a progress
+                tracker that gets updated as steps close, and an execution-observability log so that when something fails I can
+                tell which node failed and why rather than guessing from a video.</p>
+        </div>
+    </article>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+        <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+    </button>
+
+    <footer>
+        <p>© 2025 Nirav Sawant. Written with curiosity and caffeine.</p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('light-mode');
+            const isLight = body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+
+        // Initialize
+        if (localStorage.getItem('theme') === 'light' ||
+            (!localStorage.getItem('theme') && false)) { // default dark
+            document.body.classList.add('light-mode');
+        }
+    </script>
+</body>
+
+</html>

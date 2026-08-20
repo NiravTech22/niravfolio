@@ -3007,6 +3007,33 @@
       <div class="projects-grid">
         <div class="project-card">
           <div class="project-content">
+            <h3>jenga-safety-gate</h3>
+            <p>Testing whether a world model's uncertainty — not its prediction — should be allowed to veto a robot's
+              action. An SO-101 arm extracts Jenga blocks behind a fail-closed safety gate driven by a V-JEPA-distilled
+              anomaly detector, scored against an ungated control group on the same held-out scenarios. Classical CV
+              provides ground-truth tower state so the evaluation isn't circular.</p>
+            <div class="project-tech">
+              <span>Python</span>
+              <span>LeRobot</span>
+              <span>OpenCV</span>
+              <span>V-JEPA</span>
+              <span>Robot Safety</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/NiravTech22/jenga-safety-gate" target="_blank" class="project-link">
+                <img src="github-icon.png" alt="GitHub"
+                  style="width: 1rem; height: 1rem; margin-right: 0.5rem; vertical-align: middle;">
+                <span>GitHub</span>
+              </a>
+              <a href="article-safety-gate.html" class="project-link">
+                <span>Read the write-up</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-content">
             <h3>Autodidax</h3>
             <p>Treating learning as a control problem. Autodidax maintains a belief about your cognitive state and picks
               instructional actions that optimize for actual long-term learning. Uses meta-learning to adapt fast to new
@@ -3109,6 +3136,54 @@
   <section id="tech-blog">
     <h2 class="section-title">my thoughts</h2>
     <div class="section-grid">
+      <a href="article-safety-gate.html" class="blog-card" style="text-decoration: none; color: inherit;">
+        <h3>Uncertainty, Not Prediction, Should Hold the Veto</h3>
+        <div class="date">August 2026</div>
+        <p>A world model is least accurate exactly when it matters most. The full experimental plan for testing
+          whether epistemic uncertainty makes a better safety signal than a point prediction — control group, locked
+          threshold, and a result I'm prepared to have go against me.</p>
+        <div class="tags">
+          <span class="tag">Robotics Safety</span>
+          <span class="tag">World Models</span>
+          <span class="tag">Experiment Design</span>
+        </div>
+      </a>
+      <a href="article-pause-and-think.html" class="blog-card" style="text-decoration: none; color: inherit;">
+        <h3>Three Things People Mean by "Pause and Think"</h3>
+        <div class="date">August 2026</div>
+        <p>Staying able to stop, thinking harder when unsure, and knowing when to ask a human are three different
+          mechanisms with three different failure modes. Only one of them is actually hard, and it gets the least
+          attention.</p>
+        <div class="tags">
+          <span class="tag">Safety</span>
+          <span class="tag">Uncertainty</span>
+          <span class="tag">Reachability</span>
+        </div>
+      </a>
+      <a href="article-attestation-layer.html" class="blog-card" style="text-decoration: none; color: inherit;">
+        <h3>The Attestation Layer</h3>
+        <div class="date">August 2026</div>
+        <p>The blocker on unattended autonomous work isn't capability, it's that nobody with liability exposure will
+          accept a robot's own self-report. What changes when you design the monitor for a skeptical third party
+          instead of for yourself.</p>
+        <div class="tags">
+          <span class="tag">Robotics</span>
+          <span class="tag">Runtime Monitoring</span>
+          <span class="tag">Trust</span>
+        </div>
+      </a>
+      <a href="article-natural-intelligence.html" class="blog-card" style="text-decoration: none; color: inherit;">
+        <h3>Why AI Won't Outsmart Natural Intelligence</h3>
+        <div class="date">August 2026</div>
+        <p>Not a claim about benchmarks — machines will win those. A claim that "smarter" needs a shared purpose and
+          there isn't one: natural intelligence is a survival system that generates its own stakes, and that position
+          isn't reachable by scaling.</p>
+        <div class="tags">
+          <span class="tag">Psychology</span>
+          <span class="tag">Cognitive Science</span>
+          <span class="tag">Embodiment</span>
+        </div>
+      </a>
       <a href="article-studentio.html" class="blog-card" style="text-decoration: none; color: inherit;">
         <h3>Learning as a Control Problem</h3>
         <div class="date">January 2025</div>
@@ -3374,8 +3449,9 @@
     let selectedIndex = 0;
 
     const commands = [
-      { title: 'Go to Projects', subtitle: 'View StudentIO, Invariant...', icon: '<i class="fas fa-code"></i>', action: () => { window.location.href = '#projects'; } },
-      { title: 'Read My Thoughts', subtitle: 'Articles on ML and GPU Computing...', icon: '<i class="fas fa-rss"></i>', action: () => { window.location.href = '#tech-blog'; } },
+      { title: 'Go to Projects', subtitle: 'View jenga-safety-gate, Invariant, Autodidax...', icon: '<i class="fas fa-code"></i>', action: () => { window.location.href = '#projects'; } },
+      { title: 'Read My Thoughts', subtitle: 'Robot safety, uncertainty, cognition...', icon: '<i class="fas fa-rss"></i>', action: () => { window.location.href = '#tech-blog'; } },
+      { title: 'Read: Uncertainty Should Hold the Veto', subtitle: 'The jenga-safety-gate experiment', icon: '<i class="fas fa-flask"></i>', action: () => { window.location.href = 'article-safety-gate.html'; } },
       { title: 'Contact Me', subtitle: 'Send an email or connect...', icon: '<i class="fas fa-envelope"></i>', action: () => { window.location.href = '#contact'; } },
       { title: 'Toggle Theme', subtitle: 'Switch Dark/Light mode', icon: '<i class="fas fa-adjust"></i>', action: () => { toggleTheme(); } },
       { title: 'Copy Email', subtitle: 'nirav.sawant22@gmail.com', icon: '<i class="fas fa-copy"></i>', action: () => { navigator.clipboard.writeText('nirav.sawant22@gmail.com'); alert('Email copied!'); } },
