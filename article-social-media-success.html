@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three Things People Mean by "Pause and Think" | Nirav Sawant</title>
+    <title>What Social Media Did to the Definition of Success | Nirav Sawant</title>
     <link rel="icon" type="image/jpeg" href="favicon.jpg">
     <link
         href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
@@ -295,115 +295,128 @@
         </a>
 
         <header class="article-header">
-            <h1>Three Things People Mean by "Pause and Think"</h1>
+            <h1>What Social Media Did to the Definition of Success</h1>
             <div class="article-meta">
                 <span><i class="far fa-calendar"></i> August 2026</span>
                 <span><i class="far fa-clock"></i> 10 min read</span>
             </div>
             <div class="tags">
-                <span class="tag">Safety</span>
-                <span class="tag">Uncertainty</span>
-                <span class="tag">Reachability</span>
-                <span class="tag">Human-Robot Interaction</span>
+                <span class="tag">Psychology</span>
+                <span class="tag">Social Media</span>
+                <span class="tag">Self-Image</span>
+                <span class="tag">Culture</span>
             </div>
         </header>
 
         <div class="article-content">
-            <p>"The robot should pause and think when conditions degrade" is a requirement that survives design review because
-                it sounds like one specification. It is three, they operate at different layers, and they fail independently.
-                Conflating them produces safety architectures that look complete while leaving the hardest component
-                unimplemented.</p>
+            <p class="lede-note"><strong>What this argues.</strong> Not that social media is poison and everyone should delete
+                it. The evidence for population-level harm is genuinely contested, and I get into that below. The argument is
+                narrower: these platforms quietly changed what counts as success, from something you can assess privately to
+                something that has to be witnessed to be real. That shift is doing more damage than the screen time itself.</p>
 
-            <p>Separated out: maintaining the ability to stop, allocating more inference compute under uncertainty, and
-                transferring control to a human. Only the first is an open problem, and it receives the least attention.</p>
+            <h2>Comparison was always here. The sample changed.</h2>
 
-            <h2>1. Abort reachability</h2>
+            <p>People have measured themselves against each other for as long as there have been people. Festinger wrote up
+                social comparison theory in the 1950s, and the basic finding is unremarkable: in the absence of an objective
+                standard, we work out how we are doing by looking at others. It is not a defect. It is how you calibrate
+                anything when you have no ruler.</p>
 
-            <p>Pausing presupposes that a safe stop is available from the current state. For a system mid-motion this is a
-                substantive assumption and frequently false. A gripper partway through extracting a friction-fit block has
-                already altered the structure's load path. Holding position is a control input with consequences, not a null
-                action.</p>
+            <p>What changed is the sample you calibrate against. For almost all of human history the comparison set was the
+                village: a few hundred people, observed in full, including their bad days. What you see now is a set assembled
+                by a ranking system optimising for engagement, which means it is not a sample of people at all. It is a sample
+                of moments, selected because they performed well.</p>
 
-            <p>The property worth specifying is continuous rather than instantaneous: at every timestep, there exists a control
-                sequence from the current state that terminates in a safe set. The operative question is not whether the system
-                can halt now, but whether it remains inside the region from which halting safely is still reachable.</p>
+            <p>The result is a broken sense of base rates. Scrolling gives you the strong impression that you are seeing the
+                middle of a distribution when you are looking at its right tail, repeatedly, in a way no amount of knowing
+                better seems to correct. You cannot reason your way out of a prior that gets updated three hundred times a
+                day.</p>
 
-            <p>This is a reachability problem, and it maps onto latent safety filters, which apply Hamilton-Jacobi reachability
-                within the latent space of a generative world model. That formulation matters for contact-rich manipulation,
-                where an analytic dynamics model adequate for computing reachable sets does not exist. Uncertainty-aware
-                extensions treat calibrated epistemic uncertainty as an out-of-distribution proxy, bounding the region where the
-                learned dynamics, and therefore the reachability computation built on top of them, retain validity.</p>
+            <h2>The asymmetry that makes it worse</h2>
 
-            <p>Outside constrained settings this remains unsolved, and the gap is worth stating directly. A system that detects
-                hazard after leaving the recoverable set has produced a measurement, not a mitigation.</p>
+            <p>Comparison would be survivable if it ran on equivalent information. It does not. You experience your own life
+                from the inside, with every hesitation, every unglamorous stretch, every thing you got wrong. You experience
+                other people's lives as a finished cut, produced with the specific intent of looking good.</p>
 
-            <h2>2. Uncertainty-triggered compute allocation</h2>
+            <p>So the comparison is not you against them. It is your unedited interior against their edited exterior, and that
+                is a contest with a predetermined outcome. The most reliable way to feel behind is to compare a process with a
+                highlight.</p>
 
-            <p>The second reading is tractable and mostly an engineering problem: widen the search, sample additional rollouts,
-                increase denoising steps, but only when the state warrants it. Uniform deliberation wastes budget on the
-                forty-ninth routine extraction.</p>
+            <h2>Turning regard into a number</h2>
 
-            <p>The design question is what triggers the additional allocation. Prediction is the wrong trigger. A model
-                confidently predicting failure and a model with no basis for prediction call for different responses, and only
-                the second indicates that further computation will change the answer. Confident predictions do not improve with
-                more sampling; they are already at the model's resolution limit.</p>
+            <p>The more consequential move was quantifying approval. Before, social regard was real but fuzzy. You knew roughly
+                where you stood and the estimate was noisy enough to be survivable. Now it arrives as an integer, attached to
+                each thing you make, visible to everyone, and comparable across time.</p>
 
-            <p>Hardware imposes a useful constraint here. On an Orange Pi Zero 2W the per-action latency budget forces
-                "allocate more compute" to mean a bounded, measured increase rather than an open-ended search, which in turn
-                forces an explicit statement of what the additional compute purchases.</p>
+            <p>Numbers invite optimisation. This is the part engineers should recognise immediately, because it is Goodhart's
+                law: when a measure becomes a target it stops being a good measure. Point a metric at a system and the system
+                reorganises itself around the metric, including when the system is a person and the metric is other people's
+                attention.</p>
 
-            <h2>3. Calibrated deferral</h2>
+            <p>Applied to a self, that reorganisation looks like drift. You start making things you would have made anyway and
+                posting them. Then you start noticing which ones do well. Then, without any deliberate decision, you are
+                choosing projects partly on how they will read. The preference has been rewritten by the feedback signal, and
+                from the inside it still feels like taste.</p>
 
-            <p>The third reading is escalation to a human operator. Implementing it badly takes an afternoon: threshold the
-                model's confidence and raise an alert. Implementing it correctly is harder, because the requirement is not that
-                the system asks when uncertain. The requirement is a deferral rate that can be stated before deployment.</p>
+            <h2>Success becomes whatever is legible</h2>
 
-            <p>Conformal prediction supplies this. Rather than relying on raw model confidence, which is typically
-                miscalibrated in exactly the distributional regions where deferral matters, calibration against held-out data
-                yields a distribution-free guarantee: a target task success rate subject to a bounded intervention rate. Work in
-                this direction, including KnowNo, converts the escalation decision from a tuned heuristic into a statistical
-                guarantee.</p>
+            <p>Here is the part I think matters most, and it gets discussed least.</p>
 
-            <p>An operator can staff around "this system requests input approximately once per forty actions." No staffing
-                model accommodates "this system requests input when its confidence is low."</p>
+            <p>Plenty of real accomplishment is illegible. Becoming competent at something difficult mostly looks like a long
+                stretch of unremarkable effort with no visible milestone. Being reliable over years does not produce a moment.
+                Getting slowly better at a craft, staying with a hard problem past the point it stopped being fun, quietly
+                supporting people, changing your mind about something important: none of it photographs.</p>
 
-            <h2>Failure modes and composition</h2>
+            <p>A public and quantified definition of success cannot see any of that, so it systematically undervalues it. What
+                it can see is announcements. Offers, launches, admissions, numbers, awards, anything with a date and a
+                headline. Those become the visible surface of a career, and then, by a short and unexamined step, they become
+                the definition of one.</p>
 
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr><th>Mechanism</th><th>Question answered</th><th>Failure mode</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Abort reachability</td><td>Is a safe stop still reachable?</td><td>Silent exit from the recoverable set</td></tr>
-                        <tr><td>Compute allocation</td><td>Is more inference warranted here?</td><td>Uniform spend, or spend applied too late</td></tr>
-                        <tr><td>Calibrated deferral</td><td>Should a human decide this?</td><td>Unpredictable intervention rate</td></tr>
-                    </tbody>
-                </table>
-            </div>
+            <p>The cost is not that people chase visible milestones. Some of those milestones are worth having. The cost is
+                that the invisible parts start to feel like they do not count, which means the years when you are actually
+                getting good at something register as failure to yourself while they are happening.</p>
 
-            <p>The three compose in one direction only. Deferral has no value if the operator is consulted after the
-                recoverable set has been exited, and additional inference compute has no value if it is spent deliberating past
-                the last timestep at which an abort was available. Reachability is the substrate. The other two are scheduling
-                policies that assume it holds.</p>
+            <h2>Self-image under observation</h2>
 
-            <p>Most of the runtime-monitoring literature sits orthogonal to all three. Approaches that verify task progress
-                with a vision-language model, or estimate failure likelihood from a policy's internal features, produce
-                detectors. A detector is not a controller, and detecting that the system is in trouble is a separate
-                achievement from having a control sequence that leads out of it.</p>
+            <p>There is a difference between doing something and being seen doing it, and the second one changes the first.
+                Research on self-objectification describes people taking an observer's view of themselves, evaluating from the
+                outside in. Platforms built on posting make that stance the default, because to post is to consider in advance
+                how a thing will look to strangers.</p>
 
-            <h2>Scope of the Jenga testbed</h2>
+            <p>Once that habit is established it does not switch off when you close the app. You catch yourself narrating
+                ordinary experience as content. Your sense of who you are stops being something you have and becomes something
+                you maintain, and maintenance is exhausting in a way that having is not.</p>
 
-            <p>The safety-gate experiment addresses the first two mechanisms in a constrained setting. A block extraction is a
-                discrete commitment with a physically identifiable point of no return, which makes "was an abort still
-                available" an empirical question rather than a definitional one. The gate implements the crudest version of the
-                second mechanism: a locked threshold on an anomaly score producing a binary veto, with no graduated
-                response.</p>
+            <h2>Where I have to be careful</h2>
 
-            <p>Starting at that level is deliberate. If a binary veto on an uncertainty signal fails to reduce catastrophic
-                failures in a domain this constrained, the result bounds what more elaborate mechanisms can be expected to
-                deliver, and it is cheaper to obtain that bound now than after building the elaborate version on top of an
-                unverified assumption.</p>
+            <p>The honest position is that the population-level evidence is messier than either side of this argument usually
+                admits. Orben and Przybylski's specification-curve work found that the association between digital technology
+                use and adolescent wellbeing is small, comparable in size to effects nobody worries about. Other researchers,
+                Haidt and Twenge most prominently, read the same period and argue for something much larger and specifically
+                tied to smartphones and social platforms. That disagreement is live, the causal direction is hard to establish,
+                and anyone telling you it is settled is telling you about themselves.</p>
+
+            <p>It also is not uniform. For people isolated by geography, illness or identity, these platforms are the reason
+                they have a community at all, and that is not a small thing to weigh against a diffuse cost. Plenty of people
+                use them lightly and are fine.</p>
+
+            <p>My argument does not depend on the strong version being true. Even if the wellbeing effect is as small as the
+                most cautious estimate, the redefinition of success is a separate phenomenon and it is much easier to observe.
+                You can see it in how people describe their own work.</p>
+
+            <h2>The only thing that has helped me</h2>
+
+            <p>Not a detox, which I have never managed for long. What helped was writing down what I would consider a good year
+                if nobody found out about any of it. It is an uncomfortable exercise, mostly because the first list you produce
+                is obviously performative and you have to throw it away and do it again.</p>
+
+            <p>What survives the second pass tends to be specific and unimpressive. Understand a thing I currently do not
+                understand. Finish something I said I would finish. Be someone a couple of particular people can rely on. Get
+                measurably better at one skill in a way I can test myself rather than announce.</p>
+
+            <p>That list is a private metric, and a private metric is much harder to game, because the only person available to
+                fool is you. It does not make the comparison instinct go away. It does give you something to check against
+                when the feed tells you that everyone your age is further along, which is a claim the feed is structurally
+                incapable of evaluating.</p>
         </div>
     </article>
 

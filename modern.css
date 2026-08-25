@@ -245,3 +245,105 @@ textarea:focus-visible {
     transform: none;
   }
 }
+
+/* --- "rainy night" easter egg ------------------------------------------- */
+/* Triggered by typing the words; see rainy-night.js. The palette shift is a
+   filter on the whole document rather than a token swap, so it composes with
+   both themes instead of needing a third one. */
+
+.rainy-night body {
+  filter: saturate(0.55) brightness(0.62) contrast(1.06) hue-rotate(-8deg);
+  transition: filter 900ms var(--ease-out-expo);
+}
+
+.rainy-night-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+/* Cold light from somewhere off-screen, plus a vignette to push the edges
+   down. Sits above the rain so drops read as being on the glass. */
+.rainy-night-canvas::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(120% 80% at 78% -10%, rgba(120, 165, 220, 0.20), transparent 60%),
+    radial-gradient(140% 100% at 50% 120%, rgba(8, 12, 24, 0.55), transparent 65%);
+  pointer-events: none;
+}
+
+.rainy-night-hint {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10001;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(198, 214, 235, 0.28);
+  background: rgba(10, 14, 26, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: rgba(226, 236, 248, 0.92);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 900ms ease;
+}
+
+.rainy-night-hint.is-fading {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rainy-night body {
+    transition: none;
+  }
+}
+
+/* --- Project media ------------------------------------------------------ */
+
+.project-media {
+  margin: -0.5rem 0 1.25rem;
+  border-radius: 12px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 30% 10%, rgba(var(--accent-rgb), 0.10), transparent 65%),
+    var(--hover-bg);
+  border: 1px solid var(--card-border);
+}
+
+.project-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: scale(1.02);
+  transition: transform var(--dur-slow) var(--ease-out-expo);
+}
+
+.project-card:hover .project-media img {
+  transform: scale(1.05);
+}
+
+.project-media figcaption {
+  padding: 0.55rem 0.85rem 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  border-top: 1px solid var(--card-border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-media img,
+  .project-card:hover .project-media img {
+    transform: none;
+    transition: none;
+  }
+}

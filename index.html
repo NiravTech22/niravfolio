@@ -83,10 +83,7 @@
       font-weight: 300;
       overflow-x: hidden;
       line-height: 1.6;
-      /* Smooth scrolling is delegated to Lenis, with an explicit
-         scrollIntoView fallback for anchors if it fails to load. Declaring
-         it here as well put a second animation on the same property. */
-      scroll-behavior: auto;
+      scroll-behavior: smooth;
       min-height: 100vh;
       transition: background-color 0.35s ease, color 0.35s ease;
       /* No animation - lazy elegance */
@@ -3016,6 +3013,12 @@
               authority over a robot's action. An SO-101 arm extracts Jenga blocks behind a fail-closed safety gate driven by a V-JEPA-distilled
               anomaly detector, scored against an ungated control group on the same held-out scenarios. Classical CV
               provides ground-truth tower state so the evaluation isn't circular.</p>
+            <figure class="project-media">
+              <img src="so101-jenga-urdf.png" width="897" height="844" loading="lazy" decoding="async"
+                alt="Rendered SO-101 robot arm posed with its gripper at a Jenga tower, generated from the robot's URDF.">
+              <figcaption>SO-101 rendered from its URDF: real link meshes, real forward kinematics, projected
+                through the same pinhole camera model the perception pipeline is validated against.</figcaption>
+            </figure>
             <div class="project-tech">
               <span>Python</span>
               <span>LeRobot</span>
@@ -3140,6 +3143,17 @@
   <section id="tech-blog">
     <h2 class="section-title">my thoughts</h2>
     <div class="section-grid">
+      <a href="article-social-media-success.html" class="blog-card" style="text-decoration: none; color: inherit;">
+        <h3>What Social Media Did to the Definition of Success</h3>
+        <div class="date">August 2026</div>
+        <p>The platforms quietly changed what counts as an accomplishment, from something you can assess privately
+          to something that has to be witnessed to be real. Goodhart's law, pointed at a person.</p>
+        <div class="tags">
+          <span class="tag">Psychology</span>
+          <span class="tag">Social Media</span>
+          <span class="tag">Culture</span>
+        </div>
+      </a>
       <a href="article-safety-gate.html" class="blog-card" style="text-decoration: none; color: inherit;">
         <h3>Uncertainty, Not Prediction, Should Hold the Veto</h3>
         <div class="date">August 2026</div>
@@ -3574,67 +3588,18 @@
       mix-blend-mode: multiply;
     }
 
-    /* Lenis Recommended CSS */
-    html.lenis,
-    html.lenis body {
-      height: auto;
-    }
-
-    .lenis.lenis-smooth {
-      scroll-behavior: auto !important;
-    }
-
-    .lenis.lenis-smooth [data-lenis-prevent] {
-      overscroll-behavior: contain;
-    }
-
-    .lenis.lenis-stopped {
-      overflow: hidden;
-    }
-
-    .lenis.lenis-scrolling iframe {
-      pointer-events: none;
-    }
   </style>
 
   <div class="noise-overlay"></div>
 
-  <!-- Smooth Scroll (Lenis) and Global Scripts -->
-  <script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
+  <!-- Global Scripts -->
   <script>
-    // Initialize Lenis for smooth scrolling. Guarded: if the CDN is
-    // unreachable the page falls back to native scrolling rather than
-    // throwing and killing the scripts that follow.
-    // Option names below are the Lenis v1 API. The previous config used the
-    // pre-v1 names (direction, gestureDirection, smooth, mouseMultiplier),
-    // which v1 silently ignores, so four of them were doing nothing.
-    const lenis = (typeof Lenis === 'undefined') ? null : new Lenis({
-      duration: 0.85,
-      easing: (t) => 1 - Math.pow(1 - t, 3),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      syncTouch: false,
-      touchMultiplier: 1.6,
-    });
-
-    if (lenis) {
-      // Lenis owns the scroll position. Native CSS smooth scrolling sets a
-      // second animation running against the same property, and the two
-      // fight: the page stutters, overshoots and drifts after the wheel
-      // stops. Clearing it here covers every source of the declaration,
-      // including the one inside a media query. If Lenis failed to load,
-      // the CSS value is left alone so native smooth scrolling still works.
-      document.documentElement.style.scrollBehavior = 'auto';
-    }
-
-    // RAF loop
-    function raf(time) {
-      if (lenis) lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    if (lenis) requestAnimationFrame(raf);
+    // Scrolling is native. A JS scroll-hijacking library was here and has
+    // been removed: it overrode the OS and trackpad scroll curve, which is
+    // what made the page feel heavy and slightly delayed. Smoothness now
+    // comes from CSS scroll-behavior for anchor jumps and from the
+    // IntersectionObserver reveals in motion.js, neither of which touches
+    // the wheel.
 
     // Integrate with internal anchor links if any
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -3642,11 +3607,7 @@
         var target = document.querySelector(this.getAttribute('href'));
         if (!target) return;
         e.preventDefault();
-        if (lenis) {
-          lenis.scrollTo(target);
-        } else {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
 
@@ -3655,32 +3616,15 @@
     // Header Expansion/Contraction
     const header = document.querySelector('header');
 
-    function toggleHeader(e) {
-      // Determine scroll position safely
-      let scrollPosition = window.scrollY || document.documentElement.scrollTop;
-
-      // If triggered by Lenis, use its provided scroll value
-      if (e && typeof e.scroll === 'number') {
-        scrollPosition = e.scroll;
-      }
-
-      // Threshold for transition
-      if (scrollPosition > 20) {
-        if (!header.classList.contains('header-compact')) {
-          console.log('Adding header-compact class at scroll:', scrollPosition);
-          header.classList.add('header-compact');
-        }
-      } else {
-        if (header.classList.contains('header-compact')) {
-          console.log('Removing header-compact class at scroll:', scrollPosition);
-          header.classList.remove('header-compact');
-        }
-      }
+    function toggleHeader() {
+      const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+      header.classList.toggle('header-compact', scrollPosition > 20);
     }
 
-    // Bind to both window scroll (native) and Lenis (smooth) to ensure it catches
-    window.addEventListener('scroll', toggleHeader);
-    if (lenis) lenis.on('scroll', toggleHeader);
+    // Passive: this listener only reads scrollY, so it must never be able to
+    // block the scroll it is reacting to.
+    window.addEventListener('scroll', toggleHeader, { passive: true });
+
 
     // Check initial state
     toggleHeader();
@@ -3918,6 +3862,7 @@
   <script src="intent-visualizer.js"></script>
   <script src="navbar-scroll.js"></script>
     <script src="motion.js"></script>
+    <script src="rainy-night.js"></script>
 </body>
 
 </html>
