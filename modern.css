@@ -246,36 +246,54 @@ textarea:focus-visible {
   }
 }
 
-/* --- "rainy night" easter egg ------------------------------------------- */
-/* Triggered by typing the words; see rainy-night.js. The palette shift is a
-   filter on the whole document rather than a token swap, so it composes with
-   both themes instead of needing a third one. */
+/* --- Rain easter egg, day and night ------------------------------------ */
+/* Typed trigger; see weather.js. The palette shift is a filter over the whole
+   document rather than a token swap, so it composes with both themes instead
+   of needing a third one. */
 
-.rainy-night body {
-  filter: saturate(0.55) brightness(0.62) contrast(1.06) hue-rotate(-8deg);
+.weather body {
   transition: filter 900ms var(--ease-out-expo);
 }
 
-.rainy-night-canvas {
+.weather-night body {
+  filter: saturate(0.55) brightness(0.62) contrast(1.06) hue-rotate(-8deg);
+}
+
+/* Overcast rather than dark: an afternoon downpour drains colour and flattens
+   contrast, it does not turn the lights off. */
+.weather-day body {
+  filter: saturate(0.72) brightness(0.94) contrast(0.94) hue-rotate(-4deg);
+}
+
+.weather-canvas {
   position: fixed;
   inset: 0;
   z-index: 9998;
   pointer-events: none;
 }
 
-/* Cold light from somewhere off-screen, plus a vignette to push the edges
-   down. Sits above the rain so drops read as being on the glass. */
-.rainy-night-canvas::after {
+.weather-canvas::after {
   content: "";
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(120% 80% at 78% -10%, rgba(120, 165, 220, 0.20), transparent 60%),
-    radial-gradient(140% 100% at 50% 120%, rgba(8, 12, 24, 0.55), transparent 65%);
   pointer-events: none;
 }
 
-.rainy-night-hint {
+.weather-night .weather-canvas::after {
+  background:
+    radial-gradient(120% 80% at 78% -10%, rgba(120, 165, 220, 0.20), transparent 60%),
+    radial-gradient(140% 100% at 50% 120%, rgba(8, 12, 24, 0.55), transparent 65%);
+}
+
+.weather-day .weather-canvas::after {
+  background:
+    radial-gradient(130% 90% at 50% -20%, rgba(206, 218, 232, 0.42), transparent 62%),
+    radial-gradient(150% 100% at 50% 120%, rgba(120, 132, 148, 0.20), transparent 70%);
+}
+
+/* --- Toast -------------------------------------------------------------- */
+
+.site-toast {
   position: fixed;
   bottom: 2rem;
   left: 50%;
@@ -284,24 +302,26 @@ textarea:focus-visible {
   padding: 0.6rem 1.1rem;
   border-radius: 999px;
   border: 1px solid rgba(198, 214, 235, 0.28);
-  background: rgba(10, 14, 26, 0.72);
+  background: rgba(10, 14, 26, 0.78);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  color: rgba(226, 236, 248, 0.92);
+  color: rgba(226, 236, 248, 0.94);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.76rem;
   letter-spacing: 0.05em;
   pointer-events: none;
   opacity: 1;
-  transition: opacity 900ms ease;
+  transition: opacity 700ms ease, transform 700ms var(--ease-out-expo);
 }
 
-.rainy-night-hint.is-fading {
+.site-toast.is-fading {
   opacity: 0;
+  transform: translateX(-50%) translateY(6px);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rainy-night body {
+  .weather body,
+  .site-toast {
     transition: none;
   }
 }

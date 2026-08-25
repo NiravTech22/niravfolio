@@ -76,3 +76,17 @@
     init();
   }
 })();
+
+/* Shared toast, used by the command palette and the weather egg. Replaces a
+   blocking alert() that stopped the page dead to say "copied". */
+window.siteToast = function (text) {
+  var el = document.createElement('div');
+  el.className = 'site-toast';
+  el.setAttribute('role', 'status');
+  el.textContent = text;
+  document.body.appendChild(el);
+  window.setTimeout(function () { el.classList.add('is-fading'); }, 2200);
+  window.setTimeout(function () {
+    if (el.parentNode) el.parentNode.removeChild(el);
+  }, 3100);
+};

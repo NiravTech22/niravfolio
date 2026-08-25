@@ -285,16 +285,27 @@
         }
     </style>
     <link rel="stylesheet" href="modern.css">
+    <link rel="stylesheet" href="article.css">
 </head>
 
 <body>
-    <article class="article-container">
-        <a href="index.html" class="back-link">
-            <i class="fas fa-arrow-left"></i>
-            Back to Portfolio
-        </a>
+    <header class="site-header">
+        <div class="header-content">
+            <a class="logo-container" href="index.html">
+                <img src="favicon.jpg" alt="" class="logo-icon">
+                <h2 class="logo-text">nirav sawant</h2>
+            </a>
+            <nav>
+                <a href="index.html#projects">projects</a>
+                <a href="index.html#tech-blog">my thoughts</a>
+                <a href="index.html#contact">reach out!</a>
+            </nav>
+        </div>
+    </header>
 
+    <article class="article-container">
         <header class="article-header">
+            <div class="article-kicker">Research log · Jenga safety gate</div>
             <h1>Uncertainty, Not Prediction, Should Hold the Veto</h1>
             <div class="article-meta">
                 <span><i class="far fa-calendar"></i> August 2026</span>
@@ -370,6 +381,22 @@
 
             <h2>Ground truth cannot be learned</h2>
 
+            <figure>
+              <img src="fig-occupancy.jpg" width="1280" height="960" loading="lazy" decoding="async"
+                alt="The same side view with each block slot outlined and tinted green where the detector read it as occupied and red where it read empty. Caption reports zero errors out of thirty-six slots.">
+              <figcaption><b>The detector's actual output, drawn on the frame it decided from.</b> Each region is a
+                block face projected from the pose recovered by solvePnP, then sampled and thresholded. Lean is
+                estimated first by fitting the tower silhouette, because a few degrees moves a block near the top by
+                more than its own width. This frame: lean correct to 0.0 degrees, thirty-six slots, no errors.</figcaption>
+            </figure>
+            <figure>
+              <img src="fig-cameras.jpg" width="1280" height="480" loading="lazy" decoding="async"
+                alt="Two rendered camera views of a Jenga tower: an overhead view showing four ArUco markers on the table, and a corner side view showing gaps where blocks were removed.">
+              <figcaption><b>The two fixed views everything runs on.</b> Overhead recovers the marker frame and
+                reads the top layer. The side camera sits at a corner rather than square-on, because a layer's three
+                slots are only countable on the face perpendicular to their offset and those faces alternate with
+                layer parity. Square-on, half the tower is unreadable.</figcaption>
+            </figure>
             <p>Steps 1 and 2 are conventional computer vision. Two rigidly mounted cameras, fixed lighting, ArUco markers at the
                 tower base establishing a world frame, edge detection for per-layer block occupancy, and a lean estimate from
                 the side camera.</p>
@@ -459,6 +486,34 @@
 
             <h2>The comparison</h2>
 
+            <p class="claim">My position, stated before the data arrives so it cannot be quietly adjusted afterwards: I expect the gate to reduce catastrophic failures and to cost success rate doing it. If the cost is small the trade is worth making, and if the gate turns out to block indiscriminately then the uncertainty signal was never carrying the information I claimed it was, and I would rather find that out on a tower of wooden blocks than on anything that matters.</p>
+            <figure class="plot">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img"
+                 aria-label="Mean stability margin falls and worst-case topple probability rises as blocks are removed, over 24 simulated runs.">
+              <style>
+                .grid { stroke: currentColor; stroke-opacity: 0.12; stroke-width: 1; }
+                .axis { stroke: currentColor; stroke-opacity: 0.35; stroke-width: 1; }
+                .tick, .lbl { fill: currentColor; fill-opacity: 0.62; font: 11px 'JetBrains Mono', monospace; }
+                .margin { fill: none; stroke: #5b8cff; stroke-width: 2.4; stroke-linejoin: round; }
+                .risk { fill: none; stroke: #ff6b6b; stroke-width: 2.4; stroke-linejoin: round; }
+                .key { font: 11px 'JetBrains Mono', monospace; fill: currentColor; fill-opacity: 0.8; }
+              </style>
+              <line x1="52" y1="26.0" x2="668" y2="26.0" class="grid"/><line x1="52" y1="84.5" x2="668" y2="84.5" class="grid"/><line x1="52" y1="143.0" x2="668" y2="143.0" class="grid"/><line x1="52" y1="201.5" x2="668" y2="201.5" class="grid"/><line x1="52" y1="260.0" x2="668" y2="260.0" class="grid"/>
+              <line x1="52" y1="26" x2="52" y2="260" class="axis"/>
+              <line x1="52" y1="260" x2="668" y2="260" class="axis"/>
+              <polyline class="margin" points="52.0,26.0 99.4,48.5 146.8,76.5 194.2,102.0 241.5,120.0 288.9,126.9 336.3,142.4 383.7,159.1 431.1,172.5 478.5,157.1 525.8,188.7 573.2,216.0 620.6,204.6 668.0,232.2"/>
+              <polyline class="risk" points="52.0,249.4 99.4,219.0 146.8,176.3 194.2,133.8 241.5,109.5 288.9,79.1 336.3,64.9 383.7,57.5 431.1,33.0 478.5,55.2 525.8,33.0 573.2,33.0 620.6,33.0 668.0,33.0"/>
+              <text x="52.0" y="286" class="tick" text-anchor="middle">0</text><text x="241.5" y="286" class="tick" text-anchor="middle">4</text><text x="431.1" y="286" class="tick" text-anchor="middle">8</text><text x="620.6" y="286" class="tick" text-anchor="middle">12</text>
+              <text x="52" y="298" class="lbl">blocks removed</text>
+              <text x="58" y="40" class="key" fill="#5b8cff">stability margin</text>
+              <text x="58" y="56" class="key" fill="#ff6b6b">worst-case topple probability</text>
+            </svg>
+              <figcaption><b>Why the task is a reasonable testbed.</b> Mean static stability margin and worst-case
+                topple probability across twenty-four simulated runs, as blocks come out. The margin does not decay
+                gently: it holds up, then falls away, and the risk curve turns sharply upward near the end. Most
+                extractions are safe and boring right up until they are not, which is the regime a safety gate has
+                to be useful in.</figcaption>
+            </figure>
             <p>Step 8 reruns the identical policy across the identical held-out scenarios with the locked gate in the loop.
                 Step 9 subtracts.</p>
 
@@ -496,6 +551,11 @@
                 progress tracker updated as steps close, and an append-only event log so that a failure can be attributed to a
                 specific node rather than reconstructed from video afterward.</p>
         </div>
+
+        <nav class="article-nav">
+            <a class="prev" href="index.html">&larr; All writing</a>
+            <a href="article-pause-and-think.html">Three Things People Mean by "Pause and Think" &rarr;</a>
+        </nav>
     </article>
 
     <!-- Theme Toggle Button -->
@@ -532,7 +592,8 @@
         }
     </script>
     <script src="motion.js"></script>
-    <script src="rainy-night.js"></script>
+    <script src="navbar-scroll.js"></script>
+    <script src="weather.js"></script>
 </body>
 
 </html>

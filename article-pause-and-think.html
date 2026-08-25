@@ -285,16 +285,27 @@
         }
     </style>
     <link rel="stylesheet" href="modern.css">
+    <link rel="stylesheet" href="article.css">
 </head>
 
 <body>
-    <article class="article-container">
-        <a href="index.html" class="back-link">
-            <i class="fas fa-arrow-left"></i>
-            Back to Portfolio
-        </a>
+    <header class="site-header">
+        <div class="header-content">
+            <a class="logo-container" href="index.html">
+                <img src="favicon.jpg" alt="" class="logo-icon">
+                <h2 class="logo-text">nirav sawant</h2>
+            </a>
+            <nav>
+                <a href="index.html#projects">projects</a>
+                <a href="index.html#tech-blog">my thoughts</a>
+                <a href="index.html#contact">reach out!</a>
+            </nav>
+        </div>
+    </header>
 
+    <article class="article-container">
         <header class="article-header">
+            <div class="article-kicker">Notes on runtime safety</div>
             <h1>Three Things People Mean by "Pause and Think"</h1>
             <div class="article-meta">
                 <span><i class="far fa-calendar"></i> August 2026</span>
@@ -369,6 +380,7 @@
 
             <h2>Failure modes and composition</h2>
 
+            <p class="claim">The field spends most of its attention on detection because detection is tractable and publishable. Reachability is the part that actually decides whether a system is safe, and it is the part almost nobody is working on.</p>
             <div class="table-wrap">
                 <table>
                     <thead>
@@ -404,7 +416,21 @@
                 failures in a domain this constrained, the result bounds what more elaborate mechanisms can be expected to
                 deliver, and it is cheaper to obtain that bound now than after building the elaborate version on top of an
                 unverified assumption.</p>
+            <div class="references">
+            <h2>References</h2>
+            <ol>
+                <li>Bansal, S., Chen, M., Herbert, S., &amp; Tomlin, C. (2017). Hamilton-Jacobi reachability: a brief overview and recent advances. <i>IEEE CDC</i>.</li>
+                <li>Nakamura, K., &amp; Bajcsy, A. (2025). Generalizing safety beyond collision-avoidance via latent-space reachability analysis. Latent safety filters over learned world models.</li>
+                <li>Ren, A. Z., et al. (2023). Robots that ask for help: uncertainty alignment for large language model planners (KnowNo). <i>CoRL</i>. Conformal prediction for calibrated deferral rates.</li>
+                <li>Vovk, V., Gammerman, A., &amp; Shafer, G. (2005). <i>Algorithmic Learning in a Random World</i>. Springer. The conformal prediction framework.</li>
+            </ol>
+            </div>
         </div>
+
+        <nav class="article-nav">
+            <a class="prev" href="article-safety-gate.html">&larr; Uncertainty, Not Prediction, Should Hold the Veto</a>
+            <a href="article-attestation-layer.html">The Attestation Layer: Autonomy's Real Blocker Isn't Capability &rarr;</a>
+        </nav>
     </article>
 
     <!-- Theme Toggle Button -->
@@ -441,7 +467,8 @@
         }
     </script>
     <script src="motion.js"></script>
-    <script src="rainy-night.js"></script>
+    <script src="navbar-scroll.js"></script>
+    <script src="weather.js"></script>
 </body>
 
 </html>

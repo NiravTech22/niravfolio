@@ -382,16 +382,27 @@
         }
     </style>
     <link rel="stylesheet" href="modern.css">
+    <link rel="stylesheet" href="article.css">
 </head>
 
 <body>
-    <article class="article-container">
-        <a href="index.html" class="back-link">
-            <i class="fas fa-arrow-left"></i>
-            Back to Portfolio
-        </a>
+    <header class="site-header">
+        <div class="header-content">
+            <a class="logo-container" href="index.html">
+                <img src="favicon.jpg" alt="" class="logo-icon">
+                <h2 class="logo-text">nirav sawant</h2>
+            </a>
+            <nav>
+                <a href="index.html#projects">projects</a>
+                <a href="index.html#tech-blog">my thoughts</a>
+                <a href="index.html#contact">reach out!</a>
+            </nav>
+        </div>
+    </header>
 
+    <article class="article-container">
         <header class="article-header">
+            <div class="article-kicker">Primer</div>
             <h1>GPU-Accelerated Computing in Modern Artificial Intelligence</h1>
             <div class="article-meta">
                 <span><i class="far fa-calendar"></i> January 2025</span>
@@ -529,6 +540,11 @@
             <p> GPU acceleration has transformed what's possible in AI. Understanding these principles is essential for
                 anyone building high-performance systems.</p>
         </div>
+
+        <nav class="article-nav">
+            <a class="prev" href="article-studentio.html">&larr; Adaptive Learning Through Closed-Loop Perception: The StudentIO Approach</a>
+            <a href="index.html">Back to portfolio &rarr;</a>
+        </nav>
     </article>
 
     <!-- Theme Toggle Button -->
@@ -567,7 +583,8 @@
         });
     </script>
     <script src="motion.js"></script>
-    <script src="rainy-night.js"></script>
+    <script src="navbar-scroll.js"></script>
+    <script src="weather.js"></script>
 </body>
 
 </html>

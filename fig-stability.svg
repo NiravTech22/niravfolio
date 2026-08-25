@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img"
+     aria-label="Mean stability margin falls and worst-case topple probability rises as blocks are removed, over 24 simulated runs.">
+  <style>
+    .grid { stroke: currentColor; stroke-opacity: 0.12; stroke-width: 1; }
+    .axis { stroke: currentColor; stroke-opacity: 0.35; stroke-width: 1; }
+    .tick, .lbl { fill: currentColor; fill-opacity: 0.62; font: 11px 'JetBrains Mono', monospace; }
+    .margin { fill: none; stroke: #5b8cff; stroke-width: 2.4; stroke-linejoin: round; }
+    .risk { fill: none; stroke: #ff6b6b; stroke-width: 2.4; stroke-linejoin: round; }
+    .key { font: 11px 'JetBrains Mono', monospace; fill: currentColor; fill-opacity: 0.8; }
+  </style>
+  <line x1="52" y1="26.0" x2="668" y2="26.0" class="grid"/><line x1="52" y1="84.5" x2="668" y2="84.5" class="grid"/><line x1="52" y1="143.0" x2="668" y2="143.0" class="grid"/><line x1="52" y1="201.5" x2="668" y2="201.5" class="grid"/><line x1="52" y1="260.0" x2="668" y2="260.0" class="grid"/>
+  <line x1="52" y1="26" x2="52" y2="260" class="axis"/>
+  <line x1="52" y1="260" x2="668" y2="260" class="axis"/>
+  <polyline class="margin" points="52.0,26.0 99.4,48.5 146.8,76.5 194.2,102.0 241.5,120.0 288.9,126.9 336.3,142.4 383.7,159.1 431.1,172.5 478.5,157.1 525.8,188.7 573.2,216.0 620.6,204.6 668.0,232.2"/>
+  <polyline class="risk" points="52.0,249.4 99.4,219.0 146.8,176.3 194.2,133.8 241.5,109.5 288.9,79.1 336.3,64.9 383.7,57.5 431.1,33.0 478.5,55.2 525.8,33.0 573.2,33.0 620.6,33.0 668.0,33.0"/>
+  <text x="52.0" y="286" class="tick" text-anchor="middle">0</text><text x="241.5" y="286" class="tick" text-anchor="middle">4</text><text x="431.1" y="286" class="tick" text-anchor="middle">8</text><text x="620.6" y="286" class="tick" text-anchor="middle">12</text>
+  <text x="52" y="298" class="lbl">blocks removed</text>
+  <text x="58" y="40" class="key" fill="#5b8cff">stability margin</text>
+  <text x="58" y="56" class="key" fill="#ff6b6b">worst-case topple probability</text>
+</svg>

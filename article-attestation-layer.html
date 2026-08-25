@@ -285,16 +285,27 @@
         }
     </style>
     <link rel="stylesheet" href="modern.css">
+    <link rel="stylesheet" href="article.css">
 </head>
 
 <body>
-    <article class="article-container">
-        <a href="index.html" class="back-link">
-            <i class="fas fa-arrow-left"></i>
-            Back to Portfolio
-        </a>
+    <header class="site-header">
+        <div class="header-content">
+            <a class="logo-container" href="index.html">
+                <img src="favicon.jpg" alt="" class="logo-icon">
+                <h2 class="logo-text">nirav sawant</h2>
+            </a>
+            <nav>
+                <a href="index.html#projects">projects</a>
+                <a href="index.html#tech-blog">my thoughts</a>
+                <a href="index.html#contact">reach out!</a>
+            </nav>
+        </div>
+    </header>
 
+    <article class="article-container">
         <header class="article-header">
+            <div class="article-kicker">Field robotics</div>
             <h1>The Attestation Layer: Autonomy's Real Blocker Isn't Capability</h1>
             <div class="article-meta">
                 <span><i class="far fa-calendar"></i> August 2026</span>
@@ -395,11 +406,17 @@
 
             <h2>Position</h2>
 
+            <p class="claim">Robotics does not have a capability problem in construction. It has an evidence problem, and evidence is an engineering deliverable like any other.</p>
             <p>The binding constraint in field robotics is not policy performance. It is the absence of infrastructure that
                 allows a policy's behavior to be audited by someone who was not present during execution. Capability is
                 improving without intervention. Accountability is not, and accountability is what currently gates
                 deployment.</p>
         </div>
+
+        <nav class="article-nav">
+            <a class="prev" href="article-pause-and-think.html">&larr; Three Things People Mean by "Pause and Think"</a>
+            <a href="article-natural-intelligence.html">Why AI Won't Outsmart Natural Intelligence &rarr;</a>
+        </nav>
     </article>
 
     <!-- Theme Toggle Button -->
@@ -436,7 +453,8 @@
         }
     </script>
     <script src="motion.js"></script>
-    <script src="rainy-night.js"></script>
+    <script src="navbar-scroll.js"></script>
+    <script src="weather.js"></script>
 </body>
 
 </html>

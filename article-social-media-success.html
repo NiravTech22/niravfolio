@@ -285,16 +285,27 @@
         }
     </style>
     <link rel="stylesheet" href="modern.css">
+    <link rel="stylesheet" href="article.css">
 </head>
 
 <body>
-    <article class="article-container">
-        <a href="index.html" class="back-link">
-            <i class="fas fa-arrow-left"></i>
-            Back to Portfolio
-        </a>
+    <header class="site-header">
+        <div class="header-content">
+            <a class="logo-container" href="index.html">
+                <img src="favicon.jpg" alt="" class="logo-icon">
+                <h2 class="logo-text">nirav sawant</h2>
+            </a>
+            <nav>
+                <a href="index.html#projects">projects</a>
+                <a href="index.html#tech-blog">my thoughts</a>
+                <a href="index.html#contact">reach out!</a>
+            </nav>
+        </div>
+    </header>
 
+    <article class="article-container">
         <header class="article-header">
+            <div class="article-kicker">Essay · psychology</div>
             <h1>What Social Media Did to the Definition of Success</h1>
             <div class="article-meta">
                 <span><i class="far fa-calendar"></i> August 2026</span>
@@ -359,6 +370,7 @@
 
             <h2>Success becomes whatever is legible</h2>
 
+            <p class="claim">The damage is not that people post. It is that a generation learned to treat the unwitnessed parts of a life as though they did not happen, which is most of a life.</p>
             <p>Here is the part I think matters most, and it gets discussed least.</p>
 
             <p>Plenty of real accomplishment is illegible. Becoming competent at something difficult mostly looks like a long
@@ -417,7 +429,23 @@
                 fool is you. It does not make the comparison instinct go away. It does give you something to check against
                 when the feed tells you that everyone your age is further along, which is a claim the feed is structurally
                 incapable of evaluating.</p>
+            <div class="references">
+            <h2>References</h2>
+            <ol>
+                <li>Festinger, L. (1954). A theory of social comparison processes. <i>Human Relations</i>, 7(2).</li>
+                <li>Orben, A., &amp; Przybylski, A. K. (2019). The association between adolescent well-being and digital technology use. <i>Nature Human Behaviour</i>, 3.</li>
+                <li>Twenge, J. M. (2017). <i>iGen</i>. Atria Books.</li>
+                <li>Haidt, J. (2024). <i>The Anxious Generation</i>. Penguin Press.</li>
+                <li>Fredrickson, B. L., &amp; Roberts, T. (1997). Objectification theory. <i>Psychology of Women Quarterly</i>, 21(2).</li>
+                <li>Strathern, M. (1997). 'Improving ratings': audit in the British University system. <i>European Review</i>, 5(3). The source of the usual phrasing of Goodhart's law.</li>
+            </ol>
+            </div>
         </div>
+
+        <nav class="article-nav">
+            <a class="prev" href="article-natural-intelligence.html">&larr; Why AI Won't Outsmart Natural Intelligence</a>
+            <a href="article-studentio.html">Adaptive Learning Through Closed-Loop Perception: The StudentIO Approach &rarr;</a>
+        </nav>
     </article>
 
     <!-- Theme Toggle Button -->
@@ -454,7 +482,8 @@
         }
     </script>
     <script src="motion.js"></script>
-    <script src="rainy-night.js"></script>
+    <script src="navbar-scroll.js"></script>
+    <script src="weather.js"></script>
 </body>
 
 </html>

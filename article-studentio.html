@@ -239,16 +239,27 @@
         }
     </style>
     <link rel="stylesheet" href="modern.css">
+    <link rel="stylesheet" href="article.css">
 </head>
 
 <body>
-    <article class="article-container">
-        <a href="index.html" class="back-link">
-            <i class="fas fa-arrow-left"></i>
-            Back to Portfolio
-        </a>
+    <header class="site-header">
+        <div class="header-content">
+            <a class="logo-container" href="index.html">
+                <img src="favicon.jpg" alt="" class="logo-icon">
+                <h2 class="logo-text">nirav sawant</h2>
+            </a>
+            <nav>
+                <a href="index.html#projects">projects</a>
+                <a href="index.html#tech-blog">my thoughts</a>
+                <a href="index.html#contact">reach out!</a>
+            </nav>
+        </div>
+    </header>
 
+    <article class="article-container">
         <header class="article-header">
+            <div class="article-kicker">Project write-up</div>
             <h1>Adaptive Learning Through Closed-Loop Perception: The StudentIO Approach</h1>
             <div class="article-meta">
                 <span><i class="far fa-calendar"></i> January 2025</span>
@@ -329,6 +340,11 @@ def update_learner_state(current_state, observation):
                 autonomous systems. The goal isn't to replace human teachers, but to empower every learner with
                 personalized, responsive instruction.</p>
         </div>
+
+        <nav class="article-nav">
+            <a class="prev" href="article-social-media-success.html">&larr; What Social Media Did to the Definition of Success</a>
+            <a href="article-gpu-computing.html">GPU-Accelerated Computing in Modern Artificial Intelligence &rarr;</a>
+        </nav>
     </article>
 
     <!-- Theme Toggle Button -->
@@ -365,7 +381,8 @@ def update_learner_state(current_state, observation):
         }
     </script>
     <script src="motion.js"></script>
-    <script src="rainy-night.js"></script>
+    <script src="navbar-scroll.js"></script>
+    <script src="weather.js"></script>
 </body>
 
 </html>

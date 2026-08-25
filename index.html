@@ -3472,7 +3472,7 @@
       { title: 'Read: Uncertainty Should Hold the Veto', subtitle: 'The jenga-safety-gate experiment', icon: '<i class="fas fa-flask"></i>', action: () => { window.location.href = 'article-safety-gate.html'; } },
       { title: 'Contact Me', subtitle: 'Send an email or connect...', icon: '<i class="fas fa-envelope"></i>', action: () => { window.location.href = '#contact'; } },
       { title: 'Toggle Theme', subtitle: 'Switch Dark/Light mode', icon: '<i class="fas fa-adjust"></i>', action: () => { toggleTheme(); } },
-      { title: 'Copy Email', subtitle: 'nirav.sawant22@gmail.com', icon: '<i class="fas fa-copy"></i>', action: () => { navigator.clipboard.writeText('nirav.sawant22@gmail.com'); alert('Email copied!'); } },
+      { title: 'Copy Email', subtitle: 'nirav.sawant22@gmail.com', icon: '<i class="fas fa-copy"></i>', action: () => { navigator.clipboard.writeText('nirav.sawant22@gmail.com'); window.siteToast('email copied'); } },
       { title: 'View Source', subtitle: 'GitHub repository', icon: '<i class="fab fa-github"></i>', action: () => { window.open('https://github.com/NiravTech22/Portfolio-Website', '_blank'); } }
     ];
 
@@ -3614,27 +3614,9 @@
 
 
     // Header Expansion/Contraction
-    const header = document.querySelector('header');
-
-    function toggleHeader() {
-      const scrollPosition = window.scrollY || document.documentElement.scrollTop;
-      header.classList.toggle('header-compact', scrollPosition > 20);
-    }
-
-    // Passive: this listener only reads scrollY, so it must never be able to
-    // block the scroll it is reacting to.
-    window.addEventListener('scroll', toggleHeader, { passive: true });
-
-
-    // Check initial state
-    toggleHeader();
-
-    // IMMEDIATE TEST - Force class on load
-    setTimeout(() => {
-      alert('JS Running! Navbar should be RED now');
-      header.classList.add('header-compact');
-      console.log('FORCED header-compact class');
-    }, 500);
+    // Header compaction is handled once, in navbar-scroll.js. A second
+    // handler used to live here at a different scroll threshold, so the two
+    // toggled the same class against each other between the two values.
 
     // Mobile Menu Toggle
     function toggleMobileMenu() {
@@ -3862,7 +3844,7 @@
   <script src="intent-visualizer.js"></script>
   <script src="navbar-scroll.js"></script>
     <script src="motion.js"></script>
-    <script src="rainy-night.js"></script>
+    <script src="weather.js"></script>
 </body>
 
 </html>

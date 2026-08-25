@@ -1,0 +1,267 @@
+/* ---------------------------------------------------------------------------
+   article.css — the site's chrome, applied to the writing.
+
+   The articles used to be bare centred columns on a flat background while the
+   home page had a floating nav, a grid field and accent wash. Same palette,
+   different world. This gives them the same room: identical tokens, the same
+   background treatment, the same header, so moving between them reads as one
+   site rather than two.
+--------------------------------------------------------------------------- */
+
+/* --- Background --------------------------------------------------------- */
+
+body {
+  position: relative;
+  z-index: 0;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  background-position: 0 0, 0 0, -1px -1px, -1px -1px;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 15% 85%, rgba(var(--accent-rgb), 0.14), transparent),
+    radial-gradient(ellipse 60% 40% at 85% 12%, rgba(var(--accent-rgb), 0.10), transparent),
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+}
+
+/* --- Floating header ---------------------------------------------------- */
+
+.site-header {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  z-index: 500;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  box-shadow: var(--shadow-sm);
+  transition: top var(--dur-base) var(--ease-out-expo),
+              width var(--dur-base) var(--ease-out-expo),
+              max-width var(--dur-base) var(--ease-out-expo),
+              border-radius var(--dur-base) var(--ease-out-expo),
+              box-shadow var(--dur-base) var(--ease-out-expo);
+}
+
+.site-header.header-compact {
+  top: 0;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 0;
+  border-color: transparent;
+  border-bottom: 1px solid var(--card-border);
+  box-shadow: var(--shadow-md);
+}
+
+.site-header .header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 1.4rem;
+}
+
+.site-header .logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.site-header .logo-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.site-header .logo-text {
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.site-header nav {
+  display: flex;
+  gap: 1.35rem;
+}
+
+.site-header nav a {
+  position: relative;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.84rem;
+  transition: color var(--dur-fast) ease;
+}
+
+.site-header nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--dur-base) var(--ease-out-expo);
+}
+
+.site-header nav a:hover {
+  color: var(--text);
+}
+
+.site-header nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+@media (max-width: 680px) {
+  .site-header .logo-text { display: none; }
+  .site-header nav { gap: 1rem; }
+  .site-header nav a { font-size: 0.78rem; }
+}
+
+/* --- Article shell ------------------------------------------------------ */
+
+.article-container {
+  padding-top: 7.5rem;
+}
+
+.article-kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+/* Reading progress sits under the header rather than over it. */
+.reading-progress {
+  z-index: 400;
+}
+
+/* --- Figures ------------------------------------------------------------ */
+
+.article-content figure {
+  margin: 2.5rem 0;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card-bg);
+  box-shadow: var(--shadow-sm);
+}
+
+.article-content figure img,
+.article-content figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.article-content figure.plot {
+  padding: 1.25rem 1rem 0.5rem;
+  color: var(--text);
+}
+
+.article-content figcaption {
+  padding: 0.85rem 1.1rem 1rem;
+  border-top: 1px solid var(--card-border);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.article-content figcaption b {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.article-content figure.plot figcaption {
+  border-top: 1px solid var(--card-border);
+  margin-top: 0.75rem;
+}
+
+/* --- Pull quote and key claim ------------------------------------------- */
+
+.article-content .claim {
+  margin: 2.5rem 0;
+  padding: 1.4rem 1.6rem;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  background: rgba(var(--accent-rgb), 0.06);
+  font-size: 1.12rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* --- References --------------------------------------------------------- */
+
+.article-content .references {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.article-content .references h2 {
+  margin-top: 0;
+  font-size: 1.05rem;
+}
+
+.article-content .references ol {
+  padding-left: 1.25rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.article-content .references li {
+  margin-bottom: 0.6rem;
+}
+
+.article-content .references a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.35);
+}
+
+/* --- Article footer nav ------------------------------------------------- */
+
+.article-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 3.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.article-nav a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: transform var(--dur-base) var(--ease-out-expo);
+  display: inline-block;
+}
+
+.article-nav a:hover {
+  transform: translateX(3px);
+}
+
+.article-nav a.prev:hover {
+  transform: translateX(-3px);
+}

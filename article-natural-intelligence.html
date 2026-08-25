@@ -285,16 +285,27 @@
         }
     </style>
     <link rel="stylesheet" href="modern.css">
+    <link rel="stylesheet" href="article.css">
 </head>
 
 <body>
-    <article class="article-container">
-        <a href="index.html" class="back-link">
-            <i class="fas fa-arrow-left"></i>
-            Back to Portfolio
-        </a>
+    <header class="site-header">
+        <div class="header-content">
+            <a class="logo-container" href="index.html">
+                <img src="favicon.jpg" alt="" class="logo-icon">
+                <h2 class="logo-text">nirav sawant</h2>
+            </a>
+            <nav>
+                <a href="index.html#projects">projects</a>
+                <a href="index.html#tech-blog">my thoughts</a>
+                <a href="index.html#contact">reach out!</a>
+            </nav>
+        </div>
+    </header>
 
+    <article class="article-container">
         <header class="article-header">
+            <div class="article-kicker">Essay · cognitive science</div>
             <h1>Why AI Won't Outsmart Natural Intelligence</h1>
             <div class="article-meta">
                 <span><i class="far fa-calendar"></i> August 2026</span>
@@ -391,6 +402,7 @@
 
             <h2>The asymmetry that does not close</h2>
 
+            <p class="claim">I am not arguing machines will stay dumber. I am arguing that the comparison needs a shared purpose, and there is not one, so the question people think they are asking does not have an answer.</p>
             <p>Predictive processing, where the brain is understood as minimizing prediction error with perception and action
                 as two routes to the same goal, makes the difference precise. A biological system can reduce surprise in two
                 ways. It can update its model, or it can change the world so that the prediction comes true. Both routes are
@@ -417,7 +429,25 @@
                 enough. If the difference is one of kind, then no amount of capability produces a system with skin in the game,
                 and the stakes have to be supplied externally through monitors, constraints, and humans who remain accountable
                 for the outcome. That is an engineering commitment, and it is the one I would rather build on.</p>
+            <div class="references">
+            <h2>References</h2>
+            <ol>
+                <li>Moravec, H. (1988). <i>Mind Children: The Future of Robot and Human Intelligence</i>. Harvard University Press.</li>
+                <li>Damasio, A. (1994). <i>Descartes' Error: Emotion, Reason and the Human Brain</i>. Putnam.</li>
+                <li>Varela, F., Thompson, E., &amp; Rosch, E. (1991). <i>The Embodied Mind</i>. MIT Press.</li>
+                <li>Gibson, J. J. (1979). <i>The Ecological Approach to Visual Perception</i>. Houghton Mifflin.</li>
+                <li>Dreyfus, H. (1972). <i>What Computers Can't Do</i>. Harper &amp; Row.</li>
+                <li>Gigerenzer, G., &amp; Todd, P. (1999). <i>Simple Heuristics That Make Us Smart</i>. Oxford University Press.</li>
+                <li>Gopnik, A. (2012). Scientific thinking in young children. <i>Science</i>, 337(6102).</li>
+                <li>Friston, K. (2010). The free-energy principle: a unified brain theory? <i>Nature Reviews Neuroscience</i>, 11.</li>
+            </ol>
+            </div>
         </div>
+
+        <nav class="article-nav">
+            <a class="prev" href="article-attestation-layer.html">&larr; The Attestation Layer: Autonomy's Real Blocker Isn't Capability</a>
+            <a href="article-social-media-success.html">What Social Media Did to the Definition of Success &rarr;</a>
+        </nav>
     </article>
 
     <!-- Theme Toggle Button -->
@@ -454,7 +484,8 @@
         }
     </script>
     <script src="motion.js"></script>
-    <script src="rainy-night.js"></script>
+    <script src="navbar-scroll.js"></script>
+    <script src="weather.js"></script>
 </body>
 
 </html>
