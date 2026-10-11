@@ -3004,6 +3004,38 @@
       <h2>projects</h2>
 
       <div class="projects-grid">
+        <div class="project-card" id="cuphead-ai">
+          <div class="project-content">
+            <h3>cuphead-ai</h3>
+            <p>Exploring autonomous game control through visual observations and controller input. A frozen V-JEPA
+              encoder and action-conditioned episodic memory predict one-step consequences, while visual landmarks
+              guide and verify navigation. The agent has autonomously reached playable Forest Follies; combat clears
+              and a complete speedrun remain research goals.</p>
+            <figure class="project-media">
+              <img src="cuphead-ai-forest-follies.png" width="966" height="572" loading="lazy" decoding="async"
+                alt="Cuphead at the start of Forest Follies after the agent's autonomous navigation run.">
+              <figcaption>Captured after autonomous navigation into Forest Follies, with the playable scene verified.</figcaption>
+            </figure>
+            <div class="project-tech">
+              <span>Python</span>
+              <span>PyTorch</span>
+              <span>V-JEPA</span>
+              <span>Episodic Memory</span>
+              <span>Visual Control</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/NiravTech22/cuphead-ai" target="_blank" rel="noopener noreferrer" class="project-link">
+                <img src="github-icon.png" alt="GitHub"
+                  style="width: 1rem; height: 1rem; margin-right: 0.5rem; vertical-align: middle;">
+                <span>GitHub</span>
+              </a>
+              <a href="https://github.com/NiravTech22/cuphead-ai#experimental-evidence" target="_blank" rel="noopener noreferrer" class="project-link">
+                <span>Explore the experiments</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
         <div class="project-card">
           <div class="project-content">
             <h3>jenga-safety-gate</h3>
@@ -3465,7 +3497,8 @@
     let selectedIndex = 0;
 
     const commands = [
-      { title: 'Go to Projects', subtitle: 'View jenga-safety-gate, Invariant, Autodidax...', icon: '<i class="fas fa-code"></i>', action: () => { window.location.href = '#projects'; } },
+      { title: 'Go to Projects', subtitle: 'View cuphead-ai, jenga-safety-gate, Invariant...', icon: '<i class="fas fa-code"></i>', action: () => { window.location.href = '#projects'; } },
+      { title: 'Project: Cuphead AI', subtitle: 'Visual control and frozen latent memory', icon: '<i class="fas fa-gamepad"></i>', action: () => { window.location.href = '#cuphead-ai'; } },
       { title: 'Read My Thoughts', subtitle: 'Robot safety, uncertainty, cognition...', icon: '<i class="fas fa-rss"></i>', action: () => { window.location.href = '#tech-blog'; } },
       { title: 'Read: Uncertainty Should Hold the Veto', subtitle: 'The jenga-safety-gate experiment', icon: '<i class="fas fa-flask"></i>', action: () => { window.location.href = 'article-safety-gate.html'; } },
       { title: 'Contact Me', subtitle: 'Send an email or connect...', icon: '<i class="fas fa-envelope"></i>', action: () => { window.location.href = '#contact'; } },
