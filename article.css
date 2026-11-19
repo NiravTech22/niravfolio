@@ -1,127 +1,163 @@
 .article-container{
   width:min(740px,calc(100% - 40px));
-  margin:64px auto 80px}
-  .article-header{
-    padding-bottom:30px;
-    border-bottom:1px solid var(--line);
-    margin-bottom:32px}
-    .article-kicker{
-      font-size:12px;
-      letter-spacing:.1em;
-      text-transform:uppercase;
-      color:var(--accent);
-      margin-bottom:20px}
-      .article-header h1{
-        font-size:clamp(32px,5vw,52px);
-        letter-spacing:-.045em;
-        line-height:1.12}
-        .article-meta{
-          display:flex;
-          gap:24px;
-          flex-wrap:wrap;
-          color:var(--muted);
-          font-size:14px;
-          margin:24px 0 18px}
-          .article-header .tags{
-            margin-bottom:0}
-            .article-content{
-              font-size:17px;
-              line-height:1.8;
-              overflow-wrap:break-word}
-              .article-content p{
-                margin:0 0 22px}
-                .article-content h2{
-                  font-size:26px;
-                  letter-spacing:-.7px;
-                  margin:42px 0 18px}
-                  .article-content h3{
-                    font-size:21px;
-                    margin:32px 0 16px}
-                    .article-content ul,.article-content ol{
-                      padding-left:24px;
-                      margin-bottom:24px}
-                      .article-content li{
-                        margin-bottom:8px}
-                        .article-content a{
-                          color:var(--accent)}
-                          .article-content figure{
-                            margin:32px 0;
-                            border:1px solid var(--line);
-                            border-radius:6px;
-                            overflow:hidden}
-                            .article-content figure img,.article-content figure svg{
-                              width:100%;
-                              height:auto;
-                              display:block}
-                              .article-content figure.plot{
-                                padding:16px}
-                                .article-content figcaption{
-                                  padding:16px;
-                                  font-size:14px;
-                                  line-height:1.6;
-                                  color:var(--muted);
-                                  border-top:1px solid var(--line)}
-                                  .claim,blockquote,.lede-note{
-                                    margin:28px 0;
-                                    padding:20px 24px;
-                                    border-left:3px solid var(--accent);
-                                    background:var(--surface)}
-                                    .table-wrap{
-                                      overflow-x:auto;
-                                      margin:24px 0}
-                                      table{
-                                        width:100%;
-                                        border-collapse:collapse;
-                                        font-size:14px}
-                                        th,td{
-                                          padding:12px;
-                                          text-align:left;
-                                          border:1px solid var(--line)}
-                                          th{
-                                            background:var(--surface)}
-                                            pre{
-                                              overflow-x:auto;
-                                              padding:20px;
-                                              background:var(--surface);
-                                              border-radius:6px;
-                                              font-size:14px}
-                                              code{
-                                                font-family:ui-monospace,Consolas,monospace;
-                                                font-size:.9em}
-                                                .article-nav{
-                                                  display:flex;
-                                                  justify-content:space-between;
-                                                  gap:24px;
-                                                  border-top:1px solid var(--line);
-                                                  padding-top:24px;
-                                                  margin-top:40px;
-                                                  font-size:14px}
-                                                  .article-nav a{
-                                                    max-width:55%}
-                                                    .references{
-                                                      margin-top:40px;
-                                                      border-top:1px solid var(--line);
-                                                      font-size:14px}
-                                                      .code-block{
-                                                        background:var(--surface);
-                                                        padding:20px;
-                                                        overflow:auto;
-                                                        border-radius:6px}
-                                                        .code-block pre{
-                                                          padding:0}
-                                                          .keyword{
-                                                            color:#315d49}
-                                                            .string{
-                                                              color:#805029}
-                                                              .comment{
-                                                                color:#626a65}
-                                                                @media(max-width:640px){
-                                                                  .article-container{
-                                                                    margin-top:40px}
-                                                                    .article-content{
-                                                                      font-size:16px}
-                                                                      .article-nav{
-                                                                        flex-direction:column}
-                                                                        .article-nav a{
-                                                                          max-width:100%}
-                                                                        }
+  margin:64px auto 80px
+}
+.article-header{
+  padding-bottom:30px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:32px
+}
+.article-kicker{
+  font-size:12px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:20px
+}
+.article-header h1{
+  font-size:clamp(32px,5vw,52px);
+  letter-spacing:-.045em;
+  line-height:1.12
+}
+.article-meta{
+  display:flex;
+  gap:24px;
+  flex-wrap:wrap;
+  color:var(--muted);
+  font-size:14px;
+  margin:24px 0 18px
+}
+.article-header .tags{
+  margin-bottom:0
+}
+.article-content{
+  font-size:17px;
+  line-height:1.8;
+  overflow-wrap:break-word
+}
+.article-content p{
+  margin:0 0 22px
+}
+.article-content h2{
+  font-size:26px;
+  letter-spacing:-.7px;
+  margin:42px 0 18px
+}
+.article-content h3{
+  font-size:21px;
+  margin:32px 0 16px
+}
+.article-content ul,.article-content ol{
+  padding-left:24px;
+  margin-bottom:24px
+}
+.article-content li{
+  margin-bottom:8px
+}
+.article-content a{
+  color:var(--accent)
+}
+.article-content figure{
+  margin:32px 0;
+  border:1px solid var(--line);
+  border-radius:6px;
+  overflow:hidden
+}
+.article-content figure img,.article-content figure svg{
+  width:100%;
+  height:auto;
+  display:block
+}
+.article-content figure.plot{
+  padding:16px
+}
+.article-content figcaption{
+  padding:16px;
+  font-size:14px;
+  line-height:1.6;
+  color:var(--muted);
+  border-top:1px solid var(--line)
+}
+.claim,blockquote,.lede-note{
+  margin:28px 0;
+  padding:20px 24px;
+  border-left:3px solid var(--accent);
+  background:var(--surface)
+}
+.table-wrap{
+  overflow-x:auto;
+  margin:24px 0
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px
+}
+th,td{
+  padding:12px;
+  text-align:left;
+  border:1px solid var(--line)
+}
+th{
+  background:var(--surface)
+}
+pre{
+  overflow-x:auto;
+  padding:20px;
+  background:var(--surface);
+  border-radius:6px;
+  font-size:14px
+}
+code{
+  font-family:ui-monospace,Consolas,monospace;
+  font-size:.9em
+}
+.article-nav{
+  display:flex;
+  justify-content:space-between;
+  gap:24px;
+  border-top:1px solid var(--line);
+  padding-top:24px;
+  margin-top:40px;
+  font-size:14px
+}
+.article-nav a{
+  max-width:55%
+}
+.references{
+  margin-top:40px;
+  border-top:1px solid var(--line);
+  font-size:14px
+}
+.code-block{
+  background:var(--surface);
+  padding:20px;
+  overflow:auto;
+  border-radius:6px
+}
+.code-block pre{
+  padding:0
+}
+.keyword{
+  color:var(--accent)
+}
+.string{
+  color:var(--code-string, #805029)
+}
+.comment{
+  color:var(--muted)
+}
+@media(max-width:640px){
+  .article-container{
+    margin-top:40px
+  }
+  .article-content{
+    font-size:16px
+  }
+  .article-nav{
+    flex-direction:column
+  }
+  .article-nav a{
+    max-width:100%
+  }
+}
